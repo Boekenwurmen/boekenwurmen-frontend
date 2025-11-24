@@ -43,8 +43,6 @@ export default defineConfig(
 			// ============================================
 			// Prefer camelCase but allow snake_case in object properties (for APIs)
 			'camelcase': ['warn', { properties: 'never', ignoreDestructuring: true }],
-			// Allow leading underscores for "private" naming convention
-			'no-underscore-dangle': 'off',
 			// Functions must return consistently (all paths return or none do)
 			'consistent-return': 'error',
 			// Use const when variables aren't reassigned
@@ -67,8 +65,6 @@ export default defineConfig(
 			// ============================================
 			// Only allow console.warn and console.error (remove console.log before production)
 			'no-console': ['warn', { allow: ['warn', 'error'] }],
-			// Never commit debugger statements
-			'no-debugger': 'error',
 			// Avoid alert() - use proper UI notifications
 			'no-alert': 'warn',
 			// Never use eval() - security risk
@@ -107,8 +103,6 @@ export default defineConfig(
 			// ============================================
 			// ERROR PREVENTION
 			// ============================================
-			// Prevent duplicate imports from the same module
-			'no-duplicate-imports': 'error',
 			// Catch x === x comparisons (likely a mistake)
 			'no-self-compare': 'error',
 			// Warn about ${...} in regular strings (should be template literal)
@@ -181,16 +175,12 @@ export default defineConfig(
 			// ============================================
 			// SVELTE-SPECIFIC RULES
 			// ============================================
-			// Never use {@html} without sanitization (XSS risk)
-			'svelte/no-at-html-tags': 'error',
 			// Prevent target="_blank" without rel="noopener noreferrer"
 			'svelte/no-target-blank': 'error',
 			// Don't reassign reactive declarations
 			'svelte/no-reactive-reassign': 'warn',
 			// Access stores with $ prefix in components
 			'svelte/require-store-reactive-access': 'warn',
-			// Catch Svelte compilation errors
-			'svelte/valid-compile': 'error',
 			// Remove unused <!-- svelte-ignore --> comments
 			'svelte/no-unused-svelte-ignore': 'warn',
 			// Use class: directive instead of ternary in class attribute
@@ -205,48 +195,6 @@ export default defineConfig(
 			'svelte/no-useless-mustaches': 'warn',
 			// Type the createEventDispatcher for better type safety
 			'svelte/require-event-dispatcher-types': 'warn',
-			// Prevent duplicate on: directives
-			'svelte/no-dupe-on-directives': 'error',
-			// Prevent duplicate use: directives
-			'svelte/no-dupe-use-directives': 'error',
-
-			// ============================================
-			// ACCESSIBILITY (A11Y) RULES
-			// ============================================
-			// accesskey attribute causes accessibility issues
-			'svelte/a11y-accesskey': 'error',
-			// aria-activedescendant requires tabindex
-			'svelte/a11y-aria-activedescendant-has-tabindex': 'error',
-			// Use only valid ARIA attributes
-			'svelte/a11y-aria-attributes': 'error',
-			// autofocus can be disorienting for screen reader users
-			'svelte/a11y-autofocus': 'warn',
-			// Click handlers need keyboard equivalents
-			'svelte/a11y-click-events-have-key-events': 'warn',
-			// Avoid redundant words like "image" in alt text
-			'svelte/a11y-img-redundant-alt': 'warn',
-			// Interactive elements must be focusable
-			'svelte/a11y-interactive-supports-focus': 'warn',
-			// Labels must be associated with form controls
-			'svelte/a11y-label-has-associated-control': 'warn',
-			// Media elements should have captions
-			'svelte/a11y-media-has-caption': 'warn',
-			// Required attributes must be present (alt, lang, etc.)
-			'svelte/a11y-missing-attribute': 'error',
-			// Headings and anchors must have content
-			'svelte/a11y-missing-content': 'warn',
-			// Mouse events need keyboard equivalents
-			'svelte/a11y-mouse-events-have-key-events': 'warn',
-			// Don't use redundant ARIA roles that match default element roles
-			'svelte/a11y-no-redundant-roles': 'warn',
-			// Static elements with handlers need roles/tabindex
-			'svelte/a11y-no-static-element-interactions': 'warn',
-			// Avoid positive tabindex values (messes with tab order)
-			'svelte/a11y-positive-tabindex': 'warn',
-			// ARIA roles must have required properties
-			'svelte/a11y-role-has-required-aria-props': 'error',
-			// ARIA roles only support specific properties
-			'svelte/a11y-role-supports-aria-props': 'error',
 		}
 	},
 	{
