@@ -76,11 +76,11 @@ export default defineConfig(
 			// Don't reassign function parameters (except their properties)
 			'no-param-reassign': ['error', { props: false }],
 			// Avoid redundant return await
-			'no-return-await': 'error',
+			'@typescript-eslint/return-await': 'error',
 			// Functions marked async should actually use await
 			'require-await': 'warn',
 			// Disallow unused expressions except short-circuit and ternary
-			'no-unused-expressions': ['error', { allowShortCircuit: true, allowTernary: true }],
+			'@typescript-eslint/no-unused-expressions': ['error', { allowShortCircuit: true, allowTernary: true }],
 			// Always use === and !== (except for null checks)
 			'eqeqeq': ['error', 'always', { null: 'ignore' }],
 			// Always use curly braces for if/else/for/while
@@ -121,6 +121,7 @@ export default defineConfig(
 			// ============================================
 			// TYPESCRIPT-SPECIFIC RULES
 			// ============================================
+			projectService: true,
 			// Require explicit return types on functions (with sensible exceptions)
 			'@typescript-eslint/explicit-function-return-type': ['warn', {
 				allowExpressions: true,
