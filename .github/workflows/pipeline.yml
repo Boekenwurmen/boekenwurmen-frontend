@@ -23,7 +23,7 @@ jobs:
         run: npm ci
 
       # - name: Install Playwright browsers
-      #   run: npx playwright install
+      #   run: npx playwright install2
 
       - name: Run tests
         run: npm test
