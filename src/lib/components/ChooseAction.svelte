@@ -1,6 +1,6 @@
 <script>
     import { getContext } from 'svelte';
-    export let action = "Default action";
+    export let action = {toPage:1, name:"Go back"};
 
     const pageContext = getContext('page');
 
