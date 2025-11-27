@@ -5,7 +5,7 @@
     const text = $derived.by(() => {
         let page = pageContext[0];
         switch (page) {
-            case 1: return 'You should read this story. You should read this story. You should read this story. You should read this story. You should read this story. You should read this story. You should read this story. You should read this story. You should read this story. You should read this story. You should read this story. You should read this story. You should read this story. You should read this story. You should read this story. You should read this story. You should read this story. You should read this story. You should read this story. You should read this story. You should read this story.'
+            case 1: return 'You should read this story.'
             case 2: return 'Have you read the story?'
             default: return 'Empty'
         }

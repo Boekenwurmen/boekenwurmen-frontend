@@ -15,6 +15,9 @@
                 {name:'yes', toPage:2},
                 {name:'no', toPage:2},
             ]
+            default: return [
+                {name:'go back', toPage:1},
+            ]
         }
     });
 </script>
