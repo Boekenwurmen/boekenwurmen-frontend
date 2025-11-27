@@ -1,7 +1,7 @@
 export default class Stories {
     /**
      * 
-     * @param page {number}
+     * @param page {number | null | undefined}
      */
     static getPageStory(page){
         switch (page) {
@@ -20,7 +20,7 @@ export default class Stories {
 
     /**
      * 
-     * @param page {number}
+     * @param page {number | null | undefined}
      */
     static getPageOptions(page){
         switch (page) {
