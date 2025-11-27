@@ -8,20 +8,34 @@
         let page = pageContext[0]
         switch (page) {
             case 1: return [
-                {name:'read', toPage:2},
-                {name:'don\'t read', toPage:2},
+                {toPage:2, name:"You hit the ground out of frustation"},
+                {toPage:3, name:"You scream in pain from the sand in your eyes"},
             ]
             case 2: return [
-                {name:'yes', toPage:2},
-                {name:'no', toPage:2},
+                {toPage:7, name:"Check yourself for wounds"},
+                {toPage:6, name:"look around to see where you are"},
             ]
+            case 3: return [
+                {toPage:5, name:"You ignore the hatch and wander into the desert"},
+                {toPage:4, name:"You open the hatch and go inside"},
+            ]
+            case 4: case 6: case 7: return [
+                {toPage:0, name:"Enter library"},
+            ]
+            case 5: return [
+                {toPage:1, name:"Go back"},
+            ]
+            // case 0: return [
+            //     {toPage:2, name:""},
+            //     {toPage:2, name:""},
+            // ]
             default: return [
-                {name:'go back', toPage:1},
+                {toPage:1, name:"Go back"},
             ]
         }
     });
 </script>
 
 {#each options as option}
-    <ChooseAction action="{option}"/>
+    <ChooseAction action={option}/>
 {/each}
