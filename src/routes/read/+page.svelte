@@ -1,3 +1,6 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
-<p>release test</p>
+<script>
+    import Reader from "../../lib/components/Reader.svelte";
+</script>
+
+<h1>Tutorial page</h1>
+<Reader/>
