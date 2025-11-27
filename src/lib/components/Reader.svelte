@@ -10,6 +10,6 @@
 </script>
 
 <div>
-    <ReadingWindow page={page}/>
-    <ActionWindow page={page}/>
+    <ReadingWindow/>
+    <ActionWindow/>
 </div>
