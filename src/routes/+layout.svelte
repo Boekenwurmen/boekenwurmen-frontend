@@ -9,4 +9,9 @@
 	<link rel="icon" href={favicon} />
 </svelte:head>
 
-{@render children()}
+<div class="book-page-container">
+	<div class="book-spine"></div>
+	<div class="book-content">
+		{@render children()}
+	</div>
+</div>
