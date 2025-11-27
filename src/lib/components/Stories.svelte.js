@@ -25,8 +25,8 @@ export default class Stories {
     static getPageOptions(page){
         switch (page) {
             case 1: return [
-                {toPage:2, name:"You hit the ground out of frustation"},
-                {toPage:3, name:"You scream in pain from the sand in your eyes"},
+                {toPage:3, name:"You hit the ground out of frustation"},
+                {toPage:2, name:"You scream in pain from the sand in your eyes"},
             ]
             case 2: return [
                 {toPage:7, name:"Check yourself for wounds"},
