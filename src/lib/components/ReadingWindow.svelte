@@ -1,4 +1,5 @@
 <script>
+	import TypeWriter from './TypeWriter.svelte.js';
     import { getContext } from 'svelte';
 
     const pageContext = getContext('page');
@@ -19,46 +20,6 @@
             case 7: return "You check your leg and see it bleeding. You rip off a piece of your shirt and after you clean the wound with the running water you see, you make a makeshift bandage. Now that you’ve treated your wound you start to look around and see an old library filled with books you can’t read...."
             // case 0: return ""
             default: return `This part of the story ${Math.random() < 0.5 ? 'went missing' : 'got burned up'}.`
-        }
-    }
-
-    class TypeWriter {
-        /**
-         * 
-         * @param text
-         * @param speed words per minute
-         */
-        constructor(speed = 5) {
-            this._text = '';
-            this._index = 0;
-            const speedCalibrationFactor = 100;
-            /** @type {number} The speed/duration of the effect in milliseconds */
-            this._speed = speed != 0 ? speedCalibrationFactor / speed : 0;
-            this._timeout = undefined;
-            this.shown = $state('');
-            this.typeWriter = this.typeWriter.bind(this);
-            this.reset = this.reset.bind(this);
-        }
-       
-        typeWriter() {
-            if ((this._index >= this._text.length)) return;
-            this.shown += this._text.charAt(this._index);
-            this._index++;
-            this._timeout = setTimeout(this.typeWriter.bind(this), this._speed);
-        }
-        
-        /**
-         * 
-         * @param text {string}
-         */
-        reset(text) {
-            if (text) {
-                this._text = text;
-            }
-            this._index = 0;
-            this.shown = '';
-            if (this._timeout) clearTimeout(this._timeout);
-            this.typeWriter();
         }
     }
    
