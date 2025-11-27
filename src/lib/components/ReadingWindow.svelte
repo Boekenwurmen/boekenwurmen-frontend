@@ -1,0 +1,3 @@
+<p class="max-w-2xl border rounded-lg p-4">
+    You should read this story. You should read this story. You should read this story. You should read this story. You should read this story. You should read this story. You should read this story. You should read this story. You should read this story. You should read this story. You should read this story. You should read this story. You should read this story. You should read this story. You should read this story. You should read this story. You should read this story. You should read this story. You should read this story. You should read this story. You should read this story. 
+</p>
