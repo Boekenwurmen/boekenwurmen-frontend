@@ -4,7 +4,6 @@
 
     const pageContext = getContext('page');
     
-    // export let page = '1';
     let options = $derived.by(() => {
         let page = pageContext[0]
         switch (page) {

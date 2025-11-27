@@ -2,10 +2,6 @@
     import { getContext } from 'svelte';
 
     const pageContext = getContext('page');
-    // let { x, y, size, rotate } = $props();
-    
-    // export let page = ['1'];
-    // let text = 'empty';
     const text = $derived.by(() => {
         let page = pageContext[0];
         switch (page) {
