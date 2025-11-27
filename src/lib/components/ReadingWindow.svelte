@@ -22,21 +22,6 @@
         }
     }
 
-    // let i = 0;
-    // let txt = 'Lorem ipsum typing effect!'; /* The text */
-    // let speed = 50; /* The speed/duration of the effect in milliseconds */
-    // let myText = $state('');
-
-    // function typeWriter() {
-    //     if (i < txt.length) {
-    //         myText += txt.charAt(i);
-    //         i++;
-    //         setTimeout(typeWriter, speed);
-    //     }
-    // }
-
-    // typeWriter()
-
     class TypeWriter {
         /**
          * 
@@ -44,7 +29,6 @@
          * @param speed words per minute
          */
         constructor(speed = 5) {
-            console.log('constructor');
             this._text = '';
             this._index = 0;
             const speedCalibrationFactor = 100;
@@ -52,22 +36,13 @@
             this._speed = speed != 0 ? speedCalibrationFactor / speed : 0;
             this._timeout = undefined;
             this.shown = $state('');
-            // console.log('constructor almost done', $inspect(this.shown));
-            // this.typeWriter();
-            // console.log('constructor done', $inspect(this.shown));
-            
             this.typeWriter = this.typeWriter.bind(this);
             this.reset = this.reset.bind(this);
         }
        
         typeWriter() {
-            // this.shown = this._text
-            // // console.log('typewriter', this._index >= this._text?.length ?? 0, this._index, this._text?.length, this._text, this.shown);
             if ((this._index >= this._text.length)) return;
-            // // document.getElementById("demo").innerHTML += this._text.charAt(i);
             this.shown += this._text.charAt(this._index);
-            // this.shown = `${this._index}`;
-            // // console.log('typeWriter2', this.shown[0]);
             this._index++;
             this._timeout = setTimeout(this.typeWriter.bind(this), this._speed);
         }
@@ -83,7 +58,6 @@
             this._index = 0;
             this.shown = '';
             if (this._timeout) clearTimeout(this._timeout);
-            console.log('resetted')
             this.typeWriter();
         }
     }
@@ -97,17 +71,6 @@
             myTypeWriter.reset(story);
         });
     })
-
-    // const text = $derived.by(() => {
-    //     let page = pageContext[0];
-    //     const story = getPage(page);
-    //     // console.log('story', story);
-    //     // myTypeWriter.reset(story);
-    //     return story;
-    // })
-
-    // text.subscribe(myTypeWriter.reset(text).bind(myTypeWriter));
-    // myTypeWriter.shown
 </script>
 
 <p class="max-w-2xl border rounded-lg p-4 typing">{myTypeWriter.shown}</p>
