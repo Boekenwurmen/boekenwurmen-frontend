@@ -4,7 +4,6 @@
     import { getContext } from 'svelte';
 
     const pageContext = getContext('page');
-   
     const myTypeWriter = new TypeWriter();
 
     $effect(() => {
