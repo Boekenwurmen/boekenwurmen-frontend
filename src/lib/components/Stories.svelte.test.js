@@ -4,18 +4,20 @@ import Stories from './Stories.svelte.js';
 const indexes = [-10000, -100, -10, -3, -2, -1, 0, 0.5, 1, 2, 3, 10, 100, 1000, 10000, Infinity, undefined, null];
 const bookId = 0;
 
-test("All pages give valid stories", () => {
-    indexes.forEach(page => {
-        const story = Stories.getPageStory(bookId, page);
+test("All pages give valid stories", async () => {
+    const storyPromises = indexes.map(page => Stories.getPageStory(bookId, page));
+    const stories = await Promise.all(storyPromises);
+    for (const story of stories) {
         expect(story).toBeTypeOf('string');
         expect(story).not.toBe('');
         // expect(story).toMatch('');
-    });
+    }
 });
 
-test('All pages give valid options', () => {
-    indexes.forEach(page => {
-        const options = Stories.getPageOptions(bookId, page);
+test('All pages give valid options', async () => {
+    const storyPromises = indexes.map(page => Stories.getPageOptions(bookId, page));
+    const stories = await Promise.all(storyPromises);
+    stories.forEach(options => {
         expect(options).toBeInstanceOf(Array);
         options.forEach(option => {
             expect(option).toEqual(
