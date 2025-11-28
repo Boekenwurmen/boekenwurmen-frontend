@@ -5,7 +5,7 @@ export default class Stories {
      * @param page {number | null | undefined}
      */
     static getPageStory(bookId, page){
-        Stories._getPageStoryLocal(page);
+        return Stories._getPageStoryLocal(page);
     }
 
     /**
@@ -14,7 +14,7 @@ export default class Stories {
      * @param page {number | null | undefined}
      */
     static getPageOptions(bookId, page){
-        Stories._getPageOptionsLocal(page);
+        return Stories._getPageOptionsLocal(page);
     }
 
     /**
