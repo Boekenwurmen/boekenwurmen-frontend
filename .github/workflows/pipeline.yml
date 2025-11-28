@@ -45,4 +45,4 @@ jobs:
           subject: "GitHub Actions Build Failed"
           to: "azzo0003@hz.nl,alha0013@hz.nl,slui0056@hz.nl,borg0039@hz.nl,crez0003@hz.nl"
           from: "${{ secrets.SMTP_USERNAME }}"
-          body: "The build failed. Check the Actions tab for details."
+          body: "Boekenwurmen/boekenwurmen-frontend] SvelteKit CI workflow run: SvelteKit CI: All jobs have failed"
