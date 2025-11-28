@@ -11,10 +11,7 @@
 
     $effect(() => {
         let [page, bookId] = pageContext;
-        const story = Stories.getPageStory(bookId, page);
-        queueMicrotask(() => {
-            myTypeWriter.reset(story);
-        });
+        Stories.getPageStory(bookId, page).then(story => myTypeWriter.reset(story));
     })
 </script>
 
