@@ -20,12 +20,12 @@ export default class Stories {
      * 
      * @param bookId {number | null | undefined}
      * @param pageId {number | null | undefined}
-     * @returns {Promise<Object[]>}
+     * @returns {Promise<{ toPage: number, name: string }[]>}
      */
     static async getPageOptions(bookId, pageId){
         try {
             throw new Error('I give up before trying to reach out to the backend')
-            return await Stories._getPageOptionsServer(bookId, pageId);
+            return /** @type {{ toPage: number, name: string }[]} */ (await Stories._getPageOptionsServer(bookId, pageId));
         } catch (error) {
             return Stories._getPageOptionsLocal(pageId);
         }
