@@ -33,3 +33,16 @@ jobs:
 
       - name: Build Project
         run: npm run build
+
+      - name: Notify team on failure
+        if: failure()
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.example.com
+          server_port: 587
+          username: ${{ secrets.SMTP_USERNAME }}
+          password: ${{ secrets.SMTP_PASSWORD }}
+          subject: "GitHub Actions Build Failed"
+          to: "azzo0003@hz.nl,alha0013@hz.nl,slui0056@hz.nl,borg0039@hz.nl,crez0003@hz.nl"
+          from: "ci@example.com"
+          body: "The build failed. Check the Actions tab for details."
