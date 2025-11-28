@@ -8,7 +8,7 @@
     setContext('page', state);
 </script>
 
-<div>
+<div class="w-full">
     <ReadingWindow/>
     <ActionWindow/>
 </div>

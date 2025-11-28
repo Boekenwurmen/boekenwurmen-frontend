@@ -9,6 +9,6 @@
     }
 </script>
 
-<button class="w-full border rounded-lg p-4 my-4 block" on:click={setPage}>
+<button class="w-full border rounded-lg p-4 my-4 block hover:bg-opacity-10 hover:bg-gray-200 transition-colors" on:click={setPage}>
     {action.name}
 </button>
