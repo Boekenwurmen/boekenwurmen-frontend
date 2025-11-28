@@ -9,9 +9,13 @@
 	<link rel="icon" href={favicon} />
 </svelte:head>
 
+
+<header class="bg-yellow-700">
+	<a href="/">
+		<img src={favicon} alt="Library logo" class="header-icon w-30 h-30" />
+	</a>
+</header>
 <div class="book-page-container">
 	<div class="book-spine"></div>
-	<div class="book-content">
-		{@render children()}
-	</div>
+	{@render children()}
 </div>
