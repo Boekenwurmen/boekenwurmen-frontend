@@ -1,0 +1,41 @@
+services:
+  backend:
+    build:
+      context: ../boekenwurmen-backend
+      dockerfile: Dockerfile
+    container_name: boekenwurmen-backend
+    ports:
+      - "3012:3012"
+    environment:
+      - NODE_ENV=production
+      - PORT=3012
+      - DATABASE_URL=file:/app/prisma/clients.db
+    volumes:
+      - backend-data:/app/prisma
+    networks:
+      - boekenwurmen-network
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: boekenwurmen-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PUBLIC_API_URL=http://backend:3012
+    depends_on:
+      - backend
+    networks:
+      - boekenwurmen-network
+    restart: unless-stopped
+
+volumes:
+  backend-data:
+    driver: local
+
+networks:
+  boekenwurmen-network:
+    driver: bridge
