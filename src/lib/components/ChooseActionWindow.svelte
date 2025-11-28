@@ -6,8 +6,8 @@
     const pageContext = getContext('page');
     
     let options = $derived.by(() => {
-        let page = pageContext[0];
-        return Stories.getPageOptions(page);
+        let [page, bookId] = pageContext;
+        return Stories.getPageOptions(bookId, page);
     });
 </script>
 

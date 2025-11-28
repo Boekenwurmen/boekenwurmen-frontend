@@ -1,9 +1,27 @@
 export default class Stories {
     /**
      * 
+     * @param bookId {number | null | undefined}
      * @param page {number | null | undefined}
      */
-    static getPageStory(page){
+    static getPageStory(bookId, page){
+        Stories._getPageStoryLocal(page);
+    }
+
+    /**
+     * 
+     * @param bookId {number | null | undefined}
+     * @param page {number | null | undefined}
+     */
+    static getPageOptions(bookId, page){
+        Stories._getPageOptionsLocal(page);
+    }
+
+    /**
+     * 
+     * @param page {number | null | undefined}
+     */
+    static _getPageStoryLocal(page){
         switch (page) {
             case 1: return "You walk through a sandy, windy desert. The wind blows sand in your eyes and you fall to the ground."
             case 2: return "You start screaming into the vast empthy desert. While screaming you feel yourself slowely sinking into the ground when all of a sudden you fall through the ground! You hit the ground hard and hurt yourself."
@@ -22,7 +40,7 @@ export default class Stories {
      * 
      * @param page {number | null | undefined}
      */
-    static getPageOptions(page){
+    static _getPageOptionsLocal(page){
         switch (page) {
             case 1: return [
                 {toPage:3, name:"You hit the ground out of frustation"},

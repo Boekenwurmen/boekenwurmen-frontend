@@ -4,7 +4,8 @@
     import { setContext } from 'svelte';
 
     let page = 1;
-    const state = $state([ page ]);
+    let bookId = 1;
+    const state = $state([ page, bookId ]);
     setContext('page', state);
 </script>
 
