@@ -7,7 +7,7 @@
      * @type {number[]}
      */
     const pageContext = getContext('page');
-    const myTypeWriter = new TypeWriter();
+    const myTypeWriter = new TypeWriter(5, 'loading...');
 
     $effect(() => {
         let [page, bookId] = pageContext;
