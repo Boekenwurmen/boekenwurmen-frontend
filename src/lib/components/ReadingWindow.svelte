@@ -3,15 +3,15 @@
 	import Stories from './Stories.svelte.js';
     import { getContext } from 'svelte';
 
+    /**
+     * @type {number[]}
+     */
     const pageContext = getContext('page');
-    const myTypeWriter = new TypeWriter();
+    const myTypeWriter = new TypeWriter(5, 'loading...');
 
     $effect(() => {
-        let page = pageContext[0];
-        const story = Stories.getPageStory(page);
-        queueMicrotask(() => {
-            myTypeWriter.reset(story);
-        });
+        let [page, bookId] = pageContext;
+        Stories.getPageStory(bookId, page).then(story => myTypeWriter.reset(story));
     })
 </script>
 

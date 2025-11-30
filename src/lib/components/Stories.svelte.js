@@ -1,9 +1,93 @@
+import { PUBLIC_API_URL } from "$env/static/public";
+
 export default class Stories {
+    /**
+     * 
+     * @param bookId {number | null | undefined}
+     * @param pageId {number | null | undefined}
+     * @returns {Promise<string>}
+     */
+    static async getPageStory(bookId, pageId){
+        try {
+            throw new Error('I give up before trying to reach out to the backend')
+            return await Stories._getPageStoryServer(bookId, pageId);
+        } catch (error) {
+            return Stories._getPageStoryLocal(pageId);
+        }
+    }
+
+    /**
+     * 
+     * @param bookId {number | null | undefined}
+     * @param pageId {number | null | undefined}
+     * @returns {Promise<{ toPage: number, name: string }[]>}
+     */
+    static async getPageOptions(bookId, pageId){
+        try {
+            throw new Error('I give up before trying to reach out to the backend')
+            return /** @type {{ toPage: number, name: string }[]} */ (await Stories._getPageOptionsServer(bookId, pageId));
+        } catch (error) {
+            return Stories._getPageOptionsLocal(pageId);
+        }
+    }
+
+    /**
+     * 
+     * @param bookId {number | null | undefined}
+     * @param pageId {number | null | undefined}
+     * @returns {Promise<string>}
+     */
+    static async _getPageStoryServer(bookId, pageId){
+        if ([bookId, pageId].some(v => v === null || v === undefined)) {
+            throw new Error('bookId or pageId are undefined or null');
+        }
+        const v = await Stories.getDataBody(`${PUBLIC_API_URL}/books/${bookId}/${pageId}`);
+        if (typeof v === 'string' && v !== null && v !== undefined) {
+            return v;
+        } else {
+            throw new Error('backend did not return the story as a string');
+        }
+    }
+
+    /**
+     * 
+     * @param bookId {number | null | undefined}
+     * @param pageId {number | null | undefined}
+     * @returns {Promise<Object[]>}
+     */
+    static async _getPageOptionsServer(bookId, pageId){
+        if ([bookId, pageId].some(v => v === null || v === undefined)) {
+            throw new Error('bookId or pageId are undefined or null');
+        }
+        const v = await Stories.getDataBody(`${PUBLIC_API_URL}/books/${bookId}/${pageId}/options`);
+        if (Array.isArray(v) && v !== null && v !== undefined) {
+            return v;
+        } else {
+            throw new Error('backend did not return the story as an array');
+        }
+    }
+
+    /**
+     * 
+     * @param {string} url 
+     * @returns {Promise<any|null>}
+     */
+    static async getDataBody(url) {
+        try {
+            const res = await fetch(url);
+            const data = await res.json();
+            // console.log('getDataBody', url, res, data, data.body);
+            return data ?? null;
+        } catch (error) {
+            return null;
+        }
+    }
+
     /**
      * 
      * @param page {number | null | undefined}
      */
-    static getPageStory(page){
+    static _getPageStoryLocal(page){
         switch (page) {
             case 1: return "You walk through a sandy, windy desert. The wind blows sand in your eyes and you fall to the ground."
             case 2: return "You start screaming into the vast empthy desert. While screaming you feel yourself slowely sinking into the ground when all of a sudden you fall through the ground! You hit the ground hard and hurt yourself."
@@ -22,7 +106,7 @@ export default class Stories {
      * 
      * @param page {number | null | undefined}
      */
-    static getPageOptions(page){
+    static _getPageOptionsLocal(page){
         switch (page) {
             case 1: return [
                 {toPage:3, name:"You hit the ground out of frustation"},

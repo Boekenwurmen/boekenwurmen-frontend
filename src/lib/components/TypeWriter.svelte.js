@@ -1,16 +1,17 @@
 export default class TypeWriter {
     /**
      * 
-     * @param speed {number=} words per minute
+     * @param {number} [speed = 5]  words per minute
+     * @param {string} [initialText = ''] text to show on screen before it starts
      */
-    constructor(speed = 5) {
+    constructor(speed = 5, initialText = '') {
         this._text = '';
         this._index = 0;
         const speedCalibrationFactor = 100;
         /** @type {number} The speed/duration of the effect in milliseconds */
         this._speed = speed != 0 ? speedCalibrationFactor / speed : 0;
         this._timeout = undefined;
-        this.shown = $state('');
+        this.shown = $state(initialText);
         this.typeWriter = this.typeWriter.bind(this);
         this.reset = this.reset.bind(this);
     }
@@ -24,7 +25,7 @@ export default class TypeWriter {
     
     /**
      * 
-     * @param text {string}
+     * @param {string} text
      */
     reset(text) {
         if (text) {
