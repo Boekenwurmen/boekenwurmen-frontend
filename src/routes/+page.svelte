@@ -1,3 +1,9 @@
+<script>
+	let { data } = $props();
+	const dataLoaded = data.dataLoaded;
+	dataLoaded ? console.log('data from backend', dataLoaded) : console.log('no data from backend');
+</script>
+
 <div class="book-content">
 	<div class="book-page book-page-left">
 		<div class="page-number">1</div>
