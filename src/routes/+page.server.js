@@ -13,13 +13,9 @@ import { PUBLIC_API_URL } from "$env/static/public";
  */
 export const load = async ({ fetch }) => {
     try {
-        console.log('trying to load', `${PUBLIC_API_URL}/pets`);
         const data = await getDataBody(`${PUBLIC_API_URL}/pets`, fetch)
-        console.log('data loading', data);
         const promises = data?.map((e) => getDataBody(`${PUBLIC_API_URL}${e}`, fetch));
-        console.log('promises loading', promises);
         const dataLoaded = promises ? await Promise.all(promises) : null;
-        console.log('dataLoaded', dataLoaded);
         return { dataLoaded };
     } catch (error) {
         // console.error(error);
@@ -37,7 +33,6 @@ async function getDataBody(url, fetch) {
     try {
         const res = await fetch(url);
         const data = await res.json();
-        console.log('getDataBody', url, res, data, data.body);
         return data ?? null;
     } catch (error) {
         // console.error(error);
