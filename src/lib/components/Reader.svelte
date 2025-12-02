@@ -7,6 +7,10 @@
     let bookId = 1;
     const state = $state([ page, bookId ]);
     setContext('page', state);
+
+    // client context holds created client id and name
+    const client = $state({ id: null, name: null });
+    setContext('client', client);
 </script>
 
 <div class="w-full">
