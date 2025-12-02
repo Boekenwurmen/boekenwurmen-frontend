@@ -41,31 +41,72 @@ fi
 echo -e "${GREEN}✓ Prerequisites check passed${NC}"
 echo ""
 
-# Pull latest changes
+# Pull latest changes for both repos
 echo "📥 Pulling latest changes from git..."
+
+# Pull frontend
 if [ -d ".git" ]; then
+    echo "  → Pulling frontend..."
     git pull
-    echo -e "${GREEN}✓ Git pull completed${NC}"
+    echo -e "${GREEN}  ✓ Frontend updated${NC}"
 else
-    echo -e "${YELLOW}⚠ Not a git repository, skipping pull${NC}"
+    echo -e "${YELLOW}  ⚠ Not a git repository, skipping frontend pull${NC}"
+fi
+
+# Pull backend
+if [ -d "../boekenwurmen-backend/.git" ]; then
+    echo "  → Pulling backend..."
+    cd ../boekenwurmen-backend
+    git pull
+    cd ../boekenwurmen-frontend
+    echo -e "${GREEN}  ✓ Backend updated${NC}"
+else
+    echo -e "${YELLOW}  ⚠ Backend repository not found at ../boekenwurmen-backend${NC}"
+    echo -e "${YELLOW}  ⚠ Make sure both repos are cloned as siblings${NC}"
 fi
 echo ""
 
-# Check for .env file
+# Check for frontend .env file
+echo "📋 Checking environment files..."
 if [ ! -f ".env" ]; then
-    echo -e "${YELLOW}⚠ No .env file found${NC}"
-    echo "Creating .env from .env.example..."
+    echo -e "${YELLOW}⚠ No frontend .env file found${NC}"
+    echo "Creating frontend .env from .env.example..."
     if [ -f ".env.example" ]; then
         cp .env.example .env
-        echo -e "${GREEN}✓ Created .env file${NC}"
-        echo -e "${YELLOW}⚠ Please edit .env file with your configuration before continuing${NC}"
-        echo "Press Enter when ready to continue..."
-        read
+        echo -e "${GREEN}✓ Created frontend .env file${NC}"
+        echo -e "${YELLOW}⚠ Please edit frontend .env file with your configuration${NC}"
     else
-        echo -e "${RED}❌ No .env.example found${NC}"
+        echo -e "${RED}❌ No frontend .env.example found${NC}"
         exit 1
     fi
 fi
+
+# Check for backend .env file
+if [ ! -f "../boekenwurmen-backend/.env" ]; then
+    echo -e "${YELLOW}⚠ No backend .env file found${NC}"
+    echo "Creating backend .env from .env.example..."
+    if [ -f "../boekenwurmen-backend/.env.example" ]; then
+        cp ../boekenwurmen-backend/.env.example ../boekenwurmen-backend/.env
+        echo -e "${GREEN}✓ Created backend .env file${NC}"
+        echo -e "${YELLOW}⚠ Please edit backend .env file with your configuration${NC}"
+    else
+        echo -e "${RED}❌ No backend .env.example found${NC}"
+        exit 1
+    fi
+fi
+
+# If any .env files were created, pause for user to configure them
+if [ ! -f ".env" ] || [ ! -f "../boekenwurmen-backend/.env" ]; then
+    echo ""
+    echo -e "${YELLOW}⚠ Please review and edit the .env files before continuing${NC}"
+    echo "  - Frontend: .env"
+    echo "  - Backend: ../boekenwurmen-backend/.env"
+    echo ""
+    echo "Press Enter when ready to continue..."
+    read
+fi
+
+echo -e "${GREEN}✓ Environment files ready${NC}"
 echo ""
 
 # Stop existing containers
