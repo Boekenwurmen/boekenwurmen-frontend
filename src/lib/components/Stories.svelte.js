@@ -9,9 +9,9 @@ export default class Stories {
      */
     static async getPageStory(bookId, pageId){
         try {
-            throw new Error('I give up before trying to reach out to the backend')
             return await Stories._getPageStoryServer(bookId, pageId);
         } catch (error) {
+            console.warn('failed to load book story from server, switched to local story', error);
             return Stories._getPageStoryLocal(pageId);
         }
     }
@@ -24,9 +24,9 @@ export default class Stories {
      */
     static async getPageOptions(bookId, pageId){
         try {
-            throw new Error('I give up before trying to reach out to the backend')
             return /** @type {{ toPage: number, name: string }[]} */ (await Stories._getPageOptionsServer(bookId, pageId));
         } catch (error) {
+            console.warn('failed to load book options from server, switched to local story', error);
             return Stories._getPageOptionsLocal(pageId);
         }
     }
