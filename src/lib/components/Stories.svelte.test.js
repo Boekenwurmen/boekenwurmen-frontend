@@ -1,8 +1,20 @@
 import { expect, test } from 'vitest';
 import Stories from './Stories.svelte.js';
 
-const indexes = [-10000, -100, -10, -3, -2, -1, 0, 0.5, 1, 2, 3, 10, 100, 1000, 10000, Infinity, undefined, null];
+const indexes = [-10000, -100, -10, -3, -2, -1, 0, 0.5, ...getIntegersInRange(1, 20), 100, 1000, 10000, Infinity, undefined, null];
 const bookId = 0;
+
+/**
+ * 
+ * @param {number} from starting range value
+ * @param {number} to ending range value
+ * @returns {number[]} all integers in the specified range
+ */
+function getIntegersInRange(from, to) {
+    const offset = from;
+    const length = to - from;
+    return [...Array(length)].map((_, i) => i + offset);
+}
 
 test("All pages give valid stories", async () => {
     const storyPromises = indexes.map(page => Stories.getPageStory(bookId, page));
