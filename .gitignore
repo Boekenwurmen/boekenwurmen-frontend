@@ -1,5 +1,7 @@
 test-results
 node_modules
+DEPLOYMENT.md
+QUICKSTART.md
 
 # Output
 .output

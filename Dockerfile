@@ -6,8 +6,6 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-RUN npm install
-
 # Install all dependencies (including dev dependencies for building)
 RUN npm ci
 
@@ -22,12 +20,12 @@ FROM node:22-alpine
 
 WORKDIR /app
 
-# Copy package files
-COPY package*.json ./
+# Copy package files and dependencies from builder
+COPY --from=builder /app/package*.json ./
+COPY --from=builder /app/node_modules ./node_modules
 
 # Copy built application from builder
 COPY --from=builder /app/build ./build
-COPY --from=builder /app/package.json ./
 
 # Expose port
 EXPOSE 3000
