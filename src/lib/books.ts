@@ -5,6 +5,7 @@ export type Book = {
   category: string;
   year: number;
   cover?: string;
+  pdf?: string;
   description?: string;
 };
 
@@ -61,6 +62,7 @@ const books: Book[] = [
     category: 'Fictie',
     year: 2019,
     cover: '/static/covers/rebel-rose.svg',
+    pdf: '/static/covers/the-rebel-and-the-rose.pdf',
     description: 'Een historische roman vol romance, rebellie en avontuur.'
   }
 ];
