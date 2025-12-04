@@ -49,6 +49,16 @@ body{margin:0;padding:0;background:linear-gradient(135deg, #1a1a1a 0%, #2b2b2b 1
 .page-content{text-align:center;font-family:Georgia, serif;line-height:1.8;color:#3a3a3a;z-index:3;position:relative}
 .page-content p{margin:0 0 1rem 0;font-size:1.3rem;font-style:italic;color:#555;font-weight:300}
 
+/* ========== STORY UI ELEMENTS (inputs/buttons) ========== */
+.story-box{width:100%;border:1px solid var(--gold);border-radius:12px;padding:1rem 1.25rem;background:linear-gradient(90deg, #fefdfb 0%, #faf9f7 48%, #f5f3f0 50%, #faf9f7 52%, #fefdfb 100%);box-shadow:0 10px 24px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.5)}
+.story-input{width:100%;border:1.5px solid var(--gold);border-radius:10px;padding:0.65rem 0.8rem;background:var(--page);color:#3a3a3a;box-shadow:inset 0 1px 0 rgba(255,255,255,0.6)}
+.story-input::placeholder{color:#8a7f73}
+.story-button{display:inline-block;margin-top:0.6rem;padding:0.55rem 1rem;border-radius:10px;color:var(--gold);background:linear-gradient(135deg, var(--cover) 0%, var(--cover-dark) 100%);box-shadow:0 8px 18px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.15);border:1px solid rgba(214,185,106,0.4);font-family:Georgia, serif;letter-spacing:0.5px;transition:transform .15s ease, filter .15s ease}
+.story-button:hover{filter:brightness(1.08);transform:translateY(-2px)}
+.story-button:active{transform:translateY(0)}
+.story-button:focus{outline:none;box-shadow:0 0 0 4px rgba(214,185,106,0.25)}
+.story-button-wide{display:block;width:100%;text-align:center}
+
 /* ========== START SCREEN STYLES ========== */
 .start-screen{display:flex;align-items:center;justify-content:center;min-height:auto;padding:0}
 
