@@ -97,14 +97,14 @@
 </script>
 
 {#if currentPage === 3}
-    <!-- Inline box in the same style as story windows (original look) -->
-    <div class="w-full border rounded-lg p-4 typing">
+    <!-- Inline box styled like story windows -->
+    <div class="story-box typing">
         <p>{myTypeWriter.shown}</p>
-        <div class="mt-3">
-            <input class="border rounded p-2 w-full" bind:value={nameValue} placeholder="Enter your name" bind:this={nameInputEl} />
-            <button class="mt-2 px-4 py-2 bg-blue-600 text-white rounded" on:click={submitName}>Submit</button>
+        <div class="mt-3" style="width:100%">
+            <input class="story-input" bind:value={nameValue} placeholder="Enter your name" bind:this={nameInputEl} />
+            <button class="story-button" on:click={submitName}>Submit</button>
         </div>
     </div>
 {:else}
-    <p class="w-full border rounded-lg p-4 typing">{myTypeWriter.shown}</p>
+    <p class="story-box typing">{myTypeWriter.shown}</p>
 {/if}

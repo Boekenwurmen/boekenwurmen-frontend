@@ -125,12 +125,12 @@
 </script>
 
     {#if currentPage === 5}
-        <div class="mt-3">
-            <label class="block mb-2">Enter the library code (password)</label>
-            <input type="password" class="border rounded p-2 w-full" bind:value={codeValue} placeholder="Type the library code here" />
-            <button class="mt-2 px-4 py-2 bg-green-600 text-white rounded" on:click={submitCode}>Submit code</button>
+        <div class="story-box">
+            <label class="block mb-2" style="color: var(--cover-dark)">Enter the library code (password)</label>
+            <input type="password" class="story-input" bind:value={codeValue} placeholder="Type the library code here" />
+            <button class="story-button" on:click={submitCode}>Submit code</button>
             {#if message}
-                <p class="mt-2">{message}</p>
+                <p class="mt-2" style="color:#3a3a3a">{message}</p>
             {/if}
         </div>
     {:else if currentPage === 3}

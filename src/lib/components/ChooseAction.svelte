@@ -1,12 +1,13 @@
-<script>
+<script lang="ts">
     import { getContext } from 'svelte';
     const { action = { toPage: 1, name: "Go back" } } = $props();
 
-    const pageContext = getContext('page');
+    // type context as a single-number tuple (or undefined when not provided)
+    const pageContext = getContext<[number]>('page') as [number] | undefined;
 
     // keep a reactive primitive snapshot of the current page to avoid
     // logging proxied $state objects and to allow template reactivity.
-    let currentPage;
+    let currentPage = $state<number | undefined>(undefined);
     $effect(() => {
         currentPage = pageContext ? pageContext[0] : undefined;
     });
@@ -34,7 +35,7 @@
 </script>
 
 {#if currentPage !== 3}
-<button class="w-full border rounded-lg p-4 my-4 block hover:bg-opacity-10 hover:bg-gray-200 transition-colors" on:click={setPage}>
+<button class="story-button story-button-wide my-4" on:click={setPage}>
     {action.name}
 </button>
 {/if}
