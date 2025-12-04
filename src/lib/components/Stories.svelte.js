@@ -9,9 +9,9 @@ export default class Stories {
      */
     static async getPageStory(bookId, pageId){
         try {
-            throw new Error('I give up before trying to reach out to the backend')
             return await Stories._getPageStoryServer(bookId, pageId);
         } catch (error) {
+            console.warn('failed to load book story from server, switched to local story', error);
             return Stories._getPageStoryLocal(pageId);
         }
     }
@@ -24,9 +24,9 @@ export default class Stories {
      */
     static async getPageOptions(bookId, pageId){
         try {
-            throw new Error('I give up before trying to reach out to the backend')
             return /** @type {{ toPage: number, name: string }[]} */ (await Stories._getPageOptionsServer(bookId, pageId));
         } catch (error) {
+            console.warn('failed to load book options from server, switched to local story', error);
             return Stories._getPageOptionsLocal(pageId);
         }
     }
@@ -41,9 +41,10 @@ export default class Stories {
         if ([bookId, pageId].some(v => v === null || v === undefined)) {
             throw new Error('bookId or pageId are undefined or null');
         }
-        const v = await Stories.getDataBody(`${PUBLIC_API_URL}/books/${bookId}/${pageId}`);
-        if (typeof v === 'string' && v !== null && v !== undefined) {
-            return v;
+        const res = await Stories.getDataBody(`${PUBLIC_API_URL}/books/${bookId}/${pageId}`);
+        const data = res?.data?.books;
+        if (typeof data === 'string' && data !== null && data !== undefined) {
+            return data;
         } else {
             throw new Error('backend did not return the story as a string');
         }
@@ -59,9 +60,10 @@ export default class Stories {
         if ([bookId, pageId].some(v => v === null || v === undefined)) {
             throw new Error('bookId or pageId are undefined or null');
         }
-        const v = await Stories.getDataBody(`${PUBLIC_API_URL}/books/${bookId}/${pageId}/options`);
-        if (Array.isArray(v) && v !== null && v !== undefined) {
-            return v;
+        const res = await Stories.getDataBody(`${PUBLIC_API_URL}/books/${bookId}/${pageId}/options`);
+        const data = res?.data?.books;
+        if (Array.isArray(data) && data !== null && data !== undefined) {
+            return data;
         } else {
             throw new Error('backend did not return the story as an array');
         }
