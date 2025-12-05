@@ -6,7 +6,7 @@
 
     let page = 1;
     let bookId = 1;
-    const bookState = $state([ page, bookId ]);
+    const bookState = $state({ page, bookId });
     setContext('page', bookState);
     setContext('readingSettings', {speed:50, myTypeWriter: null});
 </script>

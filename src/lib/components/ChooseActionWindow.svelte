@@ -3,6 +3,9 @@
     import { getContext } from 'svelte';
 	import Stories from "./Stories.svelte";
 
+    /**
+     * @type {{page:number,bookId:number}}
+     */
     const pageContext = getContext('page');
 
     /**
@@ -11,7 +14,7 @@
     let options = $state([]);
     
     $effect(() => {
-        let [page, bookId] = pageContext;
+        let {page, bookId} = pageContext;
         Stories.getPageOptions(bookId, page).then(e => options = e);
     })
 </script>

@@ -2,10 +2,13 @@
     import { getContext } from 'svelte';
     export let action = {toPage:1, name:"Go back"};
 
+    /**
+     * @type {{page:number,bookId:number}}
+     */
     const pageContext = getContext('page');
 
     function setPage() {
-        pageContext[0] = action.toPage;
+        pageContext.page = action.toPage;
     }
 </script>
 
