@@ -9,7 +9,7 @@ describe('TypeWriter', () => {
 
     beforeEach(() => {
         vi.useFakeTimers(); // Enable fake timers
-        typeWriter = new TypeWriter(10); // speed = 10 words per minute
+        typeWriter = new TypeWriter(10); // speed = 10 words per second
     });
 
     afterEach(() => {
@@ -45,5 +45,25 @@ describe('TypeWriter', () => {
 
         vi.runAllTimers();
         expect(typeWriter.shown).toBe('New'); // full new text typed
+    });
+
+    it('should set speed correctly', () => {
+        /**
+         * Array of example inputs (Characters Per Second, CPS) for the unit test.
+         */
+        const inputs = [10, 50, 1, 20, 12.5, 0.1, 0, -1, -0.1, NaN, Infinity, -Infinity];
+        /**
+         * Array of expected outputs (Milliseconds Per Character, ms/char)
+         * calculated using the formula: 1000 / CPS.
+         */
+        const expectedOutputs = [100, 20, 1000, 50, 80, 10000, 0, 0, 0, 0, 0, 0];
+        typeWriter.reset('Hello');
+
+        expect(inputs.length).toBe(expectedOutputs.length);
+
+        for (let i in inputs) {
+            typeWriter.setSpeed(inputs[i]);
+            expect(typeWriter._typingDelay).toBe(expectedOutputs[i]);
+        }
     });
 });

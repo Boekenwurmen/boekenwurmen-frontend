@@ -46,6 +46,10 @@ export default class TypeWriter {
      * @param {number} speed to type out letters by in characters per second
      */
     setSpeed(speed) {
+        if (isNaN(speed) || speed <= 0) {
+            this._typingDelay = 0;
+            return;    
+        }
         const speedCalibrationFactor = 1000;
         this._typingDelay = speed != 0 ? speedCalibrationFactor / speed : 0;
     }
