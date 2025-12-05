@@ -3,12 +3,12 @@
     export let action = {toPage:1, name:"Go back"};
 
     /**
-     * @type {{page:number,bookId:number}}
+     * @type {{pageId:number,bookId:number}}
      */
     const pageContext = getContext('page');
 
     function setPage() {
-        pageContext.page = action.toPage;
+        pageContext.pageId = action.toPage;
     }
 </script>
 

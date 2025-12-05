@@ -10,15 +10,15 @@
     const readingSpeed = readingSettingsContext.speed;
 
     /**
-     * @type {{page:number,bookId:number}}
+     * @type {{pageId:number,bookId:number}}
      */
     const pageContext = getContext('page');
     const myTypeWriter = new TypeWriter(readingSpeed, 'loading...');
     readingSettingsContext.myTypeWriter = myTypeWriter;
 
     $effect(() => {
-        let {page, bookId} = pageContext;
-        Stories.getPageStory(bookId, page).then(story => myTypeWriter.reset(story));
+        let {pageId, bookId} = pageContext;
+        Stories.getPageStory(bookId, pageId).then(story => myTypeWriter.reset(story));
     });
 </script>
 
