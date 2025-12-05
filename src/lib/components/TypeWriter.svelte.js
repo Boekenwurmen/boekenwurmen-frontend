@@ -18,7 +18,6 @@ export default class TypeWriter {
     }
     
     typeWriter() {
-        console.log('typing at speed', this._speed);
         if ((this._index >= this._text.length)) return;
         this.shown += this._text.charAt(this._index);
         this._index++;
@@ -46,6 +45,5 @@ export default class TypeWriter {
     setSpeed(speed) {
         const speedCalibrationFactor = 100;
         this._speed = speed != 0 ? speedCalibrationFactor / speed : 0;
-        console.log('set speed to', this._speed);
     }
 }
