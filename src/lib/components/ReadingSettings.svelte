@@ -1,12 +1,17 @@
 <script>
-    import { getContext, setContext } from "svelte";
+    import { getContext, onMount, setContext } from "svelte";
     import TypeWriter from "./TypeWriter.svelte.js";
 
     /**
      * @type {{speed:number, myTypeWriter:TypeWriter}}
      */
     const readingSettingsContext = getContext('readingSettings');
-    let readingSpeed = readingSettingsContext.speed;
+    let readingSpeed = 5;
+    
+    onMount(() => {
+        // when page is loaded
+        readingSpeed = readingSettingsContext.speed;
+    });
 
     function handleInput() {
         readingSettingsContext?.myTypeWriter?.setSpeed(readingSpeed);
