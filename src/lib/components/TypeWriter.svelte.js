@@ -32,6 +32,7 @@ export default class TypeWriter {
      * @param {string} message to show until reset is called
      */
     showLoadingMessage(message = 'Loading...') {
+        this.clear();
         this.shown = message;
     }
     
@@ -43,10 +44,17 @@ export default class TypeWriter {
         if (text) {
             this._text = text;
         }
+        this.clear();
+        this.typeWriter();
+    }
+    
+    /**
+     * stops the typing animation and clears the text
+     */
+    clear() {
         this._index = 0;
         this.shown = '';
         if (this._timeout) clearTimeout(this._timeout);
-        this.typeWriter();
     }
 
     /**

@@ -2,6 +2,7 @@
 	import TypeWriter from './TypeWriter.svelte.js';
 	import Stories from './Stories.svelte.js';
     import { getContext, setContext } from 'svelte';
+	import { showDelayedLoadingMessage } from './delayedLoadingMessage.js';
     
     /**
      * @type {{speed:number, myTypeWriter:TypeWriter}}
@@ -18,8 +19,11 @@
 
     $effect(() => {
         let {pageId, bookId} = pageContext;
-        myTypeWriter.showLoadingMessage();
-        Stories.getPageStory(bookId, pageId).then(story => myTypeWriter.reset(story));
+        
+        showDelayedLoadingMessage(
+            Stories.getPageStory(bookId, pageId),
+            () => myTypeWriter.showLoadingMessage()
+        ).then(story => myTypeWriter.reset(story));
     });
 </script>
 
