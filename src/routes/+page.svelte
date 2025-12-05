@@ -14,7 +14,12 @@
 	</div>
 
 	<!-- Start button centered vertically -->
-	<div class="cta-wrap">
-		<a href="/read" class="cta" aria-label="Start spel">Start</a>
+	<div class="button-wrap">
+		<a href="/read" class="button" aria-label="Start spel">Start</a>
+	</div>
+
+	<!-- Leaderboard button below Start -->
+	<div class="leaderboard-wrap">
+		<a href="/leaderboard" class="button button--small" aria-label="Toon ranglijst">Leaderboard</a>
 	</div>
 </div>

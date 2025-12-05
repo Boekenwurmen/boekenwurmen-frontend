@@ -1,5 +1,5 @@
 /* From Uiverse.io by Cobp */
-.container {
+.start-screen .container {
 	--color-0: #fff;
 	--color-1: #111;
 	--color-2: #222;
@@ -142,7 +142,7 @@
 	background-position: center bottom;
 }
 
-.container:before {
+.start-screen .container:before {
 	content: '';
 	width: 100%;
 	height: 100%;
@@ -208,7 +208,7 @@
 	animation: flashlight 20s ease infinite;
 }
 
-.container:after {
+.start-screen .container:after {
 	content: '';
 	width: 25px;
 	height: 10px;
@@ -335,22 +335,20 @@
 	align-items: center;
 	justify-content: center;
 }
-.fx-bg {
+.start-screen .fx-bg {
 	position: absolute;
 	inset: 0;
 	z-index: 0;
+	pointer-events: none;
 }
-.title-wrap {
+.start-screen .title-wrap {
 	position: absolute;
 	top: 1rem;
 	left: 50%;
 	transform: translateX(-50%);
-	z-index: 1;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+	z-index: 2;
 }
-.cta-wrap {
+.start-screen .button-wrap {
 	position: absolute;
 	top: 50%;
 	left: 50%;
@@ -360,7 +358,17 @@
 	align-items: center;
 	justify-content: center;
 }
-.start-title {
+.start-screen .leaderboard-wrap {
+	position: absolute;
+	top: calc(50% + 120px);
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.start-screen .start-title {
 	position: relative;
   margin-top: 5rem;
 	font-family: Georgia, serif;
@@ -374,28 +382,95 @@
 		0 2px 10px rgba(0, 0, 0, 0.35);
 }
 
-.cta {
+.start-screen .button {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	padding: 0.5rem 1.5rem;
+	padding: 1.25rem 3rem;
 	border-radius: 0.75rem;
-	background: linear-gradient(135deg, #6b3e2b, #4a2a1a);
-	color: #f9efcc;
-	font-weight: 700;
-	letter-spacing: 0.5px;
-	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+	position: relative;
 	text-decoration: none;
-	border: 2px solid rgba(214, 185, 106, 0.45);
-	transition:
-		transform 0.15s ease,
-		box-shadow 0.15s ease;
-	font-size: 5rem;
-	line-height: 1;
+	font-weight: 800;
+	letter-spacing: 0.06em;
+	color: #f9efcc;
+	font-size: 6rem;
+	line-height: 1.1;
+	border-radius: 6px;
+	background:
+		linear-gradient(180deg, #7a3d22 0%, #5a2a17 100%);
+	box-shadow:
+		0 18px 22px rgba(0, 0, 0, 0.35),
+		inset 0 2px 6px rgba(255, 255, 255, 0.08),
+		inset 0 -2px 6px rgba(0, 0, 0, 0.25);
+	border: 1px solid #3b1c10;
+	transition: transform 200ms cubic-bezier(.2,.8,.2,1), box-shadow 100ms ease;
+  will-change: transform;
+}
+.start-screen .button--small {
+	font-size: 2.5rem;
+	padding: 0.75rem 2rem;
 }
 
-.cta:hover {
-	transform: translateY(-10px);
-	box-shadow: 0 16px 35px rgba(203, 76, 21, 0.197);
+/* Book spine (left) */
+.start-screen .button::before {
+	content: '';
+	position: absolute;
+	left: -10px;
+	top: -1px;
+	bottom: -1px;
+	width: 10px;
+	border-radius: 6px 0 0 6px;
+	background:
+		linear-gradient(180deg, #542715 0%, #3d1c0f 100%);
+	box-shadow:
+		inset -1px 0 0 rgba(255, 255, 255, 0.08),
+		2px 0 6px rgba(0, 0, 0, 0.35);
 }
-/* duplicate .start-title removed */
+
+/* Pages (right) */
+.start-screen .button::after {
+	content: '';
+	position: absolute;
+	right: -12px;
+	top: 3px;
+	bottom: 3px;
+	width: 12px;
+	border-radius: 0 6px 6px 0;
+	background:
+		repeating-linear-gradient(
+			90deg,
+			#f7f2e7 0px,
+			#f7f2e7 2px,
+			#e9e2d2 2px,
+			#e9e2d2 4px
+		);
+	box-shadow:
+		inset 1px 0 0 rgba(150, 140, 120, 0.6),
+		-2px 0 6px rgba(0, 0, 0, 0.25);
+}
+
+.start-screen .button:hover {
+  transform: translateY(-10px) scale(1.2);
+	box-shadow:
+		0 22px 35px rgba(0, 0, 0, 0.4),
+		inset 0 2px 8px rgba(255, 255, 255, 0.1);
+}
+/* Ensure small variant keeps a subtle hover without scaling */
+.start-screen .button.button--small:hover {
+	box-shadow:
+		0 18px 28px rgba(0, 0, 0, 0.35),
+		inset 0 2px 8px rgba(255, 255, 255, 0.1);
+}
+
+.start-screen .ranglijst-card {
+  position: relative;
+  z-index: 2;            /* above background */
+  background-color: whitesmoke;
+  color: #111;
+  width: fit-content;
+  margin: 8rem auto 0;   /* center horizontally, space from top */
+  padding: 12rem 20rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+}
+
