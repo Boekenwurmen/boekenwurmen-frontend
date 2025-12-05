@@ -1,11 +1,11 @@
 export default class TypeWriter {
-    /** @type {number} The speed/duration of the effect in milliseconds */
-    _speed = 0;
+    /** @type {number} the time to wait in milliseconds between typing each character */
+    _typingDelay = 0;
 
     /**
-     * 
-     * @param {number} [speed = 5]  words per minute
-     * @param {string} [initialText = ''] text to show on screen before it starts
+     * Creates a typewriter to type out a text one letter at a time into the attribute "this.shown" with a svelte state rune
+     * @param {number} [speed = 50] to type out letters by in characters per second
+     * @param {string} [initialText = ''] text to show on screen before the reset method is called like "loading..."
      */
     constructor(speed = 5, initialText = '') {
         this._text = '';
@@ -17,15 +17,19 @@ export default class TypeWriter {
         this.reset = this.reset.bind(this);
     }
     
+
+    /**
+     * Types out a text one letter at a time into the attribute "this.shown" with a svelte state rune
+     */
     typeWriter() {
         if ((this._index >= this._text.length)) return;
         this.shown += this._text.charAt(this._index);
         this._index++;
-        this._timeout = setTimeout(this.typeWriter.bind(this), this._speed);
+        this._timeout = setTimeout(this.typeWriter.bind(this), this._typingDelay);
     }
     
     /**
-     * 
+     * Resets the typewriter with a new text so that it clears the previous text and starts over.
      * @param {string} text
      */
     reset(text) {
@@ -39,11 +43,10 @@ export default class TypeWriter {
     }
 
     /**
-     * 
-     * @param {number} speed 
+     * @param {number} speed to type out letters by in characters per second
      */
     setSpeed(speed) {
-        const speedCalibrationFactor = 100;
-        this._speed = speed != 0 ? speedCalibrationFactor / speed : 0;
+        const speedCalibrationFactor = 1000;
+        this._typingDelay = speed != 0 ? speedCalibrationFactor / speed : 0;
     }
 }

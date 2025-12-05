@@ -25,7 +25,7 @@ describe('TypeWriter', () => {
 
         // Simulate each "_speed" interval
         for (let i = 1; i < text.length; i++) {
-            vi.advanceTimersByTime(typeWriter._speed);
+            vi.advanceTimersByTime(typeWriter._typingDelay);
             expect(typeWriter.shown.length).toBe(i + 1);
             expect(typeWriter.shown).toBe(text.slice(0, i + 1));
         }
@@ -37,7 +37,7 @@ describe('TypeWriter', () => {
 
     it('should reset correctly and cancel previous timeout', () => {
         typeWriter.reset('Hello');
-        vi.advanceTimersByTime(typeWriter._speed * 2); // type 2 letters
+        vi.advanceTimersByTime(typeWriter._typingDelay * 2); // type 2 letters
 
         typeWriter.reset('New'); // reset mid-way
         expect(typeWriter.shown).toBe('N'); // first letter of new text

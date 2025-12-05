@@ -8,7 +8,7 @@
     let bookId = 1;
     const bookState = $state([ page, bookId ]);
     setContext('page', bookState);
-    setContext('readingSettings', {speed:5, myTypeWriter: null});
+    setContext('readingSettings', {speed:50, myTypeWriter: null});
 </script>
 
 <div class="w-full">
