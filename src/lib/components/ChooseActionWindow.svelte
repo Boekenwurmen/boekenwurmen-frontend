@@ -15,6 +15,7 @@
     
     $effect(() => {
         let {pageId, bookId} = pageContext;
+        options = []
         Stories.getPageOptions(bookId, pageId).then(e => options = e);
     })
 </script>

@@ -13,11 +13,12 @@
      * @type {{pageId:number,bookId:number}}
      */
     const pageContext = getContext('page');
-    const myTypeWriter = new TypeWriter(readingSpeed, 'loading...');
+    const myTypeWriter = new TypeWriter(readingSpeed, 'Loading...');
     readingSettingsContext.myTypeWriter = myTypeWriter;
 
     $effect(() => {
         let {pageId, bookId} = pageContext;
+        myTypeWriter.showLoadingMessage();
         Stories.getPageStory(bookId, pageId).then(story => myTypeWriter.reset(story));
     });
 </script>

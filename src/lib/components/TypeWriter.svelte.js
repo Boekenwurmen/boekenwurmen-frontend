@@ -27,6 +27,13 @@ export default class TypeWriter {
         this._index++;
         this._timeout = setTimeout(this.typeWriter.bind(this), this._typingDelay);
     }
+
+    /**
+     * @param {string} message to show until reset is called
+     */
+    showLoadingMessage(message = 'Loading...') {
+        this.shown = message;
+    }
     
     /**
      * Resets the typewriter with a new text so that it clears the previous text and starts over.
