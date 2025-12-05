@@ -2,6 +2,7 @@
     import ChooseAction from "./ChooseAction.svelte";
     import { getContext } from 'svelte';
 	import Stories from "./Stories.svelte";
+	import { showDelayedLoadingMessage } from "./delayedLoadingMessage";
 
     /**
      * @type {{pageId:number,bookId:number}}
@@ -15,8 +16,10 @@
     
     $effect(() => {
         let {pageId, bookId} = pageContext;
-        options = []
-        Stories.getPageOptions(bookId, pageId).then(e => options = e);
+        showDelayedLoadingMessage(
+            Stories.getPageOptions(bookId, pageId),
+            () => options = []
+        ).then(e => options = e);
     })
 </script>
 
