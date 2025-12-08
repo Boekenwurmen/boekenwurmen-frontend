@@ -3,49 +3,225 @@
 @plugin '@tailwindcss/typography';
 
 /* Theme variables (can be overridden) */
-:root{--cover:#6b3e2b;--cover-dark:#56311f;--spine:#5a351f;--gold:#d6b96a;--page:#f6f3ee;--page-shadow:#e8e3d8}
+:root {
+	--cover: #6b3e2b;
+	--cover-dark: #56311f;
+	--spine: #5a351f;
+	--gold: #d6b96a;
+	--page: #f6f3ee;
+	--page-shadow: #e8e3d8;
+}
 
 /* ========== BOOK PAGE CONTAINER ========== */
-body{margin:0;padding:0;background:linear-gradient(135deg, #1a1a1a 0%, #2b2b2b 100%)}
+body {
+	margin: 0;
+	padding: 0;
+	background: linear-gradient(135deg, #1a1a1a 0%, #2b2b2b 100%);
+}
 
-.book-page-container{display:flex;min-height:100vh;background:linear-gradient(135deg, #1a1a1a 0%, #2b2b2b 100%);padding:0rem 1rem;justify-content:center;position:relative}
+.book-page-container {
+	display: flex;
+	min-height: 100vh;
+	background: linear-gradient(135deg, #1a1a1a 0%, #2b2b2b 100%);
+	padding: 0rem 1rem;
+	justify-content: center;
+	position: relative;
+}
 
 /* Background shadow effect */
-.book-page-container::before{content:'';position:fixed;inset:0;background:radial-gradient(circle at 50% 50%, rgba(255,255,255,0.02) 0%, transparent 100%);pointer-events:none;z-index:0}
+.book-page-container::before {
+	content: '';
+	position: fixed;
+	inset: 0;
+	background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.02) 0%, transparent 100%);
+	pointer-events: none;
+	z-index: 0;
+}
 
-.book-spine{width:50px;background:linear-gradient(90deg,#3d251a,var(--spine),#3d251a);box-shadow:inset 1px 0 8px rgba(0,0,0,0.5), inset -1px 0 8px rgba(255,255,255,0.08), 0 0 20px rgba(0,0,0,0.6);position:relative;z-index:10}
+.book-spine {
+	width: 50px;
+	background: linear-gradient(90deg, #3d251a, var(--spine), #3d251a);
+	box-shadow:
+		inset 1px 0 8px rgba(0, 0, 0, 0.5),
+		inset -1px 0 8px rgba(255, 255, 255, 0.08),
+		0 0 20px rgba(0, 0, 0, 0.6);
+	position: relative;
+	z-index: 10;
+}
 
-.book-content{display:grid;grid-template-columns:1fr 1fr;gap:0;width:100%;max-width:1100px;height:auto;min-height:620px;background:#fff;box-shadow:0 30px 80px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.4), 0 0 40px rgba(0,0,0,0.3);border-radius:0 12px 12px 0;position:relative;z-index:5}
-.book-content-single-page{display:grid;grid-template-columns:1fr;gap:0;width:100%;max-width:1100px;height:auto;min-height:620px;background:#fff;box-shadow:0 30px 80px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.4), 0 0 40px rgba(0,0,0,0.3);border-radius:0 12px 12px 0;position:relative;z-index:5}
+.book-content {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 0;
+	width: 100%;
+	max-width: 1100px;
+	height: auto;
+	min-height: 620px;
+	background: #fff;
+	box-shadow:
+		0 30px 80px rgba(0, 0, 0, 0.6),
+		inset 0 1px 0 rgba(255, 255, 255, 0.4),
+		0 0 40px rgba(0, 0, 0, 0.3);
+	border-radius: 0 12px 12px 0;
+	position: relative;
+	z-index: 5;
+}
+.book-content-single-page {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 0;
+	width: 100%;
+	max-width: 1100px;
+	height: auto;
+	min-height: 620px;
+	background: #fff;
+	box-shadow:
+		0 30px 80px rgba(0, 0, 0, 0.6),
+		inset 0 1px 0 rgba(255, 255, 255, 0.4),
+		0 0 40px rgba(0, 0, 0, 0.3);
+	border-radius: 0 12px 12px 0;
+	position: relative;
+	z-index: 5;
+}
 
 /* ========== BOOK PAGES ========== */
-.book-page{position:relative;padding:4rem 3.5rem;background:linear-gradient(90deg, #fefdfb 0%, #faf9f7 48%, #f5f3f0 50%, #faf9f7 52%, #fefdfb 100%);display:flex;flex-direction:column;justify-content:center;align-items:center;border-right:1px solid #e5ddd2}
+.book-page {
+	position: relative;
+	padding: 4rem 3.5rem;
+	background: linear-gradient(
+		90deg,
+		#fefdfb 0%,
+		#faf9f7 48%,
+		#f5f3f0 50%,
+		#faf9f7 52%,
+		#fefdfb 100%
+	);
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	border-right: 1px solid #e5ddd2;
+}
 
 /* Paper texture overlay */
-.book-page::before{content:'';position:absolute;inset:0;background-image:
-  repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.5) 2px, rgba(255,255,255,0.5) 4px),
-  repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0,0,0,0.02) 2px, rgba(0,0,0,0.02) 4px);
-  pointer-events:none;z-index:1}
+.book-page::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background-image:
+		repeating-linear-gradient(
+			0deg,
+			transparent,
+			transparent 2px,
+			rgba(255, 255, 255, 0.5) 2px,
+			rgba(255, 255, 255, 0.5) 4px
+		),
+		repeating-linear-gradient(
+			90deg,
+			transparent,
+			transparent 2px,
+			rgba(0, 0, 0, 0.02) 2px,
+			rgba(0, 0, 0, 0.02) 4px
+		);
+	pointer-events: none;
+	z-index: 1;
+}
 
-.book-page > *{position:relative;z-index:2}
+.book-page > * {
+	position: relative;
+	z-index: 2;
+}
 
-.book-page-left{border-right:3px double #d5cfc2}
-.book-page-right{border-left:1px solid #e5ddd2;border-right:0}
+.book-page-left {
+	border-right: 3px double #d5cfc2;
+}
+.book-page-right {
+	border-left: 1px solid #e5ddd2;
+	border-right: 0;
+}
 
 /* Decorative corner ornaments */
-.book-page-left::after{content:'';position:absolute;top:1.2rem;left:1.2rem;width:50px;height:50px;border-top:2.5px solid rgba(107,62,43,0.2);border-left:2.5px solid rgba(107,62,43,0.2);border-radius:3px;background:radial-gradient(circle at 0 0, rgba(214,185,106,0.08) 0%, transparent 100%)}
-.book-page-right::after{content:'';position:absolute;top:1.2rem;right:1.2rem;width:50px;height:50px;border-top:2.5px solid rgba(107,62,43,0.2);border-right:2.5px solid rgba(107,62,43,0.2);border-radius:3px;background:radial-gradient(circle at 100% 0, rgba(214,185,106,0.08) 0%, transparent 100%)}
+.book-page-left::after {
+	content: '';
+	position: absolute;
+	top: 1.2rem;
+	left: 1.2rem;
+	width: 50px;
+	height: 50px;
+	border-top: 2.5px solid rgba(107, 62, 43, 0.2);
+	border-left: 2.5px solid rgba(107, 62, 43, 0.2);
+	border-radius: 3px;
+	background: radial-gradient(circle at 0 0, rgba(214, 185, 106, 0.08) 0%, transparent 100%);
+}
+.book-page-right::after {
+	content: '';
+	position: absolute;
+	top: 1.2rem;
+	right: 1.2rem;
+	width: 50px;
+	height: 50px;
+	border-top: 2.5px solid rgba(107, 62, 43, 0.2);
+	border-right: 2.5px solid rgba(107, 62, 43, 0.2);
+	border-radius: 3px;
+	background: radial-gradient(circle at 100% 0, rgba(214, 185, 106, 0.08) 0%, transparent 100%);
+}
 
 /* Bottom corner ornaments */
-.book-page-left::before{content:'';position:absolute;bottom:1.2rem;left:1.2rem;width:50px;height:50px;border-bottom:2.5px solid rgba(107,62,43,0.2);border-left:2.5px solid rgba(107,62,43,0.2);border-radius:3px;background:radial-gradient(circle at 0 100%, rgba(214,185,106,0.08) 0%, transparent 100%)}
-.book-page-right::before{content:'';position:absolute;bottom:1.2rem;right:1.2rem;width:50px;height:50px;border-bottom:2.5px solid rgba(107,62,43,0.2);border-right:2.5px solid rgba(107,62,43,0.2);border-radius:3px;background:radial-gradient(circle at 100% 100%, rgba(214,185,106,0.08) 0%, transparent 100%)}
+.book-page-left::before {
+	content: '';
+	position: absolute;
+	bottom: 1.2rem;
+	left: 1.2rem;
+	width: 50px;
+	height: 50px;
+	border-bottom: 2.5px solid rgba(107, 62, 43, 0.2);
+	border-left: 2.5px solid rgba(107, 62, 43, 0.2);
+	border-radius: 3px;
+	background: radial-gradient(circle at 0 100%, rgba(214, 185, 106, 0.08) 0%, transparent 100%);
+}
+.book-page-right::before {
+	content: '';
+	position: absolute;
+	bottom: 1.2rem;
+	right: 1.2rem;
+	width: 50px;
+	height: 50px;
+	border-bottom: 2.5px solid rgba(107, 62, 43, 0.2);
+	border-right: 2.5px solid rgba(107, 62, 43, 0.2);
+	border-radius: 3px;
+	background: radial-gradient(circle at 100% 100%, rgba(214, 185, 106, 0.08) 0%, transparent 100%);
+}
 
 /* Page numbers - hidden */
-.page-number{display:none}
+.page-number {
+	display: none;
+}
 
 /* Decorative header separator */
-.book-page::after{content:'✦';position:absolute;top:1.5rem;left:50%;transform:translateX(-50%);font-size:1.2rem;color:rgba(214,185,106,0.5);z-index:3;letter-spacing:0.5rem}
+.book-page::after {
+	content: '✦';
+	position: absolute;
+	top: 1.5rem;
+	left: 50%;
+	transform: translateX(-50%);
+	font-size: 1.2rem;
+	color: rgba(214, 185, 106, 0.5);
+	z-index: 3;
+	letter-spacing: 0.5rem;
+}
 
-.page-content{text-align:center;font-family:Georgia, serif;line-height:1.8;color:#3a3a3a;z-index:3;position:relative}
-.page-content p{margin:0 0 1rem 0;font-size:1.3rem;font-style:italic;color:#555;font-weight:300}
-
+.page-content {
+	text-align: center;
+	font-family: Georgia, serif;
+	line-height: 1.8;
+	color: #3a3a3a;
+	z-index: 3;
+	position: relative;
+}
+.page-content p {
+	margin: 0 0 1rem 0;
+	font-size: 1.3rem;
+	font-style: italic;
+	color: #555;
+	font-weight: 300;
+}

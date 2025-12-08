@@ -326,14 +326,22 @@
 }
 
 /* ===== Start screen helpers and Start button ===== */
+.start-frame {
+	/* Mirror /read container width so flex parent centers it */
+	width: 100%;
+	max-width: 1500px;
+	min-height: 620px;
+	position: relative;
+}
 .start-screen {
 	position: relative;
 	width: 100%;
 	min-height: 100vh;
 	overflow: hidden;
 	display: flex;
-	align-items: center;
-	justify-content: center;
+	align-items: center; /* horizontal center with column layout */
+	justify-content: flex-start; /* no vertical centering */
+	flex-direction: column;
 }
 .start-screen .fx-bg {
 	position: absolute;
@@ -341,36 +349,35 @@
 	z-index: 0;
 	pointer-events: none;
 }
-.start-screen .title-wrap {
-	position: absolute;
-	top: 1rem;
-	left: 50%;
-	transform: translateX(-50%);
-	z-index: 2;
-}
-.start-screen .button-wrap {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
+.start-screen .content-wrap {
+	position: relative;
 	z-index: 1;
 	display: flex;
+	flex-direction: column;
 	align-items: center;
 	justify-content: center;
+	gap: 2rem;
+	margin-top: 6rem; /* position block lower while staying horizontally centered */
 }
+.start-screen .title-wrap,
+.start-screen .button-wrap,
 .start-screen .leaderboard-wrap {
-	position: absolute;
-	top: calc(50% + 120px);
-	left: 50%;
-	transform: translateX(-50%);
+	position: static;
+	top: auto;
+	left: auto;
+	transform: none;
 	z-index: 1;
 	display: flex;
 	align-items: center;
 	justify-content: center;
+}
+
+.start-screen .button-wrap {
+	margin-top: 120px
 }
 .start-screen .start-title {
 	position: relative;
-  margin-top: 5rem;
+	margin-top: 0;
 	font-family: Georgia, serif;
 	font-weight: 1000;
 	text-transform: uppercase;
@@ -396,15 +403,16 @@
 	font-size: 6rem;
 	line-height: 1.1;
 	border-radius: 6px;
-	background:
-		linear-gradient(180deg, #7a3d22 0%, #5a2a17 100%);
+	background: linear-gradient(180deg, #7a3d22 0%, #5a2a17 100%);
 	box-shadow:
 		0 18px 22px rgba(0, 0, 0, 0.35),
 		inset 0 2px 6px rgba(255, 255, 255, 0.08),
 		inset 0 -2px 6px rgba(0, 0, 0, 0.25);
 	border: 1px solid #3b1c10;
-	transition: transform 200ms cubic-bezier(.2,.8,.2,1), box-shadow 100ms ease;
-  will-change: transform;
+	transition:
+		transform 200ms cubic-bezier(0.2, 0.8, 0.2, 1),
+		box-shadow 100ms ease;
+	will-change: transform;
 }
 .start-screen .button--small {
 	font-size: 2.5rem;
@@ -420,8 +428,7 @@
 	bottom: -1px;
 	width: 10px;
 	border-radius: 6px 0 0 6px;
-	background:
-		linear-gradient(180deg, #542715 0%, #3d1c0f 100%);
+	background: linear-gradient(180deg, #542715 0%, #3d1c0f 100%);
 	box-shadow:
 		inset -1px 0 0 rgba(255, 255, 255, 0.08),
 		2px 0 6px rgba(0, 0, 0, 0.35);
@@ -436,21 +443,14 @@
 	bottom: 3px;
 	width: 12px;
 	border-radius: 0 6px 6px 0;
-	background:
-		repeating-linear-gradient(
-			90deg,
-			#f7f2e7 0px,
-			#f7f2e7 2px,
-			#e9e2d2 2px,
-			#e9e2d2 4px
-		);
+	background: repeating-linear-gradient(90deg, #f7f2e7 0px, #f7f2e7 2px, #e9e2d2 2px, #e9e2d2 4px);
 	box-shadow:
 		inset 1px 0 0 rgba(150, 140, 120, 0.6),
 		-2px 0 6px rgba(0, 0, 0, 0.25);
 }
 
 .start-screen .button:hover {
-  transform: translateY(-10px) scale(1.2);
+	transform: translateY(-10px) scale(1.2);
 	box-shadow:
 		0 22px 35px rgba(0, 0, 0, 0.4),
 		inset 0 2px 8px rgba(255, 255, 255, 0.1);
@@ -463,14 +463,13 @@
 }
 
 .start-screen .ranglijst-card {
-  position: relative;
-  z-index: 2;            /* above background */
-  background-color: whitesmoke;
-  color: #111;
-  width: fit-content;
-  margin: 8rem auto 0;   /* center horizontally, space from top */
-  padding: 12rem 20rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+	position: relative;
+	z-index: 2; /* above background */
+	background-color: transparent; /* remove white background */
+	color: #111;
+	width: 100%;
+	margin: 4rem auto 0; /* center horizontally, space from top */
+	padding: 0; /* card itself no padding; inner container handles spacing */
+	border-radius: 0.5rem;
+	box-shadow: none; /* remove card shadow to blend with bg */
 }
-
