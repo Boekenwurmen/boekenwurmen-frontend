@@ -27,8 +27,6 @@
 				<h1 class="start-title">Leaderboard</h1>
 			</div>
 
-			<div style="display:flex; justify-content:center; align-items:center;;"></div>
-
 			<div class="ranglijst-card" role="region" aria-label="Ranglijst" style="margin-top: 0;">
 				<div style="width: 100%; max-width: 900px;">
 					<div
