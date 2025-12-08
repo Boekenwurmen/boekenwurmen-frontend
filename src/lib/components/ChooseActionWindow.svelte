@@ -3,6 +3,7 @@
      import { getContext } from 'svelte';
      import Stories from "./Stories.svelte";
      import { PUBLIC_API_URL } from '$env/static/public';
+    import { prefillCodeForClient, ensureClientExists, saveClientCode } from '../userActions.js';
 
      const pageContext = getContext('page');
      const clientContext = getContext('client');
@@ -35,10 +36,9 @@
                 (async () => {
                     try {
                         if (clientContext && clientContext.id) {
-                            const res = await fetch(`${PUBLIC_API_URL}/clients/${clientContext.id}`);
-                            const d = await res.json();
-                            if (d && d.success && d.client && d.client.code) {
-                                codeValue = d.client.code;
+                            const code = await prefillCodeForClient(clientContext.id, PUBLIC_API_URL);
+                            if (code) {
+                                codeValue = code;
                                 message = 'Loaded saved code.';
                             }
                         }
@@ -66,17 +66,12 @@
             if (!codeValue) return;
             try {
                 console.log('[ChooseActionWindow] submitCode start', { codeValue, clientContext });
-                // ensure client exists
+                // ensure client exists via helper
                 if (!clientContext.id) {
-                    // try creating a guest client if none exists
-                    const createRes = await fetch(`${PUBLIC_API_URL}/clients`, {
-                        method: 'POST', headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ name: clientContext.name || 'guest' })
-                    });
-                    const createData = await createRes.json();
-                    if (createData && createData.success && createData.client) {
-                        clientContext.id = createData.client.id;
-                        clientContext.name = createData.client.name;
+                    const created = await ensureClientExists(PUBLIC_API_URL, clientContext.name || 'guest');
+                    if (created) {
+                        clientContext.id = created.id;
+                        clientContext.name = created.name;
                     }
                 }
 
@@ -84,12 +79,7 @@
                     message = 'No client id available. Could not save code.';
                     return;
                 }
-
-                const res = await fetch(`${PUBLIC_API_URL}/clients/${clientContext.id}`, {
-                    method: 'PATCH', headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ code: codeValue })
-                });
-                const data = await res.json();
+                const data = await saveClientCode(PUBLIC_API_URL, clientContext.id, codeValue);
                 if (data && data.success) {
                     message = 'Code saved. Thank you!';
                     // reflect saved value from server
@@ -98,10 +88,9 @@
                     }
                     // fetch fresh client object to confirm in DB and show id
                     try {
-                        const verifyRes = await fetch(`${PUBLIC_API_URL}/clients/${clientContext.id}`);
-                        const verifyJson = await verifyRes.json();
+                        const verifyJson = await prefillCodeForClient(clientContext.id, PUBLIC_API_URL, true);
                         console.log('[ChooseActionWindow] verify client after save', verifyJson);
-                        if (verifyJson && verifyJson.success && verifyJson.client) {
+                        if (verifyJson && verifyJson.client) {
                             message += ` Saved for user id ${verifyJson.client.id}.`;
                         }
                     } catch (ve) {
