@@ -15,5 +15,3 @@
 		{/if}
 	</div>
 </div>
-
-<style src="./css/errors.css"></style>
