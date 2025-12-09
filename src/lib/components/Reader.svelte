@@ -4,7 +4,7 @@
     import { setContext } from 'svelte';
 	import ReadingSettings from "./ReadingSettings.svelte";
 
-    let pageId = 1;
+    let pageId = 0;
     let bookId = 1;
     const bookState = $state({ pageId, bookId });
     setContext('page', bookState);
