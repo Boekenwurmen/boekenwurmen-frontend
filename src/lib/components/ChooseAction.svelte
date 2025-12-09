@@ -2,6 +2,7 @@
     import { getContext } from 'svelte';
     const { action = { toPage: 1, name: "Go back" } } = $props();
 
+
     // type context as a single-number tuple (or undefined when not provided)
     const pageContext = getContext<[number]>('page') as [number] | undefined;
 
@@ -14,7 +15,6 @@
 
     function setPage() {
         try {
-            // take primitive snapshots so Svelte doesn't warn about proxied $state objects
             const pageSnapshot = pageContext ? pageContext[0] : undefined;
             const actionSnapshot = { toPage: Number(action?.toPage), name: String(action?.name) };
             if (!pageContext) {

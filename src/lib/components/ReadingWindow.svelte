@@ -1,17 +1,28 @@
 <script>
 	import TypeWriter from './TypeWriter.svelte.js';
 	import Stories from './Stories.svelte.js';
+
     import { getContext } from 'svelte';
     import { PUBLIC_API_URL } from '$env/static/public';
     import { NAME_PAGE, INPUT_FOCUS_DELAY, WELCOME_DELAY } from '$lib/constants';
     import { createClient, advanceFromNameToCode } from '$lib/readingActions.js';
+    import { getContext, setContext } from 'svelte';
+	  import { showDelayedLoadingMessage } from './delayedLoadingMessage.js';
+    
+    /**
+     * @type {{speed:number, myTypeWriter:TypeWriter}}
+     */
+    const readingSettingsContext = getContext('readingSettings');
+    const readingSpeed = readingSettingsContext.speed;
 
     /**
-     * @type {number[]}
+     * @type {{pageId:number,bookId:number}}
      */
     const pageContext = getContext('page');
     const clientContext = getContext('client');
-    const myTypeWriter = new TypeWriter(5, 'loading...');
+    const myTypeWriter = new TypeWriter(readingSpeed, 'Loading...');
+    readingSettingsContext.myTypeWriter = myTypeWriter;
+
 
     // Guard to avoid repeated fetches or re-entrancy when page doesn't change
     /** @type {number | undefined} */
@@ -20,6 +31,7 @@
     /** @type {number | undefined} */
     let currentPage = $state(undefined);
     $effect(() => {
+
         currentPage = pageContext ? pageContext[0] : undefined;
     });
     
@@ -78,6 +90,15 @@
             console.error('Error loading story for page', page, err);
         });
     })
+
+        let {pageId, bookId} = pageContext;
+        
+        showDelayedLoadingMessage(
+            Stories.getPageStory(bookId, pageId),
+            () => myTypeWriter.showLoadingMessage()
+        ).then(story => myTypeWriter.reset(story));
+    });
+
 </script>
 
 {#if currentPage === 3}

@@ -3,7 +3,7 @@
      import { getContext } from 'svelte';
      import Stories from "./Stories.svelte";
      import { PUBLIC_API_URL } from '$env/static/public';
-    import { prefillCodeForClient, ensureClientExists, saveClientCode } from '../userActions.js';
+     import { prefillCodeForClient, ensureClientExists, saveClientCode } from '../userActions.js';
 
      const pageContext = getContext('page');
      const clientContext = getContext('client');
@@ -12,7 +12,7 @@
         // access index directly from the proxied $state - it supports numeric access
         currentPage = pageContext ? Number(pageContext[0] ?? 0) : 0;
     });
-
+	  import { showDelayedLoadingMessage } from "./delayedLoadingMessage";
     /**
      * @type {{ toPage: number, name: string }[]}
      */
@@ -112,6 +112,16 @@
                 message = 'Network error while saving code.';
             }
         }
+
+    
+    $effect(() => {
+        let {pageId, bookId} = pageContext;
+        showDelayedLoadingMessage(
+            Stories.getPageOptions(bookId, pageId),
+            () => options = []
+        ).then(e => options = e);
+    })
+
 </script>
 
     {#if currentPage === 5}
