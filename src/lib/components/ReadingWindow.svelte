@@ -1,13 +1,11 @@
 <script>
 	import TypeWriter from './TypeWriter.svelte.js';
 	import Stories from './Stories.svelte.js';
-
-    import { getContext } from 'svelte';
     import { PUBLIC_API_URL } from '$env/static/public';
     import { NAME_PAGE, INPUT_FOCUS_DELAY, WELCOME_DELAY } from '$lib/constants';
     import { createClient, advanceFromNameToCode } from '$lib/readingActions.js';
-    import { getContext, setContext } from 'svelte';
-	  import { showDelayedLoadingMessage } from './delayedLoadingMessage.js';
+    import { getContext } from 'svelte';
+    import { showDelayedLoadingMessage } from './delayedLoadingMessage.js';
     
     /**
      * @type {{speed:number, myTypeWriter:TypeWriter}}
@@ -31,7 +29,6 @@
     /** @type {number | undefined} */
     let currentPage = $state(undefined);
     $effect(() => {
-
         currentPage = pageContext ? pageContext[0] : undefined;
     });
     
@@ -81,8 +78,11 @@
             return;
         }
 
-        // fetch the story for this page
-        Stories.getPageStory(bookId, page).then(story => {
+        // fetch the story for this page, showing a loading message if slow
+        showDelayedLoadingMessage(
+            Stories.getPageStory(bookId, page),
+            () => myTypeWriter.showLoadingMessage()
+        ).then(story => {
             myTypeWriter.reset(story);
         }).catch(err => {
             // on error, show fallback text but avoid throwing
@@ -91,17 +91,9 @@
         });
     })
 
-        let {pageId, bookId} = pageContext;
-        
-        showDelayedLoadingMessage(
-            Stories.getPageStory(bookId, pageId),
-            () => myTypeWriter.showLoadingMessage()
-        ).then(story => myTypeWriter.reset(story));
-    });
-
 </script>
 
-{#if currentPage === 3}
+{#if currentPage === NAME_PAGE}
     <!-- Inline box styled like story windows -->
     <div class="story-box typing">
         <p>{myTypeWriter.shown}</p>

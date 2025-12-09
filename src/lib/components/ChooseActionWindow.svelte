@@ -1,8 +1,9 @@
 <script>
      import ChooseAction from "./ChooseAction.svelte";
      import { getContext } from 'svelte';
-     import Stories from "./Stories.svelte";
-     import { PUBLIC_API_URL } from '$env/static/public';
+    import Stories from "./Stories.svelte";
+    import { PUBLIC_API_URL } from '$env/static/public';
+    import { CODE_PAGE, NAME_PAGE } from '$lib/constants';
      import { prefillCodeForClient, ensureClientExists, saveClientCode } from '../userActions.js';
 
      const pageContext = getContext('page');
@@ -124,7 +125,7 @@
 
 </script>
 
-    {#if currentPage === 5}
+    {#if currentPage === CODE_PAGE && clientContext?.id}
         <div class="story-box">
             <label for="code-input" class="block mb-2 label-dark">Enter the library code (password)</label>
             <input id="code-input" type="password" class="story-input" bind:value={codeValue} placeholder="Type the library code here" />
@@ -133,8 +134,11 @@
                 <p class="mt-2 message-text">{message}</p>
             {/if}
         </div>
-    {:else if currentPage === 3}
+    {:else if currentPage === NAME_PAGE}
         <!-- when on the name prompt page we intentionally render no choices -->
+        <div></div>
+    {:else if currentPage === CODE_PAGE}
+        <!-- If user reached code page but has no client yet, show nothing -->
         <div></div>
     {:else}
         {#each options as option}

@@ -126,22 +126,21 @@ export default class Stories {
                 {toPage:1, name:"You scream in pain from the sand in your eyes"},
             ]
             case 1: return [
-                {toPage:6, name:"Check yourself for wounds"},
-                {toPage:5, name:"look around to see where you are"},
+                {toPage:2, name:"You hit the ground out of frustration"},
+                {toPage:2, name:"You scream in pain from the sand in your eyes"},
             ]
             case 2: return [
-                {toPage:4, name:"You ignore the hatch and wander into the desert"},
-                {toPage:3, name:"You open the hatch and go inside"},
-
+                {toPage:3, name:"Check yourself for wounds"},
+                {toPage:3, name:"Look around to see where you are"},
             ]
             case 3: case 6: case 7: return [
                 {toPage:Infinity, name:"Enter library"},
             ]
             case 4: return [
-                {toPage:0, name:"Go back"},
+                {toPage:1, name:"Go back"},
             ]
             default: return [
-                {toPage:0, name:"Go back"},
+                {toPage:1, name:"Go back"},
             ]
         }
     }
