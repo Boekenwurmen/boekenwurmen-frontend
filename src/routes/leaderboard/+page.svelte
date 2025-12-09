@@ -1,5 +1,5 @@
 <script>
-	import '../startscherm.css';
+	import '../css/startscherm.css';
 	const entries = [
 		{ rank: 1, name: 'Ava', score: 1280 },
 		{ rank: 2, name: 'Liam', score: 1175 },

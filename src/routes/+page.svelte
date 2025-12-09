@@ -1,5 +1,5 @@
 <script>
-	import './startscherm.css';
+	import './css/startscherm.css';
 </script>
 
 <div class="start-frame">
