@@ -17,7 +17,6 @@
             // take primitive snapshots so Svelte doesn't warn about proxied $state objects
             const pageSnapshot = pageContext ? pageContext[0] : undefined;
             const actionSnapshot = { toPage: Number(action?.toPage), name: String(action?.name) };
-            console.log('[ChooseAction] setPage called', actionSnapshot, { page: pageSnapshot });
             if (!pageContext) {
                 console.warn('[ChooseAction] pageContext is not available', pageContext);
                 return;
@@ -35,7 +34,7 @@
 </script>
 
 {#if currentPage !== 3}
-<button class="story-button story-button-wide my-4" on:click={setPage}>
+<button class="story-button story-button-wide my-4" onclick={setPage}>
     {action.name}
 </button>
 {/if}

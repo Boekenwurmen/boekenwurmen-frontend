@@ -18,8 +18,8 @@
      */
     let options = $state([]);
 
-        let codeValue = '';
-        let message = '';
+        let codeValue = $state('');
+        let message = $state('');
 
         $effect(() => {
             // snapshot primitives to avoid proxied $state usage
@@ -65,7 +65,8 @@
             message = '';
             if (!codeValue) return;
             try {
-                console.log('[ChooseActionWindow] submitCode start', { codeValue, clientContext });
+                // Avoid logging sensitive code value
+                console.log('[ChooseActionWindow] submitCode start', { hasCode: !!codeValue, clientId: clientContext?.id });
                 // ensure client exists via helper
                 if (!clientContext.id) {
                     const created = await ensureClientExists(PUBLIC_API_URL, clientContext.name || 'guest');
@@ -104,7 +105,7 @@
                     }
                 } else {
                     message = 'Could not save code.';
-                    console.warn('[ChooseActionWindow] save code response', data);
+                    console.warn('[ChooseActionWindow] save code response', { success: !!data?.success, error: data?.message });
                 }
             } catch (err) {
                 console.error('[ChooseActionWindow] submitCode error', err);
@@ -115,18 +116,22 @@
 
     {#if currentPage === 5}
         <div class="story-box">
-            <label class="block mb-2" style="color: var(--cover-dark)">Enter the library code (password)</label>
-            <input type="password" class="story-input" bind:value={codeValue} placeholder="Type the library code here" />
-            <button class="story-button" on:click={submitCode}>Submit code</button>
+            <label for="code-input" class="block mb-2 label-dark">Enter the library code (password)</label>
+            <input id="code-input" type="password" class="story-input" bind:value={codeValue} placeholder="Type the library code here" />
+            <button class="story-button" onclick={submitCode}>Submit code</button>
             {#if message}
-                <p class="mt-2" style="color:#3a3a3a">{message}</p>
+                <p class="mt-2 message-text">{message}</p>
             {/if}
         </div>
     {:else if currentPage === 3}
         <!-- when on the name prompt page we intentionally render no choices -->
-        <div />
+        <div></div>
     {:else}
         {#each options as option}
             <ChooseAction action={option}/>
         {/each}
     {/if}
+<style>
+    .label-dark { color: var(--cover-dark); }
+    .message-text { color: #3a3a3a; }
+</style>
