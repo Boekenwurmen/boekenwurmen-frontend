@@ -34,8 +34,6 @@
     }
 </script>
 
-{#if currentPage !== NAME_PAGE}
 <button class="story-button story-button-wide my-4" onclick={setPage}>
     {action.name}
 </button>
-{/if}

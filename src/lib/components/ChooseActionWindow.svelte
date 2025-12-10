@@ -24,18 +24,24 @@
     let codeValue = $state('');
     let message = $state('');
 
+    const isOnNamePage = $derived(currentPage === NAME_PAGE);
+    const isOnCodePage = $derived(currentPage === CODE_PAGE);
+
     $effect(() => {
         // snapshot primitives to avoid proxied $state usage
         const page = pageContext ? pageContext[0] : undefined;
         const bookId = pageContext ? pageContext[1] : undefined;
 
+        const isPageName = page === NAME_PAGE;
+        const isPageCode = page === CODE_PAGE;
+
         // always clear options when page is 3 (name) or 5 (code)
-        if ((page === NAME_PAGE || page === CODE_PAGE)) {
+        if ((isPageName || isPageCode)) {
             options = [];
         }
 
         // when page is 5, prefill code and do NOT fetch options
-        if (page === CODE_PAGE) {
+        if (isPageCode) {
             (async () => {
                 try {
                     if (clientContext && clientContext.id) {
@@ -120,16 +126,18 @@
     
     $effect(() => {
         let [page, bookId] = pageContext;
-        showDelayedLoadingMessage(
+        
+        const optionsPromise = showDelayedLoadingMessage(
             Stories.getPageOptions(bookId, page),
             () => options = []
-        ).then(e => options = e);
+        );
+        const typePromise = Stories.getPageType(bookId, page);
 
-        Stories.getPageType(bookId, page).then(e => pageType = e);
+        Promise.all([optionsPromise, typePromise]).then(v => [options, pageType] = v);
     })
 
 </script>
-    {#if currentPage === CODE_PAGE && clientContext?.id}
+    {#if isOnCodePage && clientContext?.id}
         <div class="story-box">
             <label for="code-input" class="block mb-2 label-dark">Enter the library code (password)</label>
             <input id="code-input" type="password" class="story-input" bind:value={codeValue} placeholder="Type the library code here" />
@@ -138,10 +146,10 @@
                 <p class="mt-2 message-text">{message}</p>
             {/if}
         </div>
-    {:else if currentPage === NAME_PAGE}
+    {:else if isOnNamePage}
         <!-- when on the name prompt page we intentionally render no choices -->
         <div></div>
-    {:else if currentPage === CODE_PAGE}
+    {:else if isOnCodePage}
         <!-- If user reached code page but has no client yet, show nothing -->
         <div></div>
     {:else}
