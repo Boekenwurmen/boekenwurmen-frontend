@@ -67,12 +67,21 @@
             return;
         }
         console.log('[ChooseActionWindow] page effect', { page, bookId });
-        Stories.getPageOptions(bookId, page).then(e => options = e).catch(err => {
-            console.error('[ChooseActionWindow] failed getPageOptions', err);
-            options = [
-                {toPage:0, type: "page", name: "Go back"},
-            ];
-        });
+                
+        const optionsPromise = showDelayedLoadingMessage(
+            Stories.getPageOptions(bookId, page),
+            () => options = []
+        );
+        const typePromise = Stories.getPageType(bookId, page);
+
+        Promise.all([optionsPromise, typePromise])
+            .then(v => {[options, pageType] = v; console.log('options loaded', v[0], v[1])})
+            .catch(err => {
+                console.error('[ChooseActionWindow] failed getPageOptions', err);
+                options = [
+                    {toPage:0, type: "page", name: "Go back"},
+                ];
+            });
     })
 
     async function submitCode() {
@@ -126,18 +135,6 @@
             message = 'Network error while saving code.';
         }
     }
-    
-    $effect(() => {
-        let [page, bookId] = pageContext;
-        
-        const optionsPromise = showDelayedLoadingMessage(
-            Stories.getPageOptions(bookId, page),
-            () => options = []
-        );
-        const typePromise = Stories.getPageType(bookId, page);
-
-        Promise.all([optionsPromise, typePromise]).then(v => [options, pageType] = v);
-    })
 
 </script>
     {#if isOnCodePage && clientContext?.id}
