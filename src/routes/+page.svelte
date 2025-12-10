@@ -18,9 +18,21 @@
 				<a href="/read" class="button" aria-label="Start spel">Start</a>
 			</div>
 			<div class="leaderboard-wrap">
-				<a href="/leaderboard" class="button button--small" aria-label="Toon ranglijst"
-					>Leaderboard</a
+				<button
+					id="continue-button"
+					class="button button--small"
+					data-spine="Boekenwurmen"
+					aria-label="Ga verder"
+					onclick={() => (window.location.href = '/login')}
 				>
+					<span class="book-cover"></span>
+					<span class="cover-subtitle">Verder lezen</span>
+					<span class="bookmark" aria-hidden="true"></span>
+				</button>
+			</div>
+			<div class="leaderboard-wrap">
+				<a href="/leaderboard" class="button button--small" aria-label="Toon ranglijst"
+					>Leaderboard</a>
 			</div>
 		</div>
 	</div>
