@@ -2,19 +2,38 @@
   import books from '../../../lib/books';
   import type { Book } from '../../../lib/books';
   import { page } from '$app/stores';
+  import { onMount } from 'svelte';
 
   let book: Book | undefined;
+  let favorites: number[] = [];
+  let isFavorite = false;
 
   $: book = books.find(b => b.id === Number($page.params.id));
+  $: isFavorite = favorites.includes(book?.id || 0);
+
+  onMount(() => {
+    const saved = localStorage.getItem('favorites');
+    if (saved) {
+      favorites = JSON.parse(saved);
+    }
+  });
 
   function handleReadClick() {
-    if (book?.cover) {
+    if (book?.pdf) {
+      window.open(book.pdf, '_blank');
+    } else if (book?.cover) {
       window.open(book.cover, '_blank');
     }
   }
 
-  function handleFavorite() {
-    alert('Toegevoegd aan favorieten!');
+  function toggleFavorite() {
+    if (!book) return;
+    if (favorites.includes(book.id)) {
+      favorites = favorites.filter(id => id !== book.id);
+    } else {
+      favorites = [...favorites, book.id];
+    }
+    localStorage.setItem('favorites', JSON.stringify(favorites));
   }
 </script>
 
@@ -42,7 +61,9 @@
 
         <div class="actions">
           <button class="btn btn-primary" on:click={handleReadClick}>Lees nu</button>
-          <button class="btn btn-secondary" on:click={handleFavorite}>Voeg toe aan favoriet</button>
+          <button class="btn btn-secondary { isFavorite ? 'is-favorite' : '' }" on:click={toggleFavorite}>
+            {isFavorite ? '♥ In favorieten' : '♡ Toevoegen aan favorieten'}
+          </button>
         </div>
       </div>
     </article>
@@ -193,6 +214,11 @@
 
   .btn-secondary:hover {
     background: rgba(214, 185, 106, 0.1);
+  }
+
+  .btn-secondary.is-favorite {
+    color: #d85233;
+    border-color: #d85233;
   }
 
   @media (max-width: 900px) {
