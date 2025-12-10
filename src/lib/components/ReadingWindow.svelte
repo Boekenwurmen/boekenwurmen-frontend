@@ -27,11 +27,16 @@
     // primitive snapshot of current page for template/reactivity
     /** @type {number | undefined} */
     let currentPage = $state(undefined);
+    let pageType = $state(
+        /**@type {"page" | "enter name" | "enter password" | "set name" | "set password"}*/
+        ('page')
+    );
+
     $effect(() => {
         currentPage = pageContext ? pageContext[0] : undefined;
     });
     
-    const isOnNamePage = $derived(currentPage === NAME_PAGE);
+    const isOnNamePage = $derived(currentPage === NAME_PAGE && false);
     
     let nameValue = $state('');
     /** @type {HTMLInputElement | null} */
@@ -63,7 +68,7 @@
         if (page == null) return; // nothing to do
         if (page === _lastPage) return; // already handled this page
         _lastPage = page;
-        const isPageName = page === NAME_PAGE;
+        const isPageName = isOnNamePage;
 
         if (isPageName) {
             // show prompt to ask for name; reset typing to prompt
@@ -81,10 +86,15 @@
         }
 
         // fetch the story for this page, showing a loading message if slow
-        showDelayedLoadingMessage(
+        const storyPromise = showDelayedLoadingMessage(
             Stories.getPageStory(bookId, page),
             () => myTypeWriter.showLoadingMessage()
-        ).then(story => {
+        );
+        const typePromise = Stories.getPageType(bookId, page);
+
+        Promise.all([storyPromise, typePromise]).then(v => {
+            const [story, myPageType] = v;
+            pageType = myPageType;
             myTypeWriter.reset(story);
         }).catch(err => {
             // on error, show fallback text but avoid throwing

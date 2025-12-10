@@ -27,16 +27,16 @@
     let codeValue = $state('');
     let message = $state('');
 
-    const isOnNamePage = $derived(currentPage === NAME_PAGE);
-    const isOnCodePage = $derived(currentPage === CODE_PAGE);
+    const isOnNamePage = $derived(pageType === 'enter name' || pageType === 'set name');
+    const isOnCodePage = $derived(pageType === 'enter password' || pageType === 'set password');
 
     $effect(() => {
         // snapshot primitives to avoid proxied $state usage
         const page = pageContext ? pageContext[0] : undefined;
         const bookId = pageContext ? pageContext[1] : undefined;
 
-        const isPageName = page === NAME_PAGE;
-        const isPageCode = page === CODE_PAGE;
+        const isPageName = isOnNamePage;
+        const isPageCode = isOnCodePage;
 
         // always clear options when page is 3 (name) or 5 (code)
         if ((isPageName || isPageCode)) {
