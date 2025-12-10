@@ -42,12 +42,19 @@ export default class Stories {
             throw new Error('bookId or pageId are undefined or null');
         }
         const res = await Stories.getDataBody(`${PUBLIC_API_URL}/books/${bookId}/${pageId}`);
+        const direct = (typeof res === 'string') ? res : undefined;
+        const nested = typeof res?.data?.books === 'string' ? res.data.books : undefined;
+        const val = nested ?? direct;
+        if (typeof val === 'string' && val !== null && val !== undefined) return val;
+        throw new Error('backend did not return the story as a string');
+
         const data = res?.data?.books;
         if (typeof data === 'string' && data !== null && data !== undefined) {
             return data;
         } else {
             throw new Error('backend did not return the story as a string');
         }
+
     }
 
     /**
@@ -61,6 +68,11 @@ export default class Stories {
             throw new Error('bookId or pageId are undefined or null');
         }
         const res = await Stories.getDataBody(`${PUBLIC_API_URL}/books/${bookId}/${pageId}/options`);
+        const direct = Array.isArray(res) ? res : undefined;
+        const nested = Array.isArray(res?.data?.books) ? res.data.books : undefined;
+        const val = nested ?? direct;
+        if (Array.isArray(val) && val !== null && val !== undefined) return val;
+        throw new Error('backend did not return the story as an array');
         const data = res?.data?.books;
         if (Array.isArray(data) && data !== null && data !== undefined) {
             return data;
@@ -108,26 +120,27 @@ export default class Stories {
      */
     static _getPageOptionsLocal(page){
         switch (page) {
+
             case 0: return [
                 {toPage:2, name:"You hit the ground out of frustation"},
                 {toPage:1, name:"You scream in pain from the sand in your eyes"},
             ]
             case 1: return [
-                {toPage:6, name:"Check yourself for wounds"},
-                {toPage:5, name:"look around to see where you are"},
+                {toPage:2, name:"You hit the ground out of frustration"},
+                {toPage:2, name:"You scream in pain from the sand in your eyes"},
             ]
             case 2: return [
-                {toPage:4, name:"You ignore the hatch and wander into the desert"},
-                {toPage:3, name:"You open the hatch and go inside"},
+                {toPage:3, name:"Check yourself for wounds"},
+                {toPage:3, name:"Look around to see where you are"},
             ]
             case 3: case 6: case 7: return [
                 {toPage:Infinity, name:"Enter library"},
             ]
             case 4: return [
-                {toPage:0, name:"Go back"},
+                {toPage:1, name:"Go back"},
             ]
             default: return [
-                {toPage:0, name:"Go back"},
+                {toPage:1, name:"Go back"},
             ]
         }
     }
