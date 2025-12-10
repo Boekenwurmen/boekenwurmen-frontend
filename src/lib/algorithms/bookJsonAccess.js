@@ -35,11 +35,10 @@ export function _getPageStoryJson(bookId, pageId) {
  * 
  * @param {number} bookId 
  * @param {number} pageId 
- * @returns {string}
  */
 export function _getPageTypeJson(bookId, pageId) {
   const page = _getPageJson(bookId, pageId);
-  return page?.type ?? 'page';
+  return /** @type {"page" | "enter name" | "enter password" | "set name" | "set password"} */(page?.type ?? 'page');
 }
 
 /**

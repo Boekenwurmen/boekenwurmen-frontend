@@ -36,11 +36,11 @@ export default class Stories {
      * 
      * @param bookId {number | null | undefined}
      * @param pageId {number | null | undefined}
-     * @returns {Promise<string>}
+     * @returns {Promise<"page" | "enter name" | "enter password" | "set name" | "set password">}
      */
     static async getPageType(bookId, pageId){
         try {
-            return /** @type {string} */ (await Stories._getPageTypeServer(bookId, pageId));
+            return /** @type {"page" | "enter name" | "enter password" | "set name" | "set password"} */ (await Stories._getPageTypeServer(bookId, pageId));
         } catch (error) {
             console.warn('failed to load book options from server, switched to local story', error);
             return Stories._getPageTypeLocal(pageId);
