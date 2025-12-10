@@ -12,6 +12,14 @@
 					</span>
 					<span class="visually-hidden">Start het spel</span>
 				</button>
+				<!-- Continue button to navigate to login page -->
+				<button id="continue-button" class="start-button book-like" data-spine="Boekenwurmen" aria-label="Ga verder" onclick={() => window.location.href = '/login'} style="margin-top: 1rem;">
+					<span class="book-cover">
+						<span class="cover-subtitle">Continue</span>
+						<span class="bookmark" aria-hidden="true"></span>
+					</span>
+					<span class="visually-hidden">Ga verder naar login</span>
+				</button>
 			</div>
 		</div>
 	</div>
