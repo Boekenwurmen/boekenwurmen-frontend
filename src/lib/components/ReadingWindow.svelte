@@ -36,7 +36,7 @@
         currentPage = pageContext ? pageContext[0] : undefined;
     });
     
-    const isOnNamePage = $derived(currentPage === NAME_PAGE && false);
+    const isOnNamePage = $derived(pageType === 'enter name' || pageType === 'set name');
     
     let nameValue = $state('');
     /** @type {HTMLInputElement | null} */
