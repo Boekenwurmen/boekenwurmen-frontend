@@ -35,12 +35,23 @@ export function _getPageStoryJson(bookId, pageId) {
  * 
  * @param {number} bookId 
  * @param {number} pageId 
- * @returns {{ toPage: number; name: string; }[]}
+ * @returns {string}
+ */
+export function _getPageTypeJson(bookId, pageId) {
+  const page = _getPageJson(bookId, pageId);
+  return page?.type ?? 'page';
+}
+
+/**
+ * 
+ * @param {number} bookId 
+ * @param {number} pageId 
+ * @returns {{ toPage: number; type:string, name: string; }[]}
  */
 export function _getPageOptionsJson(bookId, pageId) {
   const page = _getPageJson(bookId, pageId);
   return page?.options ?? [
-    {toPage:0, name:"Go back"},
+    {toPage:0, type: 'page', name: 'Go back'},
   ];
 }
 

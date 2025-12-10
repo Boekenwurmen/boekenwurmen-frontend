@@ -17,9 +17,10 @@
     });
 
     /**
-     * @type {{ toPage: number, name: string }[]}
+     * @type {{ toPage: number, type: string, name: string }[]}
      */
     let options = $state([]);
+    let pageType = $state('page');
     let codeValue = $state('');
     let message = $state('');
 
@@ -60,7 +61,7 @@
         Stories.getPageOptions(bookId, page).then(e => options = e).catch(err => {
             console.error('[ChooseActionWindow] failed getPageOptions', err);
             options = [
-                {toPage:0, name:"Go back"},
+                {toPage:0, type: "page", name: "Go back"},
             ];
         });
     })
@@ -123,6 +124,8 @@
             Stories.getPageOptions(bookId, page),
             () => options = []
         ).then(e => options = e);
+
+        Stories.getPageType(bookId, page).then(e => pageType = e);
     })
 
 </script>

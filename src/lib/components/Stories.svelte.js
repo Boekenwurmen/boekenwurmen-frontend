@@ -1,5 +1,5 @@
 import { PUBLIC_API_URL } from "$env/static/public";
-import { _getPageOptionsJson, _getPageStoryJson } from "$lib/algorithms/bookJsonAccess.js";
+import { _getPageOptionsJson, _getPageStoryJson, _getPageTypeJson } from "$lib/algorithms/bookJsonAccess.js";
 
 export default class Stories {
     /**
@@ -21,14 +21,29 @@ export default class Stories {
      * 
      * @param bookId {number | null | undefined}
      * @param pageId {number | null | undefined}
-     * @returns {Promise<{ toPage: number, name: string }[]>}
+     * @returns {Promise<{ toPage: number, type:string, name: string }[]>}
      */
     static async getPageOptions(bookId, pageId){
         try {
-            return /** @type {{ toPage: number, name: string }[]} */ (await Stories._getPageOptionsServer(bookId, pageId));
+            return /** @type {{ toPage: number, type:string, name: string }[]} */ (await Stories._getPageOptionsServer(bookId, pageId));
         } catch (error) {
             console.warn('failed to load book options from server, switched to local story', error);
             return Stories._getPageOptionsLocal(pageId);
+        }
+    }
+
+    /**
+     * 
+     * @param bookId {number | null | undefined}
+     * @param pageId {number | null | undefined}
+     * @returns {Promise<string>}
+     */
+    static async getPageType(bookId, pageId){
+        try {
+            return /** @type {string} */ (await Stories._getPageTypeServer(bookId, pageId));
+        } catch (error) {
+            console.warn('failed to load book options from server, switched to local story', error);
+            return Stories._getPageTypeLocal(pageId);
         }
     }
 
@@ -46,6 +61,34 @@ export default class Stories {
             throw new Error(`bookId is ${bookId} in _getPageStoryServer`);
         }
         const res = await Stories.getDataBody(`${PUBLIC_API_URL}/books/${bookId}/${pageId}`);
+        const direct = (typeof res === 'string') ? res : undefined;
+        const nested = typeof res?.data?.books === 'string' ? res.data.books : undefined;
+        const val = nested ?? direct;
+        if (typeof val === 'string' && val !== null && val !== undefined) return val;
+        throw new Error('backend did not return the story as a string');
+
+        const data = res?.data?.books;
+        if (typeof data === 'string' && data !== null && data !== undefined) {
+            return data;
+        } else {
+            throw new Error('backend did not return the story as a string');
+        }
+    }
+
+    /**
+     * 
+     * @param bookId {number | null | undefined}
+     * @param pageId {number | null | undefined}
+     * @returns {Promise<string>}
+     */
+    static async _getPageTypeServer(bookId, pageId){
+        if (pageId === null || pageId === undefined) {
+            throw new Error(`pageId is ${pageId} in _getPageStoryServer`);
+        }
+        if (bookId === null || bookId === undefined) {
+            throw new Error(`bookId is ${bookId} in _getPageStoryServer`);
+        }
+        const res = await Stories.getDataBody(`${PUBLIC_API_URL}/books/${bookId}/${pageId}/type`);
         const direct = (typeof res === 'string') ? res : undefined;
         const nested = typeof res?.data?.books === 'string' ? res.data.books : undefined;
         const val = nested ?? direct;
@@ -116,12 +159,23 @@ export default class Stories {
 
     /**
      * 
+     * @param {number | null | undefined} page
+     */
+    static _getPageTypeLocal(page){
+        if (page === null || page === undefined) {
+            return 'page';
+        }
+        return _getPageTypeJson(0, page);
+    }
+
+    /**
+     * 
      * @param {number | null | undefined} page 
      */
     static _getPageOptionsLocal(page){
         if (page === null || page === undefined) {
             return [
-                {toPage:0, name:"Go back"},
+                {toPage:0, type: 'page', name: 'Go back'},
             ];
         }
         return _getPageOptionsJson(0, page);
