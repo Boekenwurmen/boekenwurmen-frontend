@@ -14,7 +14,7 @@
     const readingSpeed = readingSettingsContext.speed;
 
     /**
-     * @type {{pageId:number,bookId:number}}
+     * @type {number[]}
      */
     const pageContext = getContext('page');
     const clientContext = getContext('client');

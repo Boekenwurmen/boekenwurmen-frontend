@@ -38,8 +38,11 @@ export default class Stories {
      * @returns {Promise<string>}
      */
     static async _getPageStoryServer(bookId, pageId){
-        if ([bookId, pageId].some(v => v === null || v === undefined)) {
-            throw new Error('bookId or pageId are undefined or null');
+        if (pageId === null || pageId === undefined) {
+            throw new Error(`pageId is ${pageId} in _getPageStoryServer`);
+        }
+        if (bookId === null || bookId === undefined) {
+            throw new Error(`bookId is ${bookId} in _getPageStoryServer`);
         }
         const res = await Stories.getDataBody(`${PUBLIC_API_URL}/books/${bookId}/${pageId}`);
         const direct = (typeof res === 'string') ? res : undefined;
@@ -64,8 +67,11 @@ export default class Stories {
      * @returns {Promise<Object[]>}
      */
     static async _getPageOptionsServer(bookId, pageId){
-        if ([bookId, pageId].some(v => v === null || v === undefined)) {
-            throw new Error('bookId or pageId are undefined or null');
+        if (pageId === null || pageId === undefined) {
+            throw new Error(`pageId is ${pageId} in _getPageOptionsServer`);
+        }
+        if (bookId === null || bookId === undefined) {
+            throw new Error(`bookId is ${bookId} in _getPageOptionsServer`);
         }
         const res = await Stories.getDataBody(`${PUBLIC_API_URL}/books/${bookId}/${pageId}/options`);
         const direct = Array.isArray(res) ? res : undefined;

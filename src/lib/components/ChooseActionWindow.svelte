@@ -116,9 +116,9 @@
 
     
     $effect(() => {
-        let {pageId, bookId} = pageContext;
+        let [page, bookId] = pageContext;
         showDelayedLoadingMessage(
-            Stories.getPageOptions(bookId, pageId),
+            Stories.getPageOptions(bookId, page),
             () => options = []
         ).then(e => options = e);
     })
