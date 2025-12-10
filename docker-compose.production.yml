@@ -1,0 +1,51 @@
+services:
+  backend:
+    build:
+      context: ../boekenwurmen-backend
+      dockerfile: Dockerfile
+    container_name: boekenwurmen-backend
+    ports:
+      - "3012:3012"
+    env_file:
+      - ../boekenwurmen-backend/.env
+    volumes:
+      - backend-data:/app/prisma
+    networks:
+      - boekenwurmen-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3012/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: boekenwurmen-frontend
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - boekenwurmen-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000 || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+volumes:
+  backend-data:
+    driver: local
+
+networks:
+  boekenwurmen-network:
+    driver: bridge
