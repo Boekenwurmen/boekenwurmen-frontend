@@ -141,6 +141,7 @@ export default class Stories {
             ]
             case 3: case 6: case 7: return [
                 {toPage:Infinity, name:"Enter library"},
+                {toPage:1, name:"Terug naar hoofdstuk selectie"},
             ]
             case 4: return [
                 {toPage:1, name:"Go back"},
