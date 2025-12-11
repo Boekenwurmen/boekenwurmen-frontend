@@ -24,9 +24,6 @@
     let message = $state('');
 
     $effect(() => {
-        // always clear options when page is 3 (name) or 5 (code)
-        options = [];
-
         // when page is 5, prefill code and do NOT fetch options
         (async () => {
             try {
@@ -94,21 +91,22 @@
             message = 'Network error while saving code.';
         }
     }
-
 </script>
-    {#if clientContext?.id}
-        <div class="story-box">
-            <label for="code-input" class="block mb-2 label-dark">Enter the library code (password)</label>
-            <input id="code-input" type="password" class="story-input" bind:value={codeValue} placeholder="Type the library code here" />
-            <button class="story-button" onclick={submitCode}>Submit code</button>
-            {#if message}
-                <p class="mt-2 message-text">{message}</p>
-            {/if}
-        </div>
-    {:else}
-        <!-- If user reached code page but has no client yet, show nothing -->
-        <div></div>
-    {/if}
+
+{#if clientContext?.id}
+    <div class="story-box">
+        <label for="code-input" class="block mb-2 label-dark">Enter the library code (password)</label>
+        <input id="code-input" type="password" class="story-input" bind:value={codeValue} placeholder="Type the library code here" />
+        <button class="story-button" onclick={submitCode}>Submit code</button>
+        {#if message}
+            <p class="mt-2 message-text">{message}</p>
+        {/if}
+    </div>
+{:else}
+    <!-- If user reached code page but has no client yet, show nothing -->
+    <div></div>
+{/if}
+
 <style>
     .label-dark { color: var(--cover-dark); }
     .message-text { color: #3a3a3a; }

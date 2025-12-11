@@ -23,16 +23,10 @@
     /** @type {number | undefined} */
     let _lastPage = undefined;
     // primitive snapshot of current page for template/reactivity
-    /** @type {number | undefined} */
-    let currentPage = $state(undefined);
     let pageType = $state(
         /**@type {"page" | "enter name" | "enter password" | "set name" | "set password"}*/
         ('page')
     );
-
-    $effect(() => {
-        currentPage = pageContext ? pageContext[0] : undefined;
-    });
         
     let nameValue = $state('');
     /** @type {HTMLInputElement | null} */
