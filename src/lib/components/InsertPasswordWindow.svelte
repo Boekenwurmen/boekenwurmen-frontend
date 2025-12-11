@@ -1,11 +1,7 @@
 <script>
-    import ChooseAction from "./ChooseAction.svelte";
     import { getContext } from 'svelte';
-    import Stories from "./Stories.svelte.js";
     import { PUBLIC_API_URL } from '$env/static/public';
-    import { CODE_PAGE, NAME_PAGE } from '$lib/constants';
     import { prefillCodeForClient, ensureClientExists, saveClientCode } from '../userActions.js';
-    import { showDelayedLoadingMessage } from "./delayedLoadingMessage.js";
 
     const pageContext = getContext('page');
     const clientContext = getContext('client');

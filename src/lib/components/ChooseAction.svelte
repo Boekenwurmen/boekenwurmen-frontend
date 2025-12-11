@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { NAME_PAGE } from '$lib/constants';
     import { getContext } from 'svelte';
     const { action = { toPage: 1, name: "Go back" } } = $props();
 

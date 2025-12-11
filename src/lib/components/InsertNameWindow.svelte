@@ -1,7 +1,7 @@
 <script>
 	import TypeWriter from './TypeWriter.svelte.js';
     import { PUBLIC_API_URL } from '$env/static/public';
-    import { NAME_PAGE, INPUT_FOCUS_DELAY, WELCOME_DELAY } from '$lib/constants';
+    import { INPUT_FOCUS_DELAY, WELCOME_DELAY } from '$lib/constants';
     import { createClient, advanceFromNameToCode } from '$lib/readingActions.js';
     import { getContext } from 'svelte';
     
