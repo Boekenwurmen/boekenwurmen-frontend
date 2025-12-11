@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { NAME_PAGE } from '$lib/constants';
     import { getContext } from 'svelte';
     const { action = { toPage: 1, name: "Go back" } } = $props();
 
@@ -33,8 +34,6 @@
     }
 </script>
 
-{#if currentPage !== 3}
 <button class="story-button story-button-wide my-4" onclick={setPage}>
     {action.name}
 </button>
-{/if}
