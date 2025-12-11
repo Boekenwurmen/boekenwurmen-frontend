@@ -43,14 +43,15 @@
 </script>
 
 <div class="w-full">
+    <!-- <p>isOnNamePage {isOnNamePage}, isOnCodePage {isOnCodePage}</p> -->
+    <ReadingWindow/>
     {#if isOnNamePage}
-       <InsertNameWindow/>
-    {:else}
-        <ReadingWindow/>
+        <InsertNameWindow/>
     {/if}
     {#if isOnCodePage}
         <InsertPasswordWindow/>
-    {:else if !isOnNamePage}
+    {/if}
+    {#if !isOnCodePage && !isOnNamePage}
         <ActionWindow/>
     {/if}
     <ReadingSettings/>
