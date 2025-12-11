@@ -2,12 +2,9 @@
     import ChooseAction from "./ChooseAction.svelte";
     import { getContext } from 'svelte';
     import Stories from "./Stories.svelte";
-    import { PUBLIC_API_URL } from '$env/static/public';
-    import { prefillCodeForClient, ensureClientExists, saveClientCode } from '../userActions.js';
     import { showDelayedLoadingMessage } from "./delayedLoadingMessage";
 
     const pageContext = getContext('page');
-    const clientContext = getContext('client');
     let currentPage = $state(0);
 
     $effect(() => {
@@ -23,20 +20,13 @@
         /**@type {"page" | "enter name" | "enter password" | "set name" | "set password"}*/
         ('page')
     );
-    let codeValue = $state('');
-    let message = $state('');
 
     $effect(() => {
         // snapshot primitives to avoid proxied $state usage
         const page = pageContext ? pageContext[0] : undefined;
         const bookId = pageContext ? pageContext[1] : undefined;
 
-        // normal options for other pages
-        // if (clientContext && clientContext._suppressOptions) {
-        //     options = [];
-        //     return;
-        // }
-        console.log('[ChooseActionWindow] page effect', { page, bookId });
+        // console.log('[ChooseActionWindow] page effect', { page, bookId });
                 
         const optionsPromise = showDelayedLoadingMessage(
             Stories.getPageOptions(bookId, page),
@@ -53,58 +43,6 @@
                 ];
             });
     })
-
-    async function submitCode() {
-        message = '';
-        if (!codeValue) return;
-        try {
-            // Avoid logging sensitive code value
-            console.log('[ChooseActionWindow] submitCode start', { hasCode: !!codeValue, clientId: clientContext?.id });
-            // ensure client exists via helper
-            if (!clientContext.id) {
-                const created = await ensureClientExists(PUBLIC_API_URL, clientContext.name || 'guest');
-                if (created) {
-                    clientContext.id = created.id;
-                    clientContext.name = created.name;
-                }
-            }
-
-            if (!clientContext.id) {
-                message = 'No client id available. Could not save code.';
-                return;
-            }
-            const data = await saveClientCode(PUBLIC_API_URL, clientContext.id, codeValue);
-            if (data && data.success) {
-                message = 'Code saved. Thank you!';
-                // reflect saved value from server
-                if (data.client && data.client.code) {
-                    codeValue = data.client.code;
-                }
-                // fetch fresh client object to confirm in DB and show id
-                try {
-                    const verifyJson = await prefillCodeForClient(clientContext.id, PUBLIC_API_URL, true);
-                    console.log('[ChooseActionWindow] verify client after save', verifyJson);
-                    if (verifyJson && verifyJson.client) {
-                        message += ` Saved for user id ${verifyJson.client.id}.`;
-                    }
-                } catch (ve) {
-                    console.warn('[ChooseActionWindow] could not verify client after save', ve);
-                }
-                // optionally advance page
-                try {
-                    pageContext[0] = (Number(pageContext[0]) || 0) + 1;
-                } catch (e) {
-                    console.error('[ChooseActionWindow] advancing page failed', e);
-                }
-            } else {
-                message = 'Could not save code.';
-                console.warn('[ChooseActionWindow] save code response', { success: !!data?.success, error: data?.message });
-            }
-        } catch (err) {
-            console.error('[ChooseActionWindow] submitCode error', err);
-            message = 'Network error while saving code.';
-        }
-    }
 
 </script>
     {#each options as option}
