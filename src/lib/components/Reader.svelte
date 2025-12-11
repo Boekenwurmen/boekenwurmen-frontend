@@ -50,7 +50,7 @@
     {/if}
     {#if isOnCodePage}
         <InsertPasswordWindow/>
-    {:else if !isOnCodePage}
+    {:else if !isOnNamePage}
         <ActionWindow/>
     {/if}
     <ReadingSettings/>
