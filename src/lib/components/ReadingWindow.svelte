@@ -21,7 +21,6 @@
     const myTypeWriter = new TypeWriter(readingSpeed, 'Loading...');
     readingSettingsContext.myTypeWriter = myTypeWriter;
 
-
     // Guard to avoid repeated fetches or re-entrancy when page doesn't change
     /** @type {number | undefined} */
     let _lastPage = undefined;
@@ -31,6 +30,8 @@
     $effect(() => {
         currentPage = pageContext ? pageContext[0] : undefined;
     });
+    
+    const isOnNamePage = $derived(currentPage === NAME_PAGE);
     
     let nameValue = $state('');
     /** @type {HTMLInputElement | null} */
@@ -62,8 +63,9 @@
         if (page == null) return; // nothing to do
         if (page === _lastPage) return; // already handled this page
         _lastPage = page;
+        const isPageName = page === NAME_PAGE;
 
-        if (page === NAME_PAGE) {
+        if (isPageName) {
             // show prompt to ask for name; reset typing to prompt
             myTypeWriter.reset('What is your name?');
             // focus the input shortly after the prompt is shown
@@ -93,7 +95,7 @@
 
 </script>
 
-{#if currentPage === NAME_PAGE}
+{#if isOnNamePage}
     <!-- Inline box styled like story windows -->
     <div class="story-box typing">
         <p>{myTypeWriter.shown}</p>

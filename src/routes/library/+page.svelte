@@ -3,6 +3,7 @@
   import type { Book } from '../../lib/books';
   import { writable, derived } from 'svelte/store';
   import { onMount } from 'svelte';
+  import { goto } from '$app/navigation';
 
   const allBooks: Book[] = books;
   let favorites: number[] = [];
@@ -20,6 +21,13 @@
       favorites = JSON.parse(saved);
     }
   });
+
+  function logout() {
+    try {
+      localStorage.removeItem('auth');
+    } catch {}
+    goto('/login');
+  }
 
   function toggleFavorite(bookId: number) {
     if (favorites.includes(bookId)) {
@@ -48,6 +56,7 @@
   <header class="toolbar">
     <h2>📚 Fantasie Bibliotheek</h2>
     <div class="controls">
+      <button class="chip" on:click={logout} aria-label="Uitloggen">↪ Uitloggen</button>
       <div class="search-wrap">
         <input
           type="search"
