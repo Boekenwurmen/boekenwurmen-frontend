@@ -31,8 +31,14 @@
 				</button>
 			</div>
 			<div class="leaderboard-wrap">
-				<a href="/leaderboard" class="button button--small" aria-label="Toon ranglijst"
-					>Leaderboard</a>
+				<a href="/leaderboard" class="button button--small" aria-label="Toon ranglijst">
+					Leaderboard
+				</a>
+			</div>
+			<div class="leaderboard-wrap">
+				<a href="/library" class="button button--small" aria-label="Toon bibliotheek">
+					Library
+				</a>
 			</div>
 		</div>
 	</div>
