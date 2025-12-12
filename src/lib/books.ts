@@ -16,7 +16,7 @@ const books: Book[] = [
     author: 'A. Jansen',
     category: 'Fictie',
     year: 1998,
-    cover: '/static/placeholder-book.png',
+    cover: '/static/covers/verborgen-bibliotheek.svg',
     description: 'Een mysterie dat zich afspeelt tussen de boekenplanken.'
   },
   {
@@ -25,7 +25,7 @@ const books: Book[] = [
     author: 'B. van Dijk',
     category: 'Geschiedenis',
     year: 2005,
-    cover: '/static/placeholder-book.png',
+    cover: '/static/covers/geschiedenis-avontuur.svg',
     description: 'Een overzicht van ontdekkingsreizigers en locaties.'
   },
   {
@@ -34,7 +34,7 @@ const books: Book[] = [
     author: 'C. de Vries',
     category: 'Fictie',
     year: 2018,
-    cover: '/static/placeholder-book.png',
+    cover: '/static/covers/korte-verhalen.svg',
     description: 'Een bundel korte, intieme vertellingen.'
   },
   {
@@ -43,7 +43,7 @@ const books: Book[] = [
     author: 'D. Bakker',
     category: 'Techniek',
     year: 2023,
-    cover: '/static/placeholder-book.png',
+    cover: '/static/covers/programmeren-svelte.svg',
     description: 'Praktische gids voor moderne Svelte apps.'
   },
   {
@@ -52,7 +52,7 @@ const books: Book[] = [
     author: 'E. Visser',
     category: 'Cultuur',
     year: 1975,
-    cover: '/static/placeholder-book.png',
+    cover: '/static/covers/oude-legendes.svg',
     description: 'Een collectie mythen en sagen van vroeger.'
   },
   {
