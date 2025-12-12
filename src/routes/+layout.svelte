@@ -10,9 +10,15 @@
 </svelte:head>
 
 
-<header class="bg-yellow-700">
+<header class="bg-yellow-700 grid grid-cols-4 gap-4">
 	<a href="/">
 		<img src={favicon} alt="Library logo" class="header-icon w-30 h-30" />
+	</a>
+	<a href="/leaderboard" class="button button--small" aria-label="Toon ranglijst">
+		Leaderboard
+	</a>
+	<a href="/library" class="button button--small" aria-label="Toon ranglijst">
+		Library
 	</a>
 </header>
 <div class="book-page-container">
