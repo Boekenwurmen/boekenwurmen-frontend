@@ -21,10 +21,6 @@
     /** @type {number | undefined} */
     let _lastPage = undefined;
     // primitive snapshot of current page for template/reactivity
-    let pageType = $state(
-        /**@type {"page" | "enter name" | "enter password" | "set name" | "set password"}*/
-        ('page')
-    );
 
     $effect(() => {
         // snapshot primitives from proxied $state
@@ -40,13 +36,9 @@
             Stories.getPageStory(bookId, page),
             () => myTypeWriter.showLoadingMessage()
         );
-        const typePromise = Stories.getPageType(bookId, page);
 
-        Promise.all([storyPromise, typePromise]).then(v => {
-            const [story, myPageType] = v;
-            pageType = myPageType;
-            myTypeWriter.reset(story);
-        }).catch(err => {
+        storyPromise.then(story => myTypeWriter.reset(story))
+        .catch(err => {
             // on error, show fallback text but avoid throwing
             myTypeWriter.reset('Failed to load story.');
             console.error('Error loading story for page', page, err);

@@ -23,10 +23,6 @@
     const errorOptions = $derived(options.filter(opt => opt.type === "onError"));
     const errorOptionBadPassword = $derived(errorOptions.find(opt => opt.name === "bad passord"));
     const errorOptionUnknown = $derived(errorOptions.find(opt => opt.name === "service unavailable"));
-    let pageType = $state(
-        /**@type {"page" | "enter name" | "enter password" | "set name" | "set password"}*/
-        ('page')
-    );
     let codeValue = $state('');
     let message = $state('');
 

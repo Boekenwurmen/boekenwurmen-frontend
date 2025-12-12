@@ -26,10 +26,6 @@
     /** @type {number | undefined} */
     let _lastPage = undefined;
     // primitive snapshot of current page for template/reactivity
-    let pageType = $state(
-        /**@type {"page" | "enter name" | "enter password" | "set name" | "set password"}*/
-        ('page')
-    );
         
     let nameValue = $state('');
     /** @type {HTMLInputElement | null} */

@@ -16,10 +16,6 @@
      * @type {{ toPage: number, type: string, name: string }[]}
      */
     let options = $state([]);
-    let pageType = $state(
-        /**@type {"page" | "enter name" | "enter password" | "set name" | "set password"}*/
-        ('page')
-    );
 
     $effect(() => {
         // snapshot primitives to avoid proxied $state usage
@@ -32,10 +28,9 @@
             Stories.getPageOptions(bookId, page),
             () => options = []
         );
-        const typePromise = Stories.getPageType(bookId, page);
 
-        Promise.all([optionsPromise, typePromise])
-            .then(v => {[options, pageType] = v; console.log('options loaded', v[0], v[1])})
+        optionsPromise
+            .then(v => options = v)
             .catch(err => {
                 console.error('[ChooseActionWindow] failed getPageOptions', err);
                 options = [
