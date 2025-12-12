@@ -41,10 +41,10 @@
 				);
 				goto('/library');
 			} else {
-				message = data?.message || 'Naam of code is onjuist.';
+				message = 'Je naam of code is onjuist.';
 			}
 		} catch (e) {
-			message = 'Netwerkfout tijdens inloggen.';
+			message = 'Er is netwerkfout opgetreden tijdens het inloggen.';
 		}
 	}
 </script>
@@ -84,7 +84,7 @@
 					Log in
 				</button>
 				{#if message}
-					<p style="margin-top:.6rem;color:#b00020">{message}</p>
+					<p class="login-error">{message}</p>
 				{/if}
 			</form>
 		</div>
