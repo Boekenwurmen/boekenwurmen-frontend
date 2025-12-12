@@ -1,5 +1,6 @@
 <script lang="ts">
     import { getContext } from 'svelte';
+    import { goto } from '$app/navigation';
     const { 
         action = { toPage: 0, type: 'page', name: 'Go back' } as { toPage: number; type: "page" | "bad ending" | "ending" | "to library" | "submit" | "onError"; name: string; }
     } = $props();
@@ -16,6 +17,10 @@
 
     function setPage() {
         try {
+            if (action.type === "to library") {
+                goto('/library');
+                return;
+            }
             const pageSnapshot = pageContext ? pageContext[0] : undefined;
             const actionSnapshot = { toPage: Number(action?.toPage), name: String(action?.name) };
             if (!pageContext) {
