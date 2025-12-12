@@ -29,8 +29,7 @@
             () => options = []
         );
 
-        optionsPromise
-            .then(v => options = v)
+        optionsPromise.then(v => options = v.filter(opt => opt.type !== "onError"))
             .catch(err => {
                 console.error('[ChooseActionWindow] failed getPageOptions', err);
                 options = [
