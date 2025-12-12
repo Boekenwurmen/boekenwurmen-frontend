@@ -1,7 +1,8 @@
 <script lang="ts">
     import { getContext } from 'svelte';
-    const { action = { toPage: 1, name: "Go back" } } = $props();
-
+    const { 
+        action = { toPage: 0, type: 'page', name: 'Go back' } as { toPage: number; type: "page" | "bad ending" | "ending" | "to library" | "submit" | "onError"; name: string; }
+    } = $props();
 
     // type context as a single-number tuple (or undefined when not provided)
     const pageContext = getContext<[number]>('page') as [number] | undefined;

@@ -13,7 +13,7 @@
     });
 
     /**
-     * @type {{ toPage: number, type: string, name: string }[]}
+     * @type {{ toPage: number, type: "page" | "bad ending" | "ending" | "to library" | "submit" | "onError", name: string }[]}
      */
     let options = $state([]);
 
