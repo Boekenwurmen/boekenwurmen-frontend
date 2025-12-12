@@ -37,7 +37,7 @@
 			</div>
 			<div class="leaderboard-wrap">
 				<a href="/library" class="button button--small" aria-label="Toon bibliotheek">
-					Library
+					Bibliotheek
 				</a>
 			</div>
 		</div>
