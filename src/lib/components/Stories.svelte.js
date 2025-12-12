@@ -168,28 +168,6 @@ export default class Stories {
         return _getPageTypeJson(0, page);
     }
 
-            case 0: return [
-                {toPage:2, name:"You hit the ground out of frustation"},
-                {toPage:1, name:"You scream in pain from the sand in your eyes"},
-            ]
-            case 1: return [
-                {toPage:2, name:"You hit the ground out of frustration"},
-                {toPage:2, name:"You scream in pain from the sand in your eyes"},
-            ]
-            case 2: return [
-                {toPage:3, name:"Check yourself for wounds"},
-                {toPage:3, name:"Look around to see where you are"},
-            ]
-            case 3: case 6: case 7: return [
-                {toPage:Infinity, name:"Enter library"},
-                {toPage:1, name:"Terug naar hoofdstuk selectie"},
-            ]
-            case 4: return [
-                {toPage:1, name:"Go back"},
-            ]
-            default: return [
-                {toPage:1, name:"Go back"},
-            ]
     /**
      * 
      * @param {number | null | undefined} page 
