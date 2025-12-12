@@ -44,7 +44,7 @@
 				message = 'Je naam of code is onjuist.';
 			}
 		} catch (e) {
-			message = 'Er is netwerkfout opgetreden tijdens het inloggen.';
+			message = 'Er is een netwerkfout opgetreden tijdens het inloggen.';
 		}
 	}
 </script>
