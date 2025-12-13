@@ -21,14 +21,14 @@ export default class Stories {
      * 
      * @param bookId {number | null | undefined}
      * @param pageId {number | null | undefined}
-     * @returns {Promise<{ toPage: number, type:string, name: string }[]>}
+     * @returns {Promise<{ toPage: number, type:"page" | "bad ending" | "ending" | "to library" | "submit" | "onError", name: string }[]>}
      */
     static async getPageOptions(bookId, pageId){
         try {
-            return /** @type {{ toPage: number, type:string, name: string }[]} */ (await Stories._getPageOptionsServer(bookId, pageId));
+            return /** @type {{ toPage: number, type:"page" | "bad ending" | "ending" | "to library" | "submit" | "onError", name: string }[]} */ (await Stories._getPageOptionsServer(bookId, pageId));
         } catch (error) {
             console.warn('failed to load book options from server, switched to local story', error);
-            return Stories._getPageOptionsLocal(pageId);
+            return /** @type {{ toPage: number, type:"page" | "bad ending" | "ending" | "to library" | "submit" | "onError", name: string }[]} */ (Stories._getPageOptionsLocal(pageId));
         }
     }
 

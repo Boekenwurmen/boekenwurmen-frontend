@@ -41,9 +41,9 @@ export async function saveClientCode(baseUrl, clientId, code) {
       body: JSON.stringify({ code })
     });
     const data = await res.json();
-    return data;
+    return { ok: res.ok, status: res.status, data };
   } catch (e) {
     console.warn('[userActions] saveClientCode failed', e);
-    return null;
+    return { ok: false, status: 0, data: { message: 'network-error' } };
   }
 }
