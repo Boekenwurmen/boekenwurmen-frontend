@@ -17,7 +17,7 @@
 
     function setPage() {
         try {
-            if (action.type === "to library") {
+            if (action.type === "to library" || action.type === "ending") {
                 goto('/library');
                 return;
             }
