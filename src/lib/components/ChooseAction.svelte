@@ -1,8 +1,9 @@
 <script lang="ts">
-	import { NAME_PAGE } from '$lib/constants';
     import { getContext } from 'svelte';
-    const { action = { toPage: 1, name: "Go back" } } = $props();
-
+    import { goto } from '$app/navigation';
+    const { 
+        action = { toPage: 0, type: 'page', name: 'Go back' } as { toPage: number; type: "page" | "bad ending" | "ending" | "to library" | "submit" | "onError"; name: string; }
+    } = $props();
 
     // type context as a single-number tuple (or undefined when not provided)
     const pageContext = getContext<[number]>('page') as [number] | undefined;
@@ -16,6 +17,10 @@
 
     function setPage() {
         try {
+            if (action.type === "to library") {
+                goto('/library');
+                return;
+            }
             const pageSnapshot = pageContext ? pageContext[0] : undefined;
             const actionSnapshot = { toPage: Number(action?.toPage), name: String(action?.name) };
             if (!pageContext) {

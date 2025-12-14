@@ -32,3 +32,20 @@ export function advanceFromNameToCode(pageContext) {
     // ignore
   }
 }
+
+/**
+ * Jumps to the target page stored in an options object
+ * @param {number[]} pageContext keeps track of what page we are on
+ * @param {{toPage: number, type: string, name: string}|undefined} option has the new page inside
+ * @returns {boolean} true if successful, false if unsuccessful
+ */
+export function followOption(pageContext, option) {
+  try {
+    if (!pageContext || !option || option.toPage === undefined || option.toPage === null) return false;
+    pageContext[0] = option.toPage;
+    return true;
+  } catch (e) {
+    return false;
+    // ignore
+  }
+}
