@@ -6,11 +6,14 @@
 	import InsertPasswordWindow from "./InsertPasswordWindow.svelte";
 	import InsertNameWindow from "./InsertNameWindow.svelte";
 	import Stories from "./Stories.svelte";
+    import { page } from '$app/stores';
+    
+    
+    let pageId = 0;
+    const bookParam = $page.url.searchParams.get('book');
+    let bookId =  bookParam ? parseInt(bookParam) : 0
 
-    let page = 0;
-    let bookId = 0;
-
-    const pageContext = $state([ page, bookId ]);
+    const pageContext = $state([ pageId, bookId ]);
 
     // client context holds created client id and name
     const client = $state({ id: null, name: null });

@@ -64,6 +64,16 @@ const books: Book[] = [
     cover: '/static/covers/rebel-rose.svg',
     pdf: '/static/covers/the-rebel-and-the-rose.pdf',
     description: 'Een historische roman vol romance, rebellie en avontuur.'
+  },
+  {
+    id: 7,
+    title: 'De Race Tegen de Tijd',
+    author: 'ChatGPT',
+    category: 'Fictie',
+    year: 2025,
+    cover: '/static/placeholder-book.png',
+    pdf: '/read?book=1',
+    description: 'Een tijdreiziger wordt in de middeleeuwen gekatapulteerd met slechts één uur om een geheim document te vinden dat de toekomst kan redden. Elke keuze telt, want wanneer de timer afloopt, verdwijn je terug naar het heden.',
   }
 ];
 
