@@ -1,9 +1,12 @@
 test-results
 node_modules
+DEPLOYMENT.md
+QUICKSTART.md
 
 # Output
 .output
 .vercel
+.claude
 .netlify
 .wrangler
 /.svelte-kit
