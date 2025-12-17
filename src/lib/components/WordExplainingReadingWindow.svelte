@@ -33,6 +33,7 @@
     interface Split {
         beforeWord: string;
         word: string;
+        isWordComplete: boolean;
     }
 
     let matches:Match[] = $state([]);
@@ -78,6 +79,7 @@
             tempResult.push({
                 beforeWord: text.substring(previousIndex, e?.startIndex ?? text.length),
                 word: !e || e?.startIndex > text.length ? '' : text.substring(e?.startIndex, e?.endIndex),
+                isWordComplete: e && e?.endIndex <= text.length,
             });
             previousIndex = e?.endIndex;
         };
@@ -100,6 +102,10 @@
 {#each myResult as snippet}
     {snippet.beforeWord ?? ''}
     {#if snippet.word}
-        <WordExplainer explainer={snippet.word}/>
+        {#if snippet.isWordComplete}
+            <WordExplainer explainer={snippet.word}/>
+        {:else}
+            {snippet.word}
+        {/if}
     {/if}
 {/each}
