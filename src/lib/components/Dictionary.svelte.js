@@ -4,7 +4,7 @@ import Stories from "./Stories.svelte";
 export default class Dictionary {
     /**
      * 
-     * @param word {number | null | undefined}
+     * @param word {string | null | undefined}
      * @returns {Promise<Object>}
      */
     static async getDefinition(word){
@@ -31,7 +31,7 @@ export default class Dictionary {
 
     /**
      * 
-     * @param word {number | null | undefined}
+     * @param word {string | null | undefined}
      * @returns {Promise<string>}
      */
     static async _getDefinitionServer(word){
@@ -64,7 +64,7 @@ export default class Dictionary {
 
     /**
      * 
-     * @param {number | null | undefined} word
+     * @param {string | null | undefined} word
      */
     static _getDefinitionLocal(word){
         return {};
