@@ -6,7 +6,12 @@ export default class RegexWordMatcher {
      * @param {string[]} words
      */
     constructor(words) {
-        this.regex = new RegExp(`${words.join("|")}`, "gi");
+        if (!words || words.length == 0) {
+            this.regex = null;
+            // this.regex = /(?!)/; // won't match anything
+        } else {
+            this.regex = new RegExp(`${words.join("|")}`, "gi");
+        }
     }
 
     /**
@@ -14,6 +19,9 @@ export default class RegexWordMatcher {
      * @returns {string[]} gematchte woorden (uniek)
      */
     match(text) {
+        if (!this.regex) {
+            return []
+        }
         const matches = text.match(this.regex) ?? [];
         return matches;
         // return [...new Set(matches.map(w => w.toLowerCase()))];
@@ -24,7 +32,7 @@ export default class RegexWordMatcher {
      * @returns {{ startIndex: number; endIndex: number; }[]} text split on regex matches
      */
     split(text) {
-        if (!text) {
+        if (!this.regex || !text) {
             return [];
         }
         const matches = [...text.matchAll(this.regex)];

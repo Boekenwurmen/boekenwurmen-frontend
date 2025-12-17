@@ -39,11 +39,10 @@
 
     $effect(() => {
         console.log('effect1');
-        // snapshot primitives from proxied $state
-        // const page = pageContext ? Number(pageContext[0]) : undefined;
-        // const bookId = pageContext ? Number(pageContext[1]) : undefined;
 
-        const matcher = new RegexWordMatcher(["sandy", "wind", "eyes"]);
+        const dictionaryWords = ["sandy", "wind", "eyes"];
+
+        const matcher = new RegexWordMatcher(dictionaryWords);
         matches = matcher.split(completeText);
         // console.log('matches23', matches, completeText);
     });
