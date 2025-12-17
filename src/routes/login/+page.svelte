@@ -2,6 +2,7 @@
 	import { goto } from '$app/navigation';
 	import { PUBLIC_API_URL } from '$env/static/public';
 	import { onMount } from 'svelte';
+	import '../css/login.css';
 	let name = '';
 	let code = '';
 	let message: string = '';
@@ -34,13 +35,16 @@
 			const data = await res.json().catch(() => ({}));
 			if (res.ok && data?.success && data?.client?.id) {
 				// Persist a lightweight auth flag (cookies are HttpOnly on backend origin)
-				localStorage.setItem('auth', JSON.stringify({ loggedIn: true, id: data.client.id, name: data.client.name }));
+				localStorage.setItem(
+					'auth',
+					JSON.stringify({ loggedIn: true, id: data.client.id, name: data.client.name })
+				);
 				goto('/library');
 			} else {
-				message = data?.message || 'Naam of code is onjuist.';
+				message = 'Je naam of code is onjuist.';
 			}
 		} catch (e) {
-			message = 'Netwerkfout tijdens inloggen.';
+			message = 'Er is een netwerkfout opgetreden tijdens het inloggen.';
 		}
 	}
 </script>
@@ -48,42 +52,44 @@
 <div class="book-content">
 	<div class="book-page book-page-left">
 		<div class="page-number">Login</div>
-		<form class="login-form" on:submit|preventDefault={onSubmit}>
-			<h2 class="page-title">Log in</h2>
-			<label>
-				<span>Naam</span>
-				<input type="text" bind:value={name} name="name" autocomplete="name" required />
-			</label>
-			<label>
-				<span>Code</span>
-				<input type="password" bind:value={code} name="code" autocomplete="current-password" required />
-			</label>
-			<button type="submit" class="start-button book-like" aria-label="Login">
-				<span class="book-cover">
-					<span class="cover-subtitle">Login</span>
-					<span class="bookmark" aria-hidden="true"></span>
-				</span>
-			</button>
-			{#if message}
-			  <p style="margin-top:.6rem;color:#b00020">{message}</p>
-			{/if}
-		</form>
-	</div>
-	<div class="book-page book-page-right">
-		<div class="page-number">Info</div>
-		<div class="page-content">
-			<p>Voer je naam en code in om naar de bibliotheek te gaan.</p>
+		<div class="login-content">
+			<div class="page-content">
+				<p>Voer je naam en code in om naar de bibliotheek te gaan.</p>
+			</div>
+			<form class="login-form story-box" on:submit|preventDefault={onSubmit}>
+				<h2 class="page-title">Log in</h2>
+				<label>
+					<span>Naam</span>
+					<input
+						type="text"
+						class="story-input"
+						bind:value={name}
+						name="name"
+						autocomplete="name"
+						required
+					/>
+				</label>
+				<label>
+					<span>Code</span>
+					<input
+						type="password"
+						class="story-input"
+						bind:value={code}
+						name="code"
+						autocomplete="current-password"
+						required
+					/>
+				</label>
+				<button type="submit" class="story-button story-button-wide" aria-label="Login">
+					Log in
+				</button>
+				{#if message}
+					<p class="login-error">{message}</p>
+				{/if}
+			</form>
 		</div>
 	</div>
+	<div class="book-page book-page-right">
+		<div class="page-number">&nbsp;</div>
+	</div>
 </div>
-
-<style>
-	.login-form {
-		display: flex;
-		flex-direction: column;
-		gap: 0.75rem;
-		max-width: 320px;
-	}
-	label span { display: block; margin-bottom: 0.25rem; }
-	input { padding: 0.5rem 0.75rem; border: 1px solid #ccc; border-radius: 4px; }
-</style>
