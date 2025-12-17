@@ -3,9 +3,22 @@
  */
 export default class RegexWordMatcher {
     /**
+     * @type {null|RegExp}
+     */
+    regex = null;
+
+    /**
      * @param {string[]} words
      */
     constructor(words) {
+        this.setRegex(words);
+    }
+
+    /**
+     * 
+     * @param {string[]} words 
+     */
+    setRegex(words) {
         if (!words || words.length == 0) {
             this.regex = null;
             // this.regex = /(?!)/; // won't match anything

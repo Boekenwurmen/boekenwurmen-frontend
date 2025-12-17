@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Dictionary from "./Dictionary.svelte";
 	import WordExplainer from "./WordExplainer.svelte";
 	import RegexWordMatcher from "./WordMatcher.svelte";
     // import Snippet from "./WordExplainer";
@@ -36,13 +37,20 @@
 
     let matches:Match[] = $state([]);
     let myResult:Split[] = $state([]);
+    // const dictionaryWords = ["sandy", "wind", "eyes"];
+    const matcher = new RegexWordMatcher([]);
+    
+    Dictionary.getBookList().then(list => {
+        console.log('list', list)
+        matcher.setRegex(list);
+        matches = matcher.split(completeText);
+    })
+    .catch(err => {
+        console.error('Error loading dictionary word list', err);
+    });
 
     $effect(() => {
         console.log('effect1');
-
-        const dictionaryWords = ["sandy", "wind", "eyes"];
-
-        const matcher = new RegexWordMatcher(dictionaryWords);
         matches = matcher.split(completeText);
         // console.log('matches23', matches, completeText);
     });
@@ -64,7 +72,6 @@
 
         const matches2 = matches;
 
-
         // for(let e of matches2) {
         for (let i = 0; i < matches2.length +1 && previousIndex <= text.length; i++) {
             const e = matches2[i];
@@ -74,7 +81,7 @@
             });
             previousIndex = e?.endIndex;
         };
-        console.log('tempResult', tempResult.toString(), text);
+        // console.log('tempResult', tempResult.toString(), text);
         myResult = tempResult;
     });
     // const initialText = $derived(text);
