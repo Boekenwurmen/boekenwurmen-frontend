@@ -13,11 +13,6 @@
         wordDefinition: WordDefinition;
     }
 
-    // const {
-    //     explainer = {word: '', wordDefinition: { wordType: '', definition: '', example: '' }} as Word
-    // } = $props();
-    // const definition: WordDefinition = explainer.wordDefinition;
-
     const { explainer = '' as string } = $props();
     const definition:WordDefinition = { wordType: '', definition: '', example: '' }
     let definitionText = $state('');
