@@ -1,5 +1,6 @@
 <script lang="ts">
 	import WordExplainer from "./WordExplainer.svelte";
+	import RegexWordMatcher from "./WordMatcher.svelte";
     // import Snippet from "./WordExplainer";
 
     const {
@@ -23,13 +24,30 @@
         word: Word;
     }
 
+    interface Match {
+        startIndex: number;
+        endIndex: number;
+    }
 
     interface Split {
         beforeWord: string;
         word: string;
     }
 
+    let matches:Match[] = $state([]);
     let myResult:Split[] = $state([]);
+
+    $effect(() => {
+        console.log('effect1');
+        // snapshot primitives from proxied $state
+        // const page = pageContext ? Number(pageContext[0]) : undefined;
+        // const bookId = pageContext ? Number(pageContext[1]) : undefined;
+
+        const matcher = new RegexWordMatcher(["sandy", "wind", "eyes"]);
+        matches = matcher.split(completeText);
+        // console.log('matches23', matches, completeText);
+    });
+
     $effect(() => {
         console.log('effect2');
         let previousIndex = 0;
@@ -39,11 +57,13 @@
             
         // }
 
-        const matches2 = [
-            {startIndex: 10, endIndex: 15},
-            {startIndex: 20, endIndex: 25},
-            {startIndex: 30, endIndex: 35},
-        ]
+        // const matches2 = [
+        //     {startIndex: 10, endIndex: 15},
+        //     {startIndex: 20, endIndex: 25},
+        //     {startIndex: 30, endIndex: 35},
+        // ]
+
+        const matches2 = matches;
 
 
         // for(let e of matches2) {
