@@ -145,6 +145,16 @@ const books: Book[] = [
     year: 2021,
     cover: '/static/covers/zen.svg',
     description: 'Oude wijsheid toegepast op modern leven.'
+  },
+  {
+    id: 16,
+    title: 'De Race Tegen de Tijd',
+    author: 'ChatGPT',
+    category: 'Fictie',
+    year: 2025,
+    cover: '/static/placeholder-book.png',
+    pdf: '/read?book=1',
+    description: 'Een tijdreiziger wordt in de middeleeuwen gekatapulteerd met slechts één uur om een geheim document te vinden dat de toekomst kan redden. Elke keuze telt, want wanneer de timer afloopt, verdwijn je terug naar het heden.',
   }
 ];
 
