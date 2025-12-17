@@ -2,13 +2,10 @@
 	import WordExplainer from "./WordExplainer.svelte";
     // import Snippet from "./WordExplainer";
 
-    const {text = "" as string} = $props();
-
-    // $effect(() => {
-    //     // snapshot primitives from proxied $state
-    //     // const page = pageContext ? Number(pageContext[0]) : undefined;
-    //     // const bookId = pageContext ? Number(pageContext[1]) : undefined;
-    // })
+    const {
+        text = '' as string,
+        completeText = '' as string,
+    } = $props();
 
     interface WordDefinition {
         wordType: string;

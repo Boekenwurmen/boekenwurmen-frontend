@@ -23,6 +23,8 @@
     let _lastPage = undefined;
     // primitive snapshot of current page for template/reactivity
 
+    let finalText = $state('');
+
     $effect(() => {
         // snapshot primitives from proxied $state
         const page = pageContext ? Number(pageContext[0]) : undefined;
@@ -38,7 +40,10 @@
             () => myTypeWriter.showLoadingMessage()
         );
 
-        storyPromise.then(story => myTypeWriter.reset(story))
+        storyPromise.then(story => {
+            myTypeWriter.reset(story)
+            finalText = story;
+        })
         .catch(err => {
             // on error, show fallback text but avoid throwing
             myTypeWriter.reset('Failed to load story.');
@@ -48,5 +53,8 @@
 </script>
 
 <p class="story-box typing">
-    <WordExplainingReadingWindow text={myTypeWriter.shown}/>
+    <WordExplainingReadingWindow 
+        text={myTypeWriter.shown}
+        completeText={finalText}
+    />
 </p>

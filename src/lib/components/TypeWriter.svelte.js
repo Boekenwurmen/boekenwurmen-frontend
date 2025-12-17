@@ -16,6 +16,13 @@ export default class TypeWriter {
         this.typeWriter = this.typeWriter.bind(this);
         this.reset = this.reset.bind(this);
     }
+
+    /**
+     * @returns The text that will be shown when the typewriter is done, this will view it before it is done.
+     */
+    getFinalText() {
+        return this._text;
+    }
     
 
     /**
