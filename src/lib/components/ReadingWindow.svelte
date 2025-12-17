@@ -3,6 +3,7 @@
 	import Stories from './Stories.svelte.js';
     import { getContext } from 'svelte';
     import { showDelayedLoadingMessage } from './delayedLoadingMessage.js';
+	import WordExplainingReadingWindow from './WordExplainingReadingWindow.svelte';
     
     /**
      * @type {{speed:number, myTypeWriter:TypeWriter}}
@@ -46,4 +47,6 @@
     })
 </script>
 
-<p class="story-box typing">{myTypeWriter.shown}</p>
+<p class="story-box typing">
+    <WordExplainingReadingWindow text={myTypeWriter.shown}/>
+</p>
