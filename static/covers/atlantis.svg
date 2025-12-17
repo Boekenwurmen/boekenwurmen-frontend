@@ -1,0 +1,17 @@
+<svg viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="oceanGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e40af;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0c4a6e;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="300" height="400" fill="url(#oceanGrad)"/>
+  <rect x="20" y="20" width="260" height="360" fill="none" stroke="#60a5fa" stroke-width="2"/>
+  <path d="M 80 150 Q 150 120 220 150" fill="none" stroke="#60a5fa" stroke-width="2"/>
+  <circle cx="150" cy="80" r="20" fill="#fbbf24" opacity="0.8"/>
+  <text x="150" y="240" font-size="28" font-weight="bold" text-anchor="middle" fill="#60a5fa" font-family="Georgia, serif">Reis naar</text>
+  <text x="150" y="280" font-size="28" font-weight="bold" text-anchor="middle" fill="#fbbf24" font-family="Georgia, serif">Atlantis</text>
+  <line x1="80" y1="300" x2="220" y2="300" stroke="#60a5fa" stroke-width="1" opacity="0.7"/>
+  <text x="150" y="340" font-size="14" text-anchor="middle" fill="#60a5fa" font-family="Georgia, serif">S. Magellan</text>
+  <text x="150" y="370" font-size="12" text-anchor="middle" fill="#60a5fa" opacity="0.7">2008</text>
+</svg>
