@@ -23,8 +23,6 @@
     let _lastPage = undefined;
     // primitive snapshot of current page for template/reactivity
 
-    let finalText = $state('');
-
     /**
      * @type {Promise<string>|null}
      */
@@ -47,7 +45,6 @@
 
         storyPromise.then(story => {
             myTypeWriter.reset(story)
-            finalText = story;
         })
         .catch(err => {
             // on error, show fallback text but avoid throwing
@@ -61,7 +58,6 @@
 <p class="story-box typing">
     <WordExplainingReadingWindow 
         text={myTypeWriter.shown}
-        completeText={finalText}
         storyPromise={storyPromise}
     />
 </p>
