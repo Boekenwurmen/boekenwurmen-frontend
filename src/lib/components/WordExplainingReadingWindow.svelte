@@ -6,6 +6,7 @@
     const {
         text = '' as string,
         completeText = '' as string,
+        storyPromise = null as Promise<string>|null,
     } = $props();
 
     interface WordDefinition {

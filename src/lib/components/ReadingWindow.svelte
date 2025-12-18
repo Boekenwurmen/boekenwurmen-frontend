@@ -25,6 +25,8 @@
 
     let finalText = $state('');
 
+    let storyPromise = $state();
+
     $effect(() => {
         // snapshot primitives from proxied $state
         const page = pageContext ? Number(pageContext[0]) : undefined;
@@ -35,7 +37,7 @@
         _lastPage = page;
 
         // fetch the story for this page, showing a loading message if slow
-        const storyPromise = showDelayedLoadingMessage(
+        storyPromise = showDelayedLoadingMessage(
             Stories.getPageStory(bookId, page),
             () => myTypeWriter.showLoadingMessage()
         );
@@ -56,5 +58,6 @@
     <WordExplainingReadingWindow 
         text={myTypeWriter.shown}
         completeText={finalText}
+        storyPromise={storyPromise}
     />
 </p>
