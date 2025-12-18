@@ -6,7 +6,7 @@
     const {
         text = '' as string,
         completeText = '' as string,
-        storyPromise = undefined as Promise<string>|null,
+        storyPromise = null as Promise<string>|null,
     } = $props();
 
     interface WordDefinition {
@@ -47,14 +47,18 @@
     // should trigger on each new page
     $effect(() => {
         console.log('storyPromise', storyPromise);
-        const wordListPromise = Dictionary.getBookList();
-        Promise.all([storyPromise, wordListPromise]).then(getMatches)
-        .catch(err => {
-            console.error('Error loading dictionary word list', err);
-        });
+        if (storyPromise) {
+            const wordListPromise = Dictionary.getBookList();
+            Promise.all([storyPromise, wordListPromise]).then(getMatches)
+            .catch(err => {
+                console.error('Error loading dictionary word list', err);
+            });
+        } else {
+            console.error('Error loading dictionary word list', 'no story promise');
+        }
     });
 
-    function getMatches(resolutions) {
+    function getMatches(resolutions:[string, string[]]) {
         const [completeText, bookList] = resolutions;
         console.log('getmatches', completeText, bookList);
         matcher.setRegex(bookList);
@@ -62,7 +66,7 @@
         console.log('list', bookList, completeText, matches);
     }
 
-    // should trigger on each typed character
+    // should trigger on each of typewriter's typed characters
     $effect(() => {
         console.log('effect2');
         let previousIndex = 0;

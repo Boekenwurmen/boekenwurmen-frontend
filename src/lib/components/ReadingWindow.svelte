@@ -26,7 +26,7 @@
     let finalText = $state('');
 
     /**
-     * @type {Promise<string>}
+     * @type {Promise<string>|null}
      */
     let storyPromise = $state(null);
 
