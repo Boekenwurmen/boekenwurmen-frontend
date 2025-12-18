@@ -43,16 +43,13 @@
             () => myTypeWriter.showLoadingMessage()
         );
 
-        storyPromise.then(story => {
-            myTypeWriter.reset(story)
-        })
+        storyPromise.then(story => myTypeWriter.reset(story));
         .catch(err => {
             // on error, show fallback text but avoid throwing
             myTypeWriter.reset('Failed to load story.');
             console.error('Error loading story for page', page, err);
         });
     })
-    // console.log('storyPromise3', storyPromise);
 </script>
 
 <p class="story-box typing">
