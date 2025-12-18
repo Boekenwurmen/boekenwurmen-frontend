@@ -42,7 +42,7 @@ export default class RegexWordMatcher {
 
     /**
      * @param {string} text
-     * @returns {{ startIndex: number; endIndex: number; }[]} text split on regex matches
+     * @returns {{ startIndex: number; endIndex: number; word: string;}[]} text split on regex matches
      */
     split(text) {
         if (!this.regex || !text) {
@@ -53,10 +53,8 @@ export default class RegexWordMatcher {
         return matches.map(match => {
             const word = match[0];
             const startIndex = match.index;
-            return {
-                startIndex: startIndex,
-                endIndex: startIndex + word.length,
-            }
+            const endIndex = startIndex + word.length;
+            return {startIndex, endIndex, word};
         });
         // // text.search(this.regex);
         // const parts = text.split(this.regex);

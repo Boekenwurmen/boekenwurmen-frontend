@@ -13,15 +13,18 @@
         wordDefinition: WordDefinition;
     }
 
-    const { explainer = '' as string } = $props();
+    const {
+        explainer = '' as string,
+        promise = null as Promise<Object>|null,
+    } = $props();
     const definition:WordDefinition = { wordType: '', definition: '', example: '' }
     let definitionText = $state('');
 
-    Dictionary.getDefinition(explainer).then(definition => {
+    promise?.then(definition => {
         console.log('definition', explainer, definition);
         definitionText = getDefinitionString(definition as WordDefinition);
     })
-    .catch(err => {
+    ?.catch(err => {
         console.error('Error loading dictionary word list', err);
     });
 
