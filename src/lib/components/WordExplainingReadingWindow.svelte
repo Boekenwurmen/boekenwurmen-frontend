@@ -45,7 +45,6 @@
 
     // should trigger on each new page
     $effect(() => {
-        console.log('storyPromise', storyPromise);
         if (storyPromise) {
             const wordListPromise = Dictionary.getBookList();
             Promise.all([storyPromise, wordListPromise]).then(getMatches)
@@ -59,15 +58,12 @@
 
     function getMatches(resolutions:[string, string[]]) {
         const [completeText, bookList] = resolutions;
-        console.log('getmatches', completeText, bookList);
         matcher.setRegex(bookList);
         matches = matcher.split(completeText).map(e => ({ ...e, wordDefinitionPromise: Dictionary.getDefinition(e.word) }))
-        console.log('list', bookList, completeText, matches);
     }
 
     // should trigger on each of typewriter's typed characters
     $effect(() => {
-        console.log('effect2');
         let previousIndex = 0;
         const tempResult:Split[] = [];
 

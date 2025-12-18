@@ -21,7 +21,6 @@
     let definitionText = $state('');
 
     promise?.then(definition => {
-        console.log('definition', explainer, definition);
         definitionText = getDefinitionString(definition as WordDefinition);
     })
     ?.catch(err => {
