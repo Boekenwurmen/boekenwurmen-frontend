@@ -25,7 +25,11 @@
 
     let finalText = $state('');
 
-    let storyPromise = $state();
+    /** @type {Function}*/
+    let resolveStory;
+    const storyPromiseSideChain = new Promise((_resolveStory) => {
+        resolveStory = _resolveStory;
+    });
 
     $effect(() => {
         // snapshot primitives from proxied $state
@@ -37,7 +41,7 @@
         _lastPage = page;
 
         // fetch the story for this page, showing a loading message if slow
-        storyPromise = showDelayedLoadingMessage(
+        const storyPromise = showDelayedLoadingMessage(
             Stories.getPageStory(bookId, page),
             () => myTypeWriter.showLoadingMessage()
         );
@@ -45,6 +49,7 @@
         storyPromise.then(story => {
             myTypeWriter.reset(story)
             finalText = story;
+            resolveStory(story);
         })
         .catch(err => {
             // on error, show fallback text but avoid throwing
@@ -52,12 +57,13 @@
             console.error('Error loading story for page', page, err);
         });
     })
+    // console.log('storyPromise3', storyPromise);
 </script>
 
 <p class="story-box typing">
     <WordExplainingReadingWindow 
         text={myTypeWriter.shown}
         completeText={finalText}
-        storyPromise={storyPromise}
+        storyPromise={storyPromiseSideChain}
     />
 </p>

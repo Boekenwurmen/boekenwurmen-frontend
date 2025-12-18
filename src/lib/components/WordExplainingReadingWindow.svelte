@@ -6,7 +6,7 @@
     const {
         text = '' as string,
         completeText = '' as string,
-        storyPromise = null as Promise<string>|null,
+        storyPromise = undefined as Promise<string>|null,
     } = $props();
 
     interface WordDefinition {
@@ -40,24 +40,21 @@
     let matches:Match[] = $state([]);
     let myResult:Split[] = $state([]);
     const matcher = new RegexWordMatcher([]);
+
+    console.log('storyPromise', storyPromise);
     
-    Dictionary.getBookList().then(list => {
-        console.log('list', list)
-        matcher.setRegex(list);
-        matches = getMatches();
-    })
+    const wordListPromise = Dictionary.getBookList();
+
+    Promise.all([storyPromise, wordListPromise]).then(getMatches)
     .catch(err => {
         console.error('Error loading dictionary word list', err);
     });
-    // TODO export the page text promise from this component's parent and use promise.all rather than effect to set this up once
 
-    $effect(() => {
-        console.log('effect1');
-        matches = getMatches();
-    });
-
-    function getMatches() {
-        return matcher.split(completeText).map(e => ({ ...e, promise: Dictionary.getDefinition(e.word) }))
+    function getMatches(resolutions) {
+        const [completeText, bookList] = resolutions;
+        matcher.setRegex(bookList);
+        matches = matcher.split(completeText).map(e => ({ ...e, promise: Dictionary.getDefinition(e.word) }))
+        console.log('list', bookList, completeText, matches);
     }
 
     $effect(() => {
