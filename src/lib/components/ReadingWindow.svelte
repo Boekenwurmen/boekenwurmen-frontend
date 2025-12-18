@@ -43,7 +43,7 @@
             () => myTypeWriter.showLoadingMessage()
         );
 
-        storyPromise.then(story => myTypeWriter.reset(story));
+        storyPromise.then(story => myTypeWriter.reset(story))
         .catch(err => {
             // on error, show fallback text but avoid throwing
             myTypeWriter.reset('Failed to load story.');
