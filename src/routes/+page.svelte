@@ -9,7 +9,7 @@
 			<div class="container"></div>
 		</div>
 
-		<!-- Centered content like /read -->
+		<!-- Centered content -->
 		<div class="content-wrap">
 			<div class="title-wrap">
 				<h1 class="start-title">Boekenwurmen</h1>

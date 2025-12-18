@@ -357,7 +357,7 @@
 	align-items: center;
 	justify-content: center;
 	gap: 2rem;
-	margin-top: 6rem; /* position block lower while staying horizontally centered */
+	margin-top: 4rem; 
 }
 .start-screen .title-wrap,
 .start-screen .button-wrap,
@@ -373,7 +373,7 @@
 }
 
 .start-screen .button-wrap {
-	margin-top: 120px;
+	margin-top: 20px;
 }
 .start-screen .start-title {
 	position: relative;

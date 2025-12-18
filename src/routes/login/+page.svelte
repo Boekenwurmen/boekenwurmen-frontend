@@ -2,6 +2,7 @@
 	import { goto } from '$app/navigation';
 	import { PUBLIC_API_URL } from '$env/static/public';
 	import { onMount } from 'svelte';
+	import '../css/book.css';
 	import '../css/login.css';
 	let name = '';
 	let code = '';
