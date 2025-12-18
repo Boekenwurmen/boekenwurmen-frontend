@@ -43,22 +43,26 @@
     let myResult:Split[] = $state([]);
     const matcher = new RegexWordMatcher([]);
 
-    console.log('storyPromise', storyPromise);
-    
-    const wordListPromise = Dictionary.getBookList();
 
-    Promise.all([storyPromise, wordListPromise]).then(getMatches)
-    .catch(err => {
-        console.error('Error loading dictionary word list', err);
+    // should trigger on each new page
+    $effect(() => {
+        console.log('storyPromise', storyPromise);
+        const wordListPromise = Dictionary.getBookList();
+        Promise.all([storyPromise, wordListPromise]).then(getMatches)
+        .catch(err => {
+            console.error('Error loading dictionary word list', err);
+        });
     });
 
     function getMatches(resolutions) {
         const [completeText, bookList] = resolutions;
+        console.log('getmatches', completeText, bookList);
         matcher.setRegex(bookList);
         matches = matcher.split(completeText).map(e => ({ ...e, wordDefinitionPromise: Dictionary.getDefinition(e.word) }))
         console.log('list', bookList, completeText, matches);
     }
 
+    // should trigger on each typed character
     $effect(() => {
         console.log('effect2');
         let previousIndex = 0;
