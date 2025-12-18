@@ -28,6 +28,8 @@
     interface Match {
         startIndex: number;
         endIndex: number;
+        word: string;
+        wordDefinitionPromise: Promise<Object> | null;
     }
 
     interface Split {
@@ -53,7 +55,7 @@
     function getMatches(resolutions) {
         const [completeText, bookList] = resolutions;
         matcher.setRegex(bookList);
-        matches = matcher.split(completeText).map(e => ({ ...e, promise: Dictionary.getDefinition(e.word) }))
+        matches = matcher.split(completeText).map(e => ({ ...e, wordDefinitionPromise: Dictionary.getDefinition(e.word) }))
         console.log('list', bookList, completeText, matches);
     }
 
@@ -69,7 +71,7 @@
             const beforeWord = text.substring(previousIndex, e?.startIndex ?? text.length);
             const word = !e || e?.startIndex > text.length ? '' : text.substring(e?.startIndex, e?.endIndex);
             const isWordComplete = e && e?.endIndex <= text.length;
-            const wordDefinitionPromise = isWordComplete ? Dictionary.getDefinition(word) : null;
+            const wordDefinitionPromise = isWordComplete ? e.wordDefinitionPromise : null;
             tempResult.push({ beforeWord, word, isWordComplete, wordDefinitionPromise });
             previousIndex = e?.endIndex;
         };
