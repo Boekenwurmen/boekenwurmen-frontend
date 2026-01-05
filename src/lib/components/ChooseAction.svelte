@@ -7,7 +7,7 @@
     } = $props();
 
     // type context as a single-number tuple (or undefined when not provided)
-    const pageContext = getContext<[number]>('page') as [number] | undefined;
+    const pageContext = getContext<[number, number, number]>('page') as [number, number, number] | undefined;
 
     // keep a reactive primitive snapshot of the current page to avoid
     // logging proxied $state objects and to allow template reactivity.
@@ -34,6 +34,7 @@
                 return;
             }
             pageContext[0] = newPage;
+            pageContext[2]++;
         } catch (err) {
             console.error('[ChooseAction] setPage error', err);
         }
