@@ -29,8 +29,15 @@
 
     
     function getDefinitionString(definition:WordDefinition) {
-        return `${definition.wordType} ${definition.translation ? `, ${definition.translation}` : ''}, ${definition.definition}, ${definition.example}`;
+        return `Woordsoort: ${definition.wordType} ${definition.translation ? `Vertaling: ${definition.translation}. ` : ''} Definitie: ${definition.definition} Voorbeeld: ${definition.example}`;
     }
 </script>
 
-<abbr title="{definitionText}">{explainer}</abbr>
+<!-- <abbr title="{definitionText}">{explainer}</abbr> -->
+
+<abbr class="abbr" aria-describedby="abbr-html">
+    {explainer}
+    <span id="abbr-html" class="tooltip" role="tooltip">
+        {definitionText}
+    </span>
+</abbr>
