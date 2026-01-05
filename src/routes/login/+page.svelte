@@ -83,6 +83,9 @@
 				<button type="submit" class="story-button story-button-wide" aria-label="Login">
 					Log in
 				</button>
+				<div class="login-links">
+					<a href="/login/forgot" aria-label="Wachtwoord vergeten">Wachtwoord vergeten?</a>
+				</div>
 				{#if message}
 					<p class="login-error">{message}</p>
 				{/if}
