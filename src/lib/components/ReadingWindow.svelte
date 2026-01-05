@@ -38,7 +38,6 @@
         const page = pageContext ? Number(pageContext[0]) : undefined;
         const bookId = pageContext ? Number(pageContext[1]) : undefined;
         const actionClickCount = pageContext ? Number(pageContext[2]) : undefined;
-        console.log('pageContext[2]', pageContext[2]);
 
         if (page === undefined || page === null || bookId === undefined || bookId === null) return; // nothing to do
 
@@ -50,12 +49,9 @@
 
         const isPageUnchanged = page === _lastPage && bookId === _lastBookId;
         if (isPageUnchanged) {
-            console.log('pageContext[2] reload');
             myTypeWriter.reset(); // show the user that the button they clicked did do something
             return; // already handled this page
         }
-
-        console.log('pageContext[2] fetch');
 
         _lastPage = page;
         _lastBookId = bookId;
