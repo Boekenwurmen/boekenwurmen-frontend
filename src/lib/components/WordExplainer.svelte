@@ -33,4 +33,11 @@
     }
 </script>
 
-<abbr title="{definitionText}">{explainer}</abbr>
+<!-- <abbr title="{definitionText}">{explainer}</abbr> -->
+
+<abbr class="abbr" aria-describedby="abbr-html">
+    {explainer}
+    <span id="abbr-html" class="tooltip" role="tooltip">
+        {definitionText}
+    </span>
+</abbr>
