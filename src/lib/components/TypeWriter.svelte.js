@@ -1,6 +1,15 @@
 export default class TypeWriter {
-    /** @type {number} the time to wait in milliseconds between typing each character */
+    /** @type {number} the time to wait in milliseconds between typing each character, can be set using the setSpeed() method */
     _typingDelay = 0;
+
+    /** @type {number} the factor to multiply with _typingDelay for the time to wait between typing each space character */
+    _spaceTypingDelayFactor = 1;
+
+    /** @type {number} the factor to multiply with _typingDelay for the time to wait between typing each comma character */
+    _commaTypingDelayFactor = 10;
+
+    /** @type {number} the factor to multiply with _typingDelay for the time to wait between typing each period character */
+    _periodTypingDelayFactor = 20;
 
     /**
      * Creates a typewriter to type out a text one letter at a time into the attribute "this.shown" with a svelte state rune
@@ -24,15 +33,15 @@ export default class TypeWriter {
         return this._text;
     }
     
-
     /**
      * Types out a text one letter at a time into the attribute "this.shown" with a svelte state rune
      */
     typeWriter() {
         if ((this._index >= this._text.length)) return;
-        this.shown += this._text.charAt(this._index);
+        const currentCharacter = this._getCharacterAtIndex(this._index);
+        this.shown += currentCharacter;
         this._index++;
-        this._timeout = setTimeout(this.typeWriter.bind(this), this._typingDelay);
+        this._timeout = setTimeout(this.typeWriter.bind(this), this._getCharacterDelay(currentCharacter));
     }
 
     /**
@@ -72,7 +81,30 @@ export default class TypeWriter {
             this._typingDelay = 0;
             return;    
         }
-        const speedCalibrationFactor = 1000;
-        this._typingDelay = speed != 0 ? speedCalibrationFactor / speed : 0;
+        const secondInMilliseconds = 1000;
+        this._typingDelay = speed != 0 ? secondInMilliseconds / speed : 0;
+    }
+
+    /**
+     * Gets a character from this._text at a given index.
+     * @param {number} index to get the character at, index starts at 0.
+     * @returns {string} a single character
+     */
+    _getCharacterAtIndex(index) {
+        return this._text.charAt(index);
+    }
+
+    /**
+     * 
+     * @param {string} character a single character
+     * @returns 
+     */
+    _getCharacterDelay(character) {
+        switch (character) {
+            case ' ': return this._typingDelay * this._spaceTypingDelayFactor;
+            case ',': return this._typingDelay * this._commaTypingDelayFactor;
+            case '.': return this._typingDelay * this._periodTypingDelayFactor;
+            default: return this._typingDelay;
+        }
     }
 }
