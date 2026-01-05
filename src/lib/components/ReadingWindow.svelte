@@ -28,14 +28,29 @@
      */
     let storyPromise = $state(null);
 
+    let _lastActionClickCount = 0;
+    let _lastBookId = 0;
+
     $effect(() => {
         // snapshot primitives from proxied $state
         const page = pageContext ? Number(pageContext[0]) : undefined;
         const bookId = pageContext ? Number(pageContext[1]) : undefined;
+        const actionClickCount = pageContext ? Number(pageContext[3]) : undefined;
 
-        if (page == null) return; // nothing to do
-        if (page === _lastPage) return; // already handled this page
+        if (page === undefined || page === null || bookId === undefined || bookId === null) return; // nothing to do
+
+        const isPageUnchanged = page === _lastPage && bookId === _lastBookId && actionClickCount === _lastActionClickCount;
+        // actionClickCount is needed here to trigger the effect to refresh when the page is unchanged
+        if (isPageUnchanged) {
+            // myTypeWriter.reset(); // show the user that the button they clicked did do something
+            return; // already handled this page
+        }
+
         _lastPage = page;
+        _lastBookId = bookId;
+        // if (actionClickCount !== null && actionClickCount !== undefined) {
+        //     _lastActionClickCount = actionClickCount;
+        // }
 
         // fetch the story for this page, showing a loading message if slow
         storyPromise = showDelayedLoadingMessage(

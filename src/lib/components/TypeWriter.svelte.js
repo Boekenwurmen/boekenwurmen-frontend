@@ -45,7 +45,7 @@ export default class TypeWriter {
     
     /**
      * Resets the typewriter with a new text so that it clears the previous text and starts over.
-     * @param {string} text
+     * @param {string} [text]
      */
     reset(text) {
         if (text) {
