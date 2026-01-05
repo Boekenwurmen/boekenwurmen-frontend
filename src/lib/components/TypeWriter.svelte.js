@@ -103,7 +103,7 @@ export default class TypeWriter {
         switch (character) {
             case ' ': return this._typingDelay * this._spaceTypingDelayFactor;
             case ',': return this._typingDelay * this._commaTypingDelayFactor;
-            case '.': return this._typingDelay * this._periodTypingDelayFactor;
+            case '.': case '?': case '!': return this._typingDelay * this._periodTypingDelayFactor;
             default: return this._typingDelay;
         }
     }
