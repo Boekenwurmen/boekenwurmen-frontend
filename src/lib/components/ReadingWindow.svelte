@@ -21,36 +21,44 @@
     // Guard to avoid repeated fetches or re-entrancy when page doesn't change
     /** @type {number | undefined} */
     let _lastPage = undefined;
-    // primitive snapshot of current page for template/reactivity
+
+    /** @type {number | undefined} */
+    let _lastActionClickCount = undefined;
+    
+    /** @type {number | undefined} */
+    let _lastBookId = undefined;
 
     /**
      * @type {Promise<string>|null}
      */
     let storyPromise = $state(null);
 
-    let _lastActionClickCount = 0;
-    let _lastBookId = 0;
-
     $effect(() => {
         // snapshot primitives from proxied $state
         const page = pageContext ? Number(pageContext[0]) : undefined;
         const bookId = pageContext ? Number(pageContext[1]) : undefined;
-        const actionClickCount = pageContext ? Number(pageContext[3]) : undefined;
+        const actionClickCount = pageContext ? Number(pageContext[2]) : undefined;
+        console.log('pageContext[2]', pageContext[2]);
 
         if (page === undefined || page === null || bookId === undefined || bookId === null) return; // nothing to do
 
-        const isPageUnchanged = page === _lastPage && bookId === _lastBookId && actionClickCount === _lastActionClickCount;
-        // actionClickCount is needed here to trigger the effect to refresh when the page is unchanged
+        if (actionClickCount === _lastActionClickCount) {
+            // actionClickCount is needed here to trigger the effect to refresh when the page is unchanged
+            return; // no button was clicked
+        }
+        _lastActionClickCount = actionClickCount;
+
+        const isPageUnchanged = page === _lastPage && bookId === _lastBookId;
         if (isPageUnchanged) {
-            // myTypeWriter.reset(); // show the user that the button they clicked did do something
+            console.log('pageContext[2] reload');
+            myTypeWriter.reset(); // show the user that the button they clicked did do something
             return; // already handled this page
         }
 
+        console.log('pageContext[2] fetch');
+
         _lastPage = page;
         _lastBookId = bookId;
-        // if (actionClickCount !== null && actionClickCount !== undefined) {
-        //     _lastActionClickCount = actionClickCount;
-        // }
 
         // fetch the story for this page, showing a loading message if slow
         storyPromise = showDelayedLoadingMessage(
