@@ -29,7 +29,7 @@
 
     
     function getDefinitionString(definition:WordDefinition) {
-        return `${definition.wordType} ${definition.translation ? `, ${definition.translation}` : ''}, ${definition.definition}, ${definition.example}`;
+        return `Woordsoort: ${definition.wordType} ${definition.translation ? `Vertaling: ${definition.translation}` : ''} Definitie: ${definition.definition} Voorbeeld: ${definition.example}`;
     }
 </script>
 
