@@ -269,17 +269,22 @@ body {
     bottom: 120%;
     left: 50%;
     transform: translateX(-50%);
+
+    width: max-content;
+    max-width: min(90vw, 20rem);
+    word-wrap: break-word;
+    text-align: center;
+	
     background: #222;
     color: #fff;
     padding: 6px 8px;
     border-radius: 4px;
     font-size: 0.85rem;
-    /* white-space: nowrap; */
+    white-space: normal;
 
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.2s ease;
-	width: 80%px;
 }
 
 /* Hover (desktop) */
