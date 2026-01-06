@@ -72,7 +72,7 @@
     if (currentPage > 1) currentPage--;
   }
 
-  const displayBooks = $derived(() => {
+  const displayBooks = $derived.by(() => {
     const start = (currentPage - 1) * itemsPerPage;
     const end = start + itemsPerPage;
     const allFiltered = $filtered;
