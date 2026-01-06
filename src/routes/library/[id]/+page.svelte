@@ -117,25 +117,36 @@
 
   .cover {
     width: 100%;
-    max-width: 300px;
+    max-width: 400px;
     aspect-ratio: 3/4;
-    background-size: cover;
+    background-size: contain;
     background-position: center;
+    background-repeat: no-repeat;
     border-radius: 8px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
     display: flex;
-    align-items: flex-end;
-    padding: 1rem;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    background-color: #f0f4f8;
   }
 
   .fake-cover {
     background: linear-gradient(135deg, var(--cover, #6b3e2b), var(--cover-dark, #56311f));
     color: var(--gold, #d6b96a);
-    padding: 1rem;
+    padding: 1rem 0.6rem;
     border-radius: 6px;
     font-weight: 700;
-    font-size: 1.2rem;
+    font-size: 0.7rem;
     text-align: center;
+    max-width: 80%;
+    max-height: 150px;
+    overflow: hidden;
+    word-break: break-word;
+    line-height: 1.2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .info-section {

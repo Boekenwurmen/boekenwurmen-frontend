@@ -33,3 +33,19 @@ jobs:
 
       - name: Build Project
         run: npm run build
+
+      - name: Notify Discord on failure
+        if: failure()
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets['DISCORD_WEBHOOK_URL'] }}
+        run: |
+          if [ -z "$DISCORD_WEBHOOK_URL" ]; then
+            echo "DISCORD_WEBHOOK_URL secret is not set; skipping Discord notification."
+            exit 0
+          fi
+
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          MSG="❌ CI failed for ${{ github.repository }} on ${{ github.ref_name }} (event: ${{ github.event_name }}, job: ${{ github.job }}, actor: ${{ github.actor }}). Run: ${RUN_URL}"
+
+          payload=$(MSG="$MSG" node -e "console.log(JSON.stringify({ content: process.env.MSG }))")
+          curl -sS -X POST -H "Content-Type: application/json" -d "$payload" "$DISCORD_WEBHOOK_URL"

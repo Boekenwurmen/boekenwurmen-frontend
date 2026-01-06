@@ -42,6 +42,7 @@ export function advanceFromNameToCode(pageContext) {
 export function followOption(pageContext, option) {
   try {
     if (!pageContext || !option || option.toPage === undefined || option.toPage === null) return false;
+    pageContext[2]++;
     pageContext[0] = option.toPage;
     return true;
   } catch (e) {
