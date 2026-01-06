@@ -81,6 +81,9 @@
     min-height: 100vh;
     color: var(--text, #111);
     background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1e 100%);
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
   }
 
   .back-link {
@@ -233,6 +236,89 @@
 
     .info-section h1 {
       font-size: 1.5rem;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .detail-page {
+      padding: 1.5rem;
+    }
+
+    .book-detail {
+      padding: 1.5rem;
+    }
+
+    .cover {
+      max-width: 200px;
+    }
+
+    .info-section h1 {
+      font-size: 1.25rem;
+    }
+
+    .author {
+      font-size: 0.95rem;
+    }
+
+    .description {
+      font-size: 0.95rem;
+    }
+
+    .actions {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .btn {
+      width: 100%;
+      text-align: center;
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 400px) {
+    .detail-page {
+      padding: 1rem;
+    }
+
+    .book-detail {
+      padding: 1rem;
+    }
+
+    .cover {
+      max-width: 180px;
+    }
+
+    .info-section h1 {
+      font-size: 1.15rem;
+    }
+
+    .author {
+      font-size: 0.9rem;
+    }
+
+    .meta {
+      font-size: 0.85rem;
+    }
+
+    .category {
+      font-size: 0.75rem;
+      padding: 0.3rem 0.65rem;
+    }
+
+    .description {
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .btn {
+      padding: 0.6rem 1.25rem;
+      font-size: 0.95rem;
+    }
+
+    .back-link {
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
     }
   }
 </style>

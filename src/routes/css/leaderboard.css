@@ -1,0 +1,178 @@
+/* Leaderboard specific styles */
+
+.leaderboard-container {
+	width: 100%;
+	max-width: 900px;
+}
+
+.leaderboard-table {
+	border: 1px solid #3b1c10;
+	border-radius: 12px;
+	overflow: hidden;
+	background: goldenrod;
+	box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
+}
+
+.leaderboard-header {
+	display: grid;
+	grid-template-columns: 90px 1fr 140px;
+	padding: 1rem 1.25rem;
+	background: #c2931b;
+	color: #1f140b;
+	font-weight: 800;
+	font-size: 1.1rem;
+}
+
+.leaderboard-row {
+	display: grid;
+	grid-template-columns: 90px 1fr 140px;
+	padding: 1.1rem 1.25rem;
+	border-top: 1px solid rgba(0, 0, 0, 0.15);
+	align-items: center;
+	background: rgba(255, 255, 255, 0.06);
+}
+
+.leaderboard-rank {
+	font-weight: 900;
+	color: #3b1c10;
+	font-size: 1.1rem;
+}
+
+.leaderboard-player {
+	display: flex;
+	align-items: center;
+	gap: 0.8rem;
+}
+
+.leaderboard-player-name {
+	font-weight: 800;
+	color: #1f140b;
+	font-size: 1.05rem;
+}
+
+.leaderboard-score {
+	text-align: right;
+	font-weight: 900;
+	color: #1f140b;
+	font-size: 1.05rem;
+}
+
+.leaderboard-trophy {
+	filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.25));
+}
+
+.leaderboard-trophy-placeholder {
+	width: 36px;
+	height: 36px;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+
+/* Tablet and below (≤900px) */
+@media (max-width: 900px) {
+	.leaderboard-header,
+	.leaderboard-row {
+		grid-template-columns: 60px 1fr 100px;
+		padding: 0.9rem 1rem;
+	}
+
+	.leaderboard-header {
+		font-size: 1rem;
+	}
+
+	.leaderboard-rank,
+	.leaderboard-player-name,
+	.leaderboard-score {
+		font-size: 1rem;
+	}
+}
+
+/* Mobile phones (≤600px) */
+@media (max-width: 600px) {
+	.leaderboard-container {
+		padding: 0 0.5rem;
+	}
+
+	.leaderboard-header,
+	.leaderboard-row {
+		grid-template-columns: 50px 1fr 90px;
+		padding: 0.8rem 0.75rem;
+	}
+
+	.leaderboard-header {
+		font-size: 0.95rem;
+	}
+
+	.leaderboard-rank {
+		font-size: 0.95rem;
+	}
+
+	.leaderboard-player {
+		gap: 0.5rem;
+	}
+
+	.leaderboard-player-name {
+		font-size: 0.95rem;
+	}
+
+	.leaderboard-score {
+		font-size: 0.95rem;
+	}
+
+	.leaderboard-trophy {
+		width: 28px;
+		height: 28px;
+	}
+
+	.leaderboard-trophy-placeholder {
+		width: 28px;
+		height: 28px;
+	}
+
+	.leaderboard-header > div:first-child {
+		font-size: 0.9rem;
+	}
+}
+
+/* Extra small phones (≤400px) - Old phones */
+@media (max-width: 400px) {
+	.leaderboard-container {
+		padding: 0 0.25rem;
+	}
+
+	.leaderboard-header,
+	.leaderboard-row {
+		grid-template-columns: 40px 1fr 75px;
+		padding: 0.7rem 0.6rem;
+	}
+
+	.leaderboard-header {
+		font-size: 0.85rem;
+	}
+
+	.leaderboard-rank {
+		font-size: 0.85rem;
+	}
+
+	.leaderboard-player {
+		gap: 0.4rem;
+	}
+
+	.leaderboard-player-name {
+		font-size: 0.85rem;
+	}
+
+	.leaderboard-score {
+		font-size: 0.85rem;
+	}
+
+	.leaderboard-trophy {
+		width: 24px;
+		height: 24px;
+	}
+
+	.leaderboard-trophy-placeholder {
+		width: 24px;
+		height: 24px;
+	}
+}

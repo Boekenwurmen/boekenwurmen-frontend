@@ -7,6 +7,7 @@
 
   const allBooks: Book[] = books;
   let favorites: number[] = [];
+  let showFilters = $state(false);
 
   const search = writable('');
   const category = writable('All');
@@ -54,9 +55,16 @@
 
 <main class="library-page">
   <header class="toolbar">
-    <h2>📚 Fantasie Bibliotheek</h2>
-    <div class="controls">
+    <div class="toolbar-top">
+      <h2>📚 Fantasie Bibliotheek</h2>
       <button class="chip" on:click={logout} aria-label="Uitloggen">↪ Uitloggen</button>
+    </div>
+
+    <div class="controls">
+      <button class="chip filter-toggle" on:click={() => showFilters = !showFilters} aria-label="Filters tonen">
+        🔍 Filters {showFilters ? '✕' : '▼'}
+      </button>
+
       <div class="search-wrap">
         <input
           type="search"
@@ -67,20 +75,31 @@
         <button class="clear" on:click={() => search.set('')} aria-label="Wis zoekopdracht">✕</button>
       </div>
 
-      <div class="filters">
-        <div class="chips">
-          <button class="chip { $showOnlyFavorites ? 'active' : '' }" on:click={() => showOnlyFavorites.set(!$showOnlyFavorites)}>♥ Favorieten</button>
-          {#each categories as c}
-            <button class="chip { $category === c ? 'active' : '' }" on:click={() => category.set(c)}>{c}</button>
-          {/each}
-        </div>
+      <div class="filters {showFilters ? 'show' : ''}">
+        {#if showFilters}
+          <div class="filter-overlay" on:click={() => showFilters = false}></div>
+        {/if}
 
-        <div class="sort-wrap">
-          <label for="sort" class="sr-only">Sorteer</label>
-          <select id="sort" on:change={(e) => sort.set((e.target as HTMLSelectElement).value)} aria-label="Sorteer">
-            <option value="newest">Nieuwste eerst</option>
-            <option value="oldest">Oudste eerst</option>
-          </select>
+        <div class="filter-content">
+          <div class="filter-header">
+            <h3>Filters</h3>
+            <button class="close-filters" on:click={() => showFilters = false} aria-label="Sluit filters">✕</button>
+          </div>
+
+          <div class="chips">
+            <button class="chip { $showOnlyFavorites ? 'active' : '' }" on:click={() => showOnlyFavorites.set(!$showOnlyFavorites)}>♥ Favorieten</button>
+            {#each categories as c}
+              <button class="chip { $category === c ? 'active' : '' }" on:click={() => category.set(c)}>{c}</button>
+            {/each}
+          </div>
+
+          <div class="sort-wrap">
+            <label for="sort" class="sr-only">Sorteer</label>
+            <select id="sort" on:change={(e) => sort.set((e.target as HTMLSelectElement).value)} aria-label="Sorteer">
+              <option value="newest">Nieuwste eerst</option>
+              <option value="oldest">Oudste eerst</option>
+            </select>
+          </div>
         </div>
       </div>
     </div>
@@ -120,7 +139,7 @@
 </main>
 
 <style>
-  .library-page{padding:2.4rem;min-height:100vh;color:var(--text,#111);font-family:'Georgia', serif;background:linear-gradient(135deg,#2a1f1a 0%,#1a1a2e 50%,#16213e 100%);position:relative;overflow:hidden}
+  .library-page{padding:2.4rem;min-height:100vh;color:var(--text,#111);font-family:'Georgia', serif;background:linear-gradient(135deg,#2a1f1a 0%,#1a1a2e 50%,#16213e 100%);position:relative;overflow:hidden;width:100%;max-width:100vw;overflow-x:hidden}
   
   .library-page::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background-image:radial-gradient(circle at 20% 50%, rgba(214,185,106,0.03) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(107,62,43,0.04) 0%, transparent 50%);pointer-events:none;z-index:0}
 
@@ -169,12 +188,71 @@
 
   .empty{color:#b8a896;background:linear-gradient(135deg,rgba(245,243,240,0.1),rgba(214,185,106,0.05));padding:2.5rem;border-radius:12px;text-align:center;border:2px dashed rgba(214,185,106,0.25);backdrop-filter:blur(5px);font-size:1.1rem;font-weight:500}
 
+  .toolbar-top{display:flex;justify-content:space-between;align-items:center;width:100%}
+
+  .filter-toggle{display:none}
+  .filter-header{display:none}
+  .filter-overlay{display:none}
+
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-width:0}
+
   @media (max-width:900px){
     .controls{flex-direction:column;align-items:stretch}
     .toolbar{gap:.8rem}
-    .filters{flex-direction:column;align-items:stretch}
-    .chips{width:100%}
+
+    .toolbar-top{margin-bottom:1rem}
+
+    .filter-toggle{display:block;width:100%;margin-bottom:0.5rem;text-align:left;padding:0.6rem 1rem;font-size:1rem}
+
+    .filters{position:fixed;top:0;left:0;right:0;bottom:0;z-index:1001;display:none}
+
+    .filters.show{display:block}
+
+    .filter-overlay{position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:1}
+
+    .filter-content{position:relative;z-index:2;background:rgba(26,26,46,0.98);backdrop-filter:blur(10px);padding:2rem;height:100%;overflow-y:auto;display:flex;flex-direction:column;gap:1.5rem}
+
+    .filter-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
+
+    .filter-header h3{margin:0;color:var(--gold,#d6b96a);font-size:1.5rem}
+
+    .close-filters{background:transparent;border:2px solid var(--gold,#d6b96a);color:var(--gold,#d6b96a);font-size:1.5rem;width:2.5rem;height:2.5rem;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0}
+
+    .chips{width:100%;flex-direction:column}
+    .chip{width:100%;text-align:left;justify-content:flex-start;cursor:pointer}
+    .sort-wrap{width:100%}
+    .sort-wrap select{width:100%}
     .results .grid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.5rem}
+  }
+
+  @media (max-width:600px){
+    .library-page{padding:1.5rem}
+    .toolbar{padding:1rem;margin-bottom:1.5rem}
+    .toolbar h2{font-size:1.5rem;letter-spacing:1px}
+    .search-wrap input{font-size:16px;padding:0.75rem 2.5rem 0.75rem 0.75rem}
+    .chip{font-size:0.85rem;padding:0.4rem 0.75rem}
+    .results .grid{grid-template-columns:1fr;gap:1.25rem}
+    .card{box-shadow:0 8px 20px rgba(0,0,0,0.25)}
+    .meta h3{font-size:1rem}
+    .author{font-size:0.9rem}
+    .desc{font-size:0.85rem}
+  }
+
+  @media (max-width:400px){
+    .library-page{padding:1rem}
+    .toolbar{padding:0.75rem;margin-bottom:1rem}
+    .toolbar h2{font-size:1.35rem}
+    .search-wrap input{font-size:16px;padding:0.65rem 2.25rem 0.65rem 0.65rem}
+    .chip{font-size:0.8rem;padding:0.35rem 0.65rem}
+    .results .grid{gap:1rem}
+    .card{padding:0}
+    .meta{padding:1rem}
+    .meta h3{font-size:0.95rem}
+    .author{font-size:0.85rem}
+    .category{font-size:0.75rem;padding:0.25rem 0.5rem}
+    .desc{font-size:0.8rem}
+    .cover{height:180px}
+    .favorite-btn{width:2rem;height:2rem;font-size:1rem;top:0.6rem;right:0.6rem}
   }
 
 </style>
