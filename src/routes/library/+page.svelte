@@ -72,12 +72,12 @@
     if (currentPage > 1) currentPage--;
   }
 
-  $: displayBooks = (() => {
+  let displayBooks = $derived.by(() => {
     const start = (currentPage - 1) * itemsPerPage;
     const end = start + itemsPerPage;
     const allFiltered = $filtered;
     return allFiltered.slice(start, end);
-  })();
+  });
 </script>
 
 <main class="library-page">
@@ -129,7 +129,7 @@
           </div>
         </div>
       </div>
-    {/if}
+    </div>
   </header>
 
   <section class="results">
