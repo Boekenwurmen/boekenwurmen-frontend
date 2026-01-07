@@ -64,7 +64,7 @@
         if (!codeValue) return;
         if (codeValue.length < 10) {
             message = 'That is a bad password, try making it longer.';
-            if (followOption(pageContext, errorOptionBadPassword)) return;
+            if (await followOption(pageContext, errorOptionBadPassword)) return;
             return;
         }
         try {
@@ -83,19 +83,19 @@
                     // proceed to next page
                     try {
                         pageContext[0] = (Number(pageContext[0]) || 0) + 1;
-                        if (followOption(pageContext, submitOption)) return;
+                        if (await followOption(pageContext, submitOption)) return;
                     } catch (e) {
                         console.error('[ChooseActionWindow] advancing page failed after register', e);
-                        if (followOption(pageContext, errorOptionUnknown)) return;
+                        if (await followOption(pageContext, errorOptionUnknown)) return;
                     }
                 } else if (status === 409) {
                     message = 'That name is already taken. Please go back and choose a different name.';
                 } else if (status >= 400 && status < 500) {
-                    if (followOption(pageContext, errorOptionBadPassword)) return;
+                    if (await followOption(pageContext, errorOptionBadPassword)) return;
                     message = data?.message || 'That is a bad password, try making it longer.';
                 } else {
                     console.warn('[ChooseActionWindow] register client response', { success: !!data?.success, error: data?.message });
-                    if (followOption(pageContext, errorOptionUnknown)) return;
+                    if (await followOption(pageContext, errorOptionUnknown)) return;
                     message = 'Could not create your account.';
                 }
             } else {
@@ -105,23 +105,23 @@
                     message = 'Code saved. Thank you!';
                     try {
                         pageContext[0] = (Number(pageContext[0]) || 0) + 1;
-                        if (followOption(pageContext, submitOption)) return;
+                        if (await followOption(pageContext, submitOption)) return;
                     } catch (e) {
                         console.error('[ChooseActionWindow] advancing page failed', e);
-                        if (followOption(pageContext, errorOptionUnknown)) return;
+                        if (await followOption(pageContext, errorOptionUnknown)) return;
                     }
                 } else if (status >= 400 && status < 500) {
-                    if (followOption(pageContext, errorOptionBadPassword)) return;
+                    if (await followOption(pageContext, errorOptionBadPassword)) return;
                     message = data?.message || 'That is a bad password, try making it longer.';
                 } else {
                     console.warn('[ChooseActionWindow] save code response', { success: !!data?.success, error: data?.message });
-                    if (followOption(pageContext, errorOptionUnknown)) return;
+                    if (await followOption(pageContext, errorOptionUnknown)) return;
                     message = 'Could not save code.';
                 }
             }
         } catch (err) {
             console.error('[ChooseActionWindow] submitCode error', err);
-            if (followOption(pageContext, errorOptionUnknown)) return;
+            if (await followOption(pageContext, errorOptionUnknown)) return;
             message = 'Network error while saving code.';
         }
     }

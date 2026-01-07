@@ -4,7 +4,6 @@
     import { getContext } from 'svelte';
     import { showDelayedLoadingMessage } from './delayedLoadingMessage.js';
 	import WordExplainingReadingWindow from './WordExplainingReadingWindow.svelte';
-	import ProgressBar from './ProgressBar.svelte';
 	import { goto } from '$app/navigation';
     
     /**
@@ -82,10 +81,6 @@
 			storyPromise={storyPromise}
 		/>
 	</p>
-
-	<div class="progress-section">
-		<ProgressBar />
-	</div>
 </div>
 
 <style>
