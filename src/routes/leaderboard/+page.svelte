@@ -25,7 +25,7 @@
 		<!-- Centered content like /read -->
 		<div class="content-wrap" style="margin-top: 100px; gap: 1rem;">
 			<div class="title-wrap">
-				<h1 class="start-title">Leaderboard</h1>
+				<h1 class="start-title">Ranglijst</h1>
 			</div>
 
 			<div class="ranglijst-card" role="region" aria-label="Ranglijst" style="margin-top: 0;">

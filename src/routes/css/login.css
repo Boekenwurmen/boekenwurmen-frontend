@@ -11,7 +11,7 @@
 	flex-direction: column;
 	gap: 0.75rem;
 	width: 100%;
-	max-width: 320px;
+	max-width: 500px;
 }
 
 .login-form label span {

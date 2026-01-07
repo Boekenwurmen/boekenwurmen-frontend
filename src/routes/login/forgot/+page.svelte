@@ -37,33 +37,43 @@
 	}
 </script>
 
-<div class="book-content">
-	<div class="book-page book-page-left">
-		<div class="page-number">Wachtwoord vergeten</div>
-		<div class="login-content">
-			<div class="page-content">
-				<p>Reset je code direct met je gebruikersnaam.</p>
-			</div>
-
-			<form class="login-form story-box" on:submit|preventDefault={submitResetDirect}>
-				<h2 class="page-title">Code resetten</h2>
-				<label>
-					<span>Naam</span>
-					<input type="text" class="story-input" bind:value={name} name="name" autocomplete="name" required />
-				</label>
-				<label>
-					<span>Nieuwe code</span>
-					<input type="password" class="story-input" bind:value={newCode} name="code" autocomplete="new-password" required />
-				</label>
-				<button type="submit" class="story-button story-button-wide">Reset code</button>
-			</form>
-
-			{#if message}
-				<p class="login-error">{message}</p>
-			{/if}
+<div class="book-page book-page-left">
+	<div class="page-number">Wachtwoord vergeten</div>
+	<div class="login-content">
+		<div class="page-content">
+			<p>Reset je code direct met je gebruikersnaam.</p>
 		</div>
-	</div>
-	<div class="book-page book-page-right">
-		<div class="page-number">&nbsp;</div>
+
+		<form class="login-form story-box" on:submit|preventDefault={submitResetDirect}>
+			<h2 class="page-title">Code resetten</h2>
+			<label>
+				<span>Naam</span>
+				<input
+					type="text"
+					class="story-input"
+					bind:value={name}
+					name="name"
+					autocomplete="name"
+					required
+				/>
+			</label>
+			<label>
+				<span>Nieuwe code</span>
+				<input
+					type="password"
+					class="story-input"
+					bind:value={newCode}
+					name="code"
+					autocomplete="new-password"
+					required
+				/>
+			</label>
+			<button type="submit" class="story-button story-button-wide">Reset code</button>
+		</form>
+
+		{#if message}
+			<p class="login-error">{message}</p>
+		{/if}
 	</div>
 </div>
+
