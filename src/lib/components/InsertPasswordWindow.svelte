@@ -128,7 +128,7 @@
 </script>
 
 <div class="story-box">
-    <label for="code-input" class="block mb-2 label-dark">Enter the library code (password)</label>
+    <label for="code-input" class="block mb-2 label-dark">Enter your personal library code (password)</label>
     <input id="code-input" type="password" class="story-input" bind:value={codeValue} placeholder="Type the library code here" />
     <button class="story-button" onclick={submitCode}>{submitOption?.name ?? "Submit code"}</button>
     {#if message}

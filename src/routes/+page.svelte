@@ -32,7 +32,7 @@
 			</div>
 			<div class="leaderboard-wrap">
 				<a href="/leaderboard" class="button button--small" aria-label="Toon ranglijst"
-					>Leaderboard</a>
+					>‎‎ ‎ ‎  Ranglijst‎ ‎ ‎ ‎ </a>
 			</div>
 		</div>
 	</div>

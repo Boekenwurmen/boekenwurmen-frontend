@@ -49,50 +49,45 @@
 	}
 </script>
 
-<div class="book-content">
-	<div class="book-page book-page-left">
-		<div class="page-number">Login</div>
-		<div class="login-content">
-			<div class="page-content">
-				<p>Voer je naam en code in om naar de bibliotheek te gaan.</p>
-			</div>
-			<form class="login-form story-box" on:submit|preventDefault={onSubmit}>
-				<h2 class="page-title">Log in</h2>
-				<label>
-					<span>Naam</span>
-					<input
-						type="text"
-						class="story-input"
-						bind:value={name}
-						name="name"
-						autocomplete="name"
-						required
-					/>
-				</label>
-				<label>
-					<span>Code</span>
-					<input
-						type="password"
-						class="story-input"
-						bind:value={code}
-						name="code"
-						autocomplete="current-password"
-						required
-					/>
-				</label>
-				<button type="submit" class="story-button story-button-wide" aria-label="Login">
-					Log in
-				</button>
-				<div class="login-links">
-					<a href="/login/forgot" aria-label="Wachtwoord vergeten">Wachtwoord vergeten?</a>
-				</div>
-				{#if message}
-					<p class="login-error">{message}</p>
-				{/if}
-			</form>
+<div class="book-page book-page-left">
+	<div class="page-number">Login</div>
+	<div class="login-content">
+		<div class="page-content">
+			<p>Voer je naam en code in om naar de bibliotheek te gaan.</p>
 		</div>
-	</div>
-	<div class="book-page book-page-right">
-		<div class="page-number">&nbsp;</div>
+		<form class="login-form story-box" on:submit|preventDefault={onSubmit}>
+			<h2 class="page-title">Log in</h2>
+			<label>
+				<span>Naam</span>
+				<input
+					type="text"
+					class="story-input"
+					bind:value={name}
+					name="name"
+					autocomplete="name"
+					required
+				/>
+			</label>
+			<label>
+				<span>Code</span>
+				<input
+					type="password"
+					class="story-input"
+					bind:value={code}
+					name="code"
+					autocomplete="current-password"
+					required
+				/>
+			</label>
+			<button type="submit" class="story-button story-button-wide" aria-label="Login">
+				Log in
+			</button>
+			<div class="login-links">
+				<a href="/login/forgot" aria-label="Wachtwoord vergeten">Wachtwoord vergeten?</a>
+			</div>
+			{#if message}
+				<p class="login-error">{message}</p>
+			{/if}
+		</form>
 	</div>
 </div>
