@@ -9,7 +9,7 @@
   let favorites: number[] = [];
   let showFilters = $state(false);
   let menuOpen = false;
-  let currentPage = 1;
+  let currentPage = $state(1);
   const itemsPerPage = 12;
 
   const search = writable('');
@@ -72,7 +72,7 @@
     if (currentPage > 1) currentPage--;
   }
 
-  let displayBooks = $derived.by(() => {
+  const displayBooks = $derived.by(() => {
     const start = (currentPage - 1) * itemsPerPage;
     const end = start + itemsPerPage;
     const allFiltered = $filtered;
@@ -84,11 +84,11 @@
   <header class="toolbar">
     <div class="toolbar-top">
       <h2>📚 Fantasie Bibliotheek</h2>
-      <button class="chip" on:click={logout} aria-label="Uitloggen">↪ Uitloggen</button>
+      <button class="chip" onclick={logout} aria-label="Uitloggen">↪ Uitloggen</button>
     </div>
 
     <div class="controls">
-      <button class="chip filter-toggle" on:click={() => showFilters = !showFilters} aria-label="Filters tonen">
+      <button class="chip filter-toggle" onclick={() => showFilters = !showFilters} aria-label="Filters tonen">
         🔍 Filters {showFilters ? '✕' : '▼'}
       </button>
 
@@ -96,33 +96,33 @@
         <input
           type="search"
           placeholder="Zoek titel, auteur of beschrijving..."
-          on:input={(e) => search.set(e.currentTarget.value)}
+          oninput={(e) => search.set(e.currentTarget.value)}
           aria-label="Zoek boeken"
         />
-        <button class="clear" on:click={() => search.set('')} aria-label="Wis zoekopdracht">✕</button>
+        <button class="clear" onclick={() => search.set('')} aria-label="Wis zoekopdracht">✕</button>
       </div>
 
       <div class="filters {showFilters ? 'show' : ''}">
         {#if showFilters}
-          <div class="filter-overlay" on:click={() => showFilters = false}></div>
+          <div class="filter-overlay" role="button" tabindex="0" onclick={() => showFilters = false} onkeydown={(e) => (e.key === 'Escape' || e.key === 'Enter') && (showFilters = false)}></div>
         {/if}
 
         <div class="filter-content">
           <div class="filter-header">
             <h3>Filters</h3>
-            <button class="close-filters" on:click={() => showFilters = false} aria-label="Sluit filters">✕</button>
+            <button class="close-filters" onclick={() => showFilters = false} aria-label="Sluit filters">✕</button>
           </div>
 
           <div class="chips">
-            <button class="chip { $showOnlyFavorites ? 'active' : '' }" on:click={() => showOnlyFavorites.set(!$showOnlyFavorites)}>♥ Favorieten</button>
+            <button class="chip { $showOnlyFavorites ? 'active' : '' }" onclick={() => showOnlyFavorites.set(!$showOnlyFavorites)}>♥ Favorieten</button>
             {#each categories as c}
-              <button class="chip { $category === c ? 'active' : '' }" on:click={() => category.set(c)}>{c}</button>
+              <button class="chip { $category === c ? 'active' : '' }" onclick={() => category.set(c)}>{c}</button>
             {/each}
           </div>
 
           <div class="sort-wrap">
             <label for="sort" class="sr-only">Sorteer</label>
-            <select id="sort" on:change={(e) => sort.set((e.target as HTMLSelectElement).value)} aria-label="Sorteer">
+            <select id="sort" onchange={(e) => sort.set((e.target as HTMLSelectElement).value)} aria-label="Sorteer">
               <option value="newest">Nieuwste eerst</option>
               <option value="oldest">Oudste eerst</option>
             </select>
@@ -162,9 +162,9 @@
       </div>
 
       <div class="pagination">
-        <button class="pag-btn" on:click={prevPage} disabled={currentPage === 1}>← Vorige</button>
+        <button class="pag-btn" onclick={prevPage} disabled={currentPage === 1}>← Vorige</button>
         <span class="page-info">Pagina {currentPage} van {$totalPages}</span>
-        <button class="pag-btn" on:click={nextPage} disabled={currentPage === $totalPages}>Volgende →</button>
+        <button class="pag-btn" onclick={nextPage} disabled={currentPage === $totalPages}>Volgende →</button>
       </div>
     {/if}
   </section>
