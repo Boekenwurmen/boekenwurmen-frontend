@@ -47,10 +47,8 @@
 
 .login-eye:hover {
 	background: rgba(214, 185, 106, 0.18);
-}
-
-.login-eye:focus {
-	outline: none;
+	outline: 2px solid #d6b96a;
+	outline-offset: 2px;
 	box-shadow: 0 0 0 4px rgba(214, 185, 106, 0.25);
 }
 
