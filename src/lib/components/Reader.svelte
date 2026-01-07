@@ -7,6 +7,7 @@
 	import InsertNameWindow from "./InsertNameWindow.svelte";
 	import Stories from "./Stories.svelte";
     import { page } from '$app/stores';
+    import ProgressBar from './ProgressBar.svelte';
     
     
     let pageId = 0;
@@ -58,5 +59,6 @@
     {#if !isOnCodePage && !isOnNamePage}
         <ActionWindow/>
     {/if}
+    <ProgressBar/>
     <ReadingSettings/>
 </div>
