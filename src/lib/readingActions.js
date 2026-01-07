@@ -59,9 +59,9 @@ export function advanceFromNameToCode(pageContext) {
  * Jumps to the target page stored in an options object
  * @param {number[]} pageContext keeps track of what page we are on
  * @param {{toPage: number, type: string, name: string}|undefined} option has the new page inside
- * @param {string} baseUrl the base URL for API calls
- * @param {number} clientId the client ID
- * @returns {boolean} true if successful, false if unsuccessful
+ * @param {string} [baseUrl] the base URL for API calls (optional)
+ * @param {number} [clientId] the client ID (optional)
+ * @returns {Promise<boolean>} true if successful, false if unsuccessful
  */
 export async function followOption(pageContext, option, baseUrl, clientId) {
   try {
