@@ -4,6 +4,7 @@
   import { writable, derived } from 'svelte/store';
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
+  import Book3d from "../../lib/components/book3d.svelte";
 
   const allBooks: Book[] = books;
   let favorites: number[] = [];
@@ -138,9 +139,18 @@
     {:else}
       <div class="grid">
         {#each displayBooks as book}
-          <a href="/library/{book.id}" class="card-link">
-            <article class="card">
-              <div
+
+        
+        
+        <a href="/library/{book.id}" class="card-link">
+          <article class="card">
+            {#if !book.cover}
+              <div class="fake-cover">{book.title}</div>
+            {:else}
+              <!-- '/static/covers/test.svg' -->
+              <Book3d image={book.cover} url={`/library/${book.id}`}/>
+            {/if}
+              <!-- <div
                 class="cover"
                 role="img"
                 aria-label={book.title}
@@ -149,7 +159,7 @@
                 {#if !book.cover}
                   <div class="fake-cover">{book.title}</div>
                 {/if}
-              </div>
+              </div> -->
             <div class="meta">
               <h3>{book.title}</h3>
               <p class="author">{book.author} <span class="year">· {book.year}</span></p>
@@ -216,7 +226,7 @@
   #sort{width:100%;padding:.7rem;border-radius:6px;border:1px solid #cbd5e0;background:#fff;color:#2c3e50;font-weight:500;cursor:pointer;transition:all .2s;font-size:0.9rem}
   #sort:focus{border-color:#2c5282;box-shadow:0 0 0 3px rgba(44,82,130,0.1)}
 
-  .results .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.5rem;padding:2rem 2rem}
+  .results .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem;padding:2rem 2rem}
 
   .card-link{text-decoration:none;color:inherit;display:block}
   .card{background:#fff;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.08);overflow:hidden;display:flex;flex-direction:column;transition:transform .2s, box-shadow .2s;cursor:pointer;border:1px solid #e0e4e8;height:100%;min-height:450px}
