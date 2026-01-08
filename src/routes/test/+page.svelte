@@ -2,5 +2,5 @@
     import Book3d from "../../lib/components/book3d.svelte";
 </script>
 
-<!-- <Book3d image={'./assets/web-cover-en.png'}/> -->
-<Book3d image={'/static/covers/kosmisch.svg'}/>
+<!-- make sure the image resolution is 250 x 375 -->
+<Book3d image={'/static/covers/test.svg'} url={'https://www.youtube.com/watch?v=dQw4w9WgXcQ'}/>
