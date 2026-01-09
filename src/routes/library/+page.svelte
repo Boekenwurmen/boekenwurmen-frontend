@@ -175,7 +175,7 @@
   
   .library-page::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background-image:radial-gradient(circle at 20% 50%, rgba(214,185,106,0.03) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(107,62,43,0.04) 0%, transparent 50%);pointer-events:none;z-index:0}
 
-  .library-page::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background-image:radial-gradient(circle at 20% 50%, rgba(214,185,106,0.03) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(107,62,43,0.04) 0%, transparent 50%);pointer-events:none;z-index:0}
+
   .library-page > *{position:relative;z-index:1}
 
   .toolbar{display:flex;flex-direction:column;gap:0;margin-bottom:0;background:#fff;padding:0;border-radius:0;width:100%;position:relative;z-index:50}

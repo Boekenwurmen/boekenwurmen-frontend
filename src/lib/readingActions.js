@@ -42,6 +42,7 @@ export function advanceFromNameToCode(pageContext) {
 export function followOption(pageContext, option) {
   try {
     if (!pageContext || !option || option.toPage === undefined || option.toPage === null) return false;
+    // Index 2 tracks action clicks to trigger effects
     pageContext[2]++;
     pageContext[0] = option.toPage;
     return true;
