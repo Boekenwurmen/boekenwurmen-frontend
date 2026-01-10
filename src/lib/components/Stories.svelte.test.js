@@ -1,4 +1,9 @@
-import { expect, test } from 'vitest';
+import { expect, test, vi } from 'vitest';
+
+vi.mock('$env/static/public', () => ({
+    PUBLIC_API_URL: 'http://localhost:3012'
+}));
+
 import Stories from './Stories.svelte.js';
 
 const indexes = [-10000, -100, -10, -3, -2, -1, 0, 0.5, 1, 2, 3, 10, 100, 1000, 10000, Infinity, undefined, null];

@@ -19,7 +19,7 @@ export default class RegexWordMatcher {
      * @param {string[]} words 
      */
     setRegex(words) {
-        if (!words || words.length == 0) {
+        if (!words || words.length === 0) {
             this.regex = null;
         } else {
             this.regex = new RegExp(`${words.join("|")}`, "gi");
