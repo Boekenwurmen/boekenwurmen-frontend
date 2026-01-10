@@ -29,10 +29,10 @@
 		loading = false;
 	}
 
-	const categories = $derived(() => {
-		const cats = new Set(books.map((b) => b.category));
-		return ['all', ...Array.from(cats)];
-	});
+	const categories = $derived([
+		'all',
+		...Array.from(new Set(books.map((b) => b.category)))
+	]);
 
 	const filteredBooks = $derived(() => {
 		let list = books;
@@ -184,7 +184,7 @@
 							<span class="rounded-full bg-slate-100 px-2 py-1 text-xs text-slate-600"
 								>{book.category}</span
 							>
-							<span class="text-xs text-slate-400">{book.year}</span>
+							<span class="text-xs text-slate-400">{book.year ?? ''}</span>
 						</div>
 					</div>
 				</div>
