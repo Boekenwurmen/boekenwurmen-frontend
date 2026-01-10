@@ -39,12 +39,12 @@ const books: Book[] = [
   },
   {
     id: 4,
-    title: 'Programmeren in Svelte',
-    author: 'D. Bakker',
-    category: 'Techniek',
-    year: 2023,
-    cover: '/static/covers/programmeren-svelte.svg',
-    description: 'Praktische gids voor moderne Svelte apps.'
+    title: 'De Bibliothecaris',
+    author: 'M. Vellemann',
+    category: 'Fictie',
+    year: 2020,
+    cover: '/static/covers/bibliothecaris.svg',
+    description: 'Een fascinerende roman over geheimen verborgen tussen antieke boeken.'
   },
   {
     id: 5,
@@ -67,6 +67,87 @@ const books: Book[] = [
   },
   {
     id: 7,
+    title: 'De Nachtwaak',
+    author: 'R. Hogestein',
+    category: 'Mysterie',
+    year: 2021,
+    cover: '/static/covers/nachtwaak.svg',
+    description: 'Een spannend mysterie dat in het donker speelt.'
+  },
+  {
+    id: 8,
+    title: 'Reis naar Atlantis',
+    author: 'S. Magellan',
+    category: 'Avontuur',
+    year: 2008,
+    cover: '/static/covers/atlantis.svg',
+    description: 'Een episch avontuur op zoek naar de verloren stad.'
+  },
+  {
+    id: 9,
+    title: 'Gedichten van het Hart',
+    author: 'T. Schelling',
+    category: 'Poëzie',
+    year: 2015,
+    cover: '/static/covers/gedichten-hart.svg',
+    description: 'Verzameling van hartverwarmende en diepzinnige gedichten.'
+  },
+  {
+    id: 10,
+    title: 'De Verloren Erfenis',
+    author: 'U. Pietersen',
+    category: 'Fictie',
+    year: 2019,
+    cover: '/static/covers/erfenis.svg',
+    description: 'Een familiegeheim dat over generaties wordt verborgen.'
+  },
+  {
+    id: 11,
+    title: 'Kosmische Wonderen',
+    author: 'V. Sterren',
+    category: 'Wetenschap',
+    year: 2022,
+    cover: '/static/covers/kosmisch.svg',
+    description: 'Ontdekkingen over het universum en verre sterrenstelsels.'
+  },
+  {
+    id: 12,
+    title: 'Het Groene Woud',
+    author: 'W. Natuur',
+    category: 'Cultuur',
+    year: 2017,
+    cover: '/static/covers/groen-woud.svg',
+    description: 'Een verhaal over de geheimen van het oerwoud.'
+  },
+  {
+    id: 13,
+    title: 'Stadsleven in Gotiek',
+    author: 'X. Architect',
+    category: 'Geschiedenis',
+    year: 2010,
+    cover: '/static/covers/gotiek.svg',
+    description: 'Architectuur en leven in middeleeuwse steden.'
+  },
+  {
+    id: 14,
+    title: 'De Dansende Slaaf',
+    author: 'Y. Ritme',
+    category: 'Fictie',
+    year: 2020,
+    cover: '/static/covers/dans.svg',
+    description: 'Een verhaal van vrijheid en uitdrukking door dans.'
+  },
+  {
+    id: 15,
+    title: 'Zenwijsheid voor Vandaag',
+    author: 'Z. Meditatie',
+    category: 'Cultuur',
+    year: 2021,
+    cover: '/static/covers/zen.svg',
+    description: 'Oude wijsheid toegepast op modern leven.'
+  },
+  {
+    id: 16,
     title: 'De Race Tegen de Tijd',
     author: 'ChatGPT',
     category: 'Fictie',

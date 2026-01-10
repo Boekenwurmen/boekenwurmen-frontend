@@ -47,3 +47,29 @@ export async function saveClientCode(baseUrl, clientId, code) {
     return { ok: false, status: 0, data: { message: 'network-error' } };
   }
 }
+
+export async function registerClient(baseUrl, name, code) {
+  try {
+    const res = await fetch(`${baseUrl}/clients`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, code })
+    });
+    const data = await res.json();
+    return { ok: res.ok, status: res.status, data };
+  } catch (e) {
+    console.warn('[userActions] registerClient failed', e);
+    return { ok: false, status: 0, data: { message: 'network-error' } };
+  }
+}
+
+export async function getProgress(baseUrl, clientId, bookId) {
+  try {
+    const res = await fetch(`${baseUrl}/progress/${clientId}/${bookId}`);
+    const data = await res.json();
+    return { ok: res.ok, percentage: data.percentage || 0 };
+  } catch (e) {
+    console.warn('[userActions] getProgress failed', e);
+    return { ok: false, percentage: 0 };
+  }
+}

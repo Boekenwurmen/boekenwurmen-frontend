@@ -13,7 +13,7 @@ export default class Stories {
             return await Stories._getPageStoryServer(bookId, pageId);
         } catch (error) {
             console.warn('failed to load book story from server, switched to local story', error);
-            return Stories._getPageStoryLocal(pageId);
+            return Stories._getPageStoryLocal(bookId, pageId);
         }
     }
 
@@ -28,7 +28,7 @@ export default class Stories {
             return /** @type {{ toPage: number, type:"page" | "bad ending" | "ending" | "to library" | "submit" | "onError", name: string }[]} */ (await Stories._getPageOptionsServer(bookId, pageId));
         } catch (error) {
             console.warn('failed to load book options from server, switched to local story', error);
-            return /** @type {{ toPage: number, type:"page" | "bad ending" | "ending" | "to library" | "submit" | "onError", name: string }[]} */ (Stories._getPageOptionsLocal(pageId));
+            return /** @type {{ toPage: number, type:"page" | "bad ending" | "ending" | "to library" | "submit" | "onError", name: string }[]} */ (Stories._getPageOptionsLocal(bookId, pageId));
         }
     }
 
@@ -43,7 +43,7 @@ export default class Stories {
             return /** @type {"page" | "enter name" | "enter password" | "set name" | "set password"} */ (await Stories._getPageTypeServer(bookId, pageId));
         } catch (error) {
             console.warn('failed to load book options from server, switched to local story', error);
-            return Stories._getPageTypeLocal(pageId);
+            return Stories._getPageTypeLocal(bookId, pageId);
         }
     }
 
@@ -150,34 +150,34 @@ export default class Stories {
      * 
      * @param {number | null | undefined} page
      */
-    static _getPageStoryLocal(page){
+    static _getPageStoryLocal(bookId, page){
         if (page === null || page === undefined) {
             return `This part of the story ${Math.random() < 0.5 ? 'went missing' : 'got burned up'}.`;
         }
-        return _getPageStoryJson(0, page);
+        return _getPageStoryJson(Number(bookId) || 0, page);
     }
 
     /**
      * 
      * @param {number | null | undefined} page
      */
-    static _getPageTypeLocal(page){
+    static _getPageTypeLocal(bookId, page){
         if (page === null || page === undefined) {
             return 'page';
         }
-        return _getPageTypeJson(0, page);
+        return _getPageTypeJson(Number(bookId) || 0, page);
     }
 
     /**
      * 
      * @param {number | null | undefined} page 
      */
-    static _getPageOptionsLocal(page){
+    static _getPageOptionsLocal(bookId, page){
         if (page === null || page === undefined) {
             return [
                 {toPage:0, type: 'page', name: 'Go back'},
             ];
         }
-        return _getPageOptionsJson(0, page);
+        return _getPageOptionsJson(Number(bookId) || 0, page);
     }
 }

@@ -24,9 +24,9 @@
 
 <div class="w-full">
     <details>
-        <summary>Settings</summary>
+        <summary>Instellingen</summary>
         <div>
-            <label for="readingSpeed">Reading Speed</label>
+            <label for="readingSpeed">Leessnelheid</label>
             <input type="range" id="readingSpeed" name="readingSpeed" min="5" max="80" step="5" bind:value={readingSpeed} on:input={handleReadingSpeedUpdate}/>
         </div>
     </details>

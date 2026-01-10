@@ -81,6 +81,9 @@
     min-height: 100vh;
     color: var(--text, #111);
     background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1e 100%);
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
   }
 
   .back-link {
@@ -114,25 +117,36 @@
 
   .cover {
     width: 100%;
-    max-width: 300px;
+    max-width: 400px;
     aspect-ratio: 3/4;
-    background-size: cover;
+    background-size: contain;
     background-position: center;
+    background-repeat: no-repeat;
     border-radius: 8px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
     display: flex;
-    align-items: flex-end;
-    padding: 1rem;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    background-color: #f0f4f8;
   }
 
   .fake-cover {
     background: linear-gradient(135deg, var(--cover, #6b3e2b), var(--cover-dark, #56311f));
     color: var(--gold, #d6b96a);
-    padding: 1rem;
+    padding: 1rem 0.6rem;
     border-radius: 6px;
     font-weight: 700;
-    font-size: 1.2rem;
+    font-size: 0.7rem;
     text-align: center;
+    max-width: 80%;
+    max-height: 150px;
+    overflow: hidden;
+    word-break: break-word;
+    line-height: 1.2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .info-section {
@@ -233,6 +247,89 @@
 
     .info-section h1 {
       font-size: 1.5rem;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .detail-page {
+      padding: 1.5rem;
+    }
+
+    .book-detail {
+      padding: 1.5rem;
+    }
+
+    .cover {
+      max-width: 200px;
+    }
+
+    .info-section h1 {
+      font-size: 1.25rem;
+    }
+
+    .author {
+      font-size: 0.95rem;
+    }
+
+    .description {
+      font-size: 0.95rem;
+    }
+
+    .actions {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .btn {
+      width: 100%;
+      text-align: center;
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 400px) {
+    .detail-page {
+      padding: 1rem;
+    }
+
+    .book-detail {
+      padding: 1rem;
+    }
+
+    .cover {
+      max-width: 180px;
+    }
+
+    .info-section h1 {
+      font-size: 1.15rem;
+    }
+
+    .author {
+      font-size: 0.9rem;
+    }
+
+    .meta {
+      font-size: 0.85rem;
+    }
+
+    .category {
+      font-size: 0.75rem;
+      padding: 0.3rem 0.65rem;
+    }
+
+    .description {
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .btn {
+      padding: 0.6rem 1.25rem;
+      font-size: 0.95rem;
+    }
+
+    .back-link {
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
     }
   }
 </style>

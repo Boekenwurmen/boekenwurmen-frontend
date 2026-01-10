@@ -2,7 +2,7 @@
 	import TypeWriter from './TypeWriter.svelte.js';
     import { PUBLIC_API_URL } from '$env/static/public';
     import { INPUT_FOCUS_DELAY, WELCOME_DELAY } from '$lib/constants';
-    import { createClient, advanceFromNameToCode, followOption } from '$lib/readingActions.js';
+    import { advanceFromNameToCode, followOption } from '$lib/readingActions.js';
     import { getContext } from 'svelte';
 	import { showDelayedLoadingMessage } from './delayedLoadingMessage.js';
 	import Stories from './Stories.svelte.js';
@@ -41,22 +41,10 @@
 
     async function submitName() {
         if (!nameValue) return;
-        const { ok, status, data } = await createClient(PUBLIC_API_URL, nameValue);
-        if (status === 201 && data && data.success && data.client) {
-            clientContext.id = data.client.id;
-            clientContext.name = data.client.name;
-            myTypeWriter.reset(`Welcome ${data.client.name}!`);
-            // setTimeout(() => advanceFromNameToCode(pageContext), WELCOME_DELAY);
-            setTimeout(() => followOption(pageContext, submitOption), WELCOME_DELAY);
-        } else if (status === 409) {
-            if (followOption(pageContext, errorOptionDuplicateName)) return;
-            const msg = `The librarian says that the name is taken by somebody else, the scroll in his hand gives clues of what might happen written in codewords that can only be deciphered by the master librarians who built the library, it goes like this: "http${status} ${data?.message}". The librarian sighs and gives me an instruction "If you know the master librarians, please give them this scroll to fix the library" he says.` || 'Name already taken.';
-            myTypeWriter.reset(msg);
-        } else {
-            if (followOption(pageContext, errorOptionUnknown)) return;
-            const msg = `The librarian could not find his scroll. He did find a clue but it is written in codewords that can only be deciphered by the master librarians who built the library, it goes like this: "http${status} ${data?.message}". The librarian sighs and gives me an instruction "If you know the master librarians, please give them this scroll to fix the library" he says.` || 'Could not create player. Try again.';
-            myTypeWriter.reset(msg);
-        }
+        // Do not create the account yet; just store the name locally.
+        clientContext.name = nameValue.trim();
+        myTypeWriter.reset(`Welcome ${clientContext.name}!`);
+        setTimeout(() => followOption(pageContext, submitOption), WELCOME_DELAY);
     }
 
     $effect(() => {
