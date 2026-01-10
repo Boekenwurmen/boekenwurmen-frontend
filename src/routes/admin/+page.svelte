@@ -2,6 +2,7 @@
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import { adminLogin, getAccessToken } from '$lib/adminApi';
+	import PasswordInputWithToggle from '$lib/components/PasswordInputWithToggle.svelte';
 
 	let email = $state('');
 	let password = $state('');
@@ -72,13 +73,16 @@
 					<label for="password" class="mb-2 block text-sm font-medium text-slate-700">
 						Wachtwoord
 					</label>
-					<input
-						type="password"
+					<PasswordInputWithToggle
 						id="password"
 						bind:value={password}
-						class="w-full rounded-lg border border-slate-300 px-4 py-3 transition-all focus:border-transparent focus:ring-2 focus:ring-amber-500"
+						name="password"
+						autocomplete="current-password"
+						inputClass="w-full rounded-lg border border-slate-300 px-4 py-3 transition-all focus:border-transparent focus:ring-2 focus:ring-amber-500"
+						containerClass="relative"
+						buttonClass="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-700"
 						placeholder="••••••••"
-						required
+						required={true}
 						disabled={loading}
 					/>
 				</div>
