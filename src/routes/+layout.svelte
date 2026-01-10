@@ -15,7 +15,7 @@
 	</a>
 	<a
 		href="/admin"
-		class="mr-6 rounded bg-yellow-800 px-4 py-2 font-semibold text-white transition-colors hover:bg-yellow-900"
+		class="text-xl mr-6 rounded bg-yellow-800 px-6 py-2 font-bold text-white transition-colors hover:bg-yellow-900"
 	>
 		⚙️ Admin
 	</a>
