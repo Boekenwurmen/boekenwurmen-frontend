@@ -4,7 +4,6 @@
     import { getContext } from 'svelte';
     import { showDelayedLoadingMessage } from './delayedLoadingMessage.js';
 	import WordExplainingReadingWindow from './WordExplainingReadingWindow.svelte';
-	import SkipIntroButton from './SkipIntroButton.svelte';
     
     /**
      * @type {{speed:number, myTypeWriter:TypeWriter}}
@@ -73,8 +72,6 @@
 </script>
 
 <div class="reading-container">	
-    <SkipIntroButton/>
-
 	<p class="story-box typing">
 		<WordExplainingReadingWindow 
 			text={myTypeWriter.shown}

@@ -10,6 +10,7 @@
     import ProgressBar from './ProgressBar.svelte';
 	import { INTRODUCTION_BOOK_ID } from "$lib/constants.ts";
 	import SkipIntroButton from "./SkipIntroButton.svelte";
+	import ExitButton from "./ExitButton.svelte";
     
     
     let pageId = 0;
@@ -51,6 +52,7 @@
 
 <div class="w-full">
     <!-- <p>isOnNamePage {isOnNamePage}, isOnCodePage {isOnCodePage}</p> -->
+    <ExitButton/>
     {#if bookId === INTRODUCTION_BOOK_ID}
         <SkipIntroButton/>
     {/if}

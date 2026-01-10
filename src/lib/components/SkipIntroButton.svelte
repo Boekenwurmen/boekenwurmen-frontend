@@ -44,7 +44,7 @@
 	.skip-button {
 		position: absolute;
 		top: -180px;
-		left: 0;
+		left: 100px;
 		background: linear-gradient(135deg, #f5e6d3 0%, #e8d5c4 100%);
 		color: #6b5437;
 		border: 2px solid #d4a574;
