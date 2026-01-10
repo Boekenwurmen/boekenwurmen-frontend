@@ -6,6 +6,7 @@
 	export let required: boolean = false;
 	export let placeholder: string = '';
 	export let id: string | undefined;
+	export let disabled: boolean = false;
 
 	// Styling hooks (defaults match existing login pages)
 	export let inputClass: string = 'story-input';
@@ -31,6 +32,7 @@
 		{autocomplete}
 		{placeholder}
 		{required}
+		{disabled}
 	/>
 	<button class={buttonClass} type="button" aria-label={ariaLabel} on:click={() => (show = !show)}>
 		{#if show}

@@ -22,16 +22,10 @@
 		{ label: 'Gebruikers', value: clients.length, icon: '👥', color: 'bg-blue-500' },
 		{ label: 'Boeken', value: books.length, icon: '📚', color: 'bg-green-500' },
 		{
-			label: 'Totale Score',
+			label: 'Totale Score van gebruikers',
 			value: clients.reduce((sum, c) => sum + (c.score ?? 0), 0),
 			icon: '⭐',
 			color: 'bg-amber-500'
-		},
-		{
-			label: 'Intro Boek',
-			value: books.filter((b) => b.isIntroduction).length > 0 ? '✓' : '✗',
-			icon: '📖',
-			color: 'bg-purple-500'
 		}
 	]);
 
@@ -80,8 +74,10 @@
 			<div class="rounded-xl bg-white shadow-sm">
 				<div class="flex items-center justify-between border-b border-slate-100 p-4">
 					<h2 class="font-semibold text-slate-800">🏆 Top Gebruikers</h2>
-					<a href="/admin/clients" class="text-sm text-amber-600 hover:underline"
-						>Bekijk alle gebruikers→</a
+					<a
+						href="/admin/clients"
+						class="rounded-lg bg-amber-100 px-3 py-2 text-base font-semibold text-amber-700 transition-colors hover:bg-amber-200"
+						>Bekijk alle gebruikers →</a
 					>
 				</div>
 				<div class="divide-y divide-slate-100">
@@ -107,8 +103,10 @@
 			<div class="rounded-xl bg-white shadow-sm">
 				<div class="flex items-center justify-between border-b border-slate-100 p-4">
 					<h2 class="font-semibold text-slate-800">📖 Recente Boeken</h2>
-					<a href="/admin/books" class="text-sm text-amber-600 hover:underline"
-						>Bekijk alle boeken→</a
+					<a
+						href="/admin/books"
+						class="rounded-lg bg-amber-100 px-3 py-2 text-base font-semibold text-amber-700 transition-colors hover:bg-amber-200"
+						>Bekijk alle boeken →</a
 					>
 				</div>
 				<div class="divide-y divide-slate-100">

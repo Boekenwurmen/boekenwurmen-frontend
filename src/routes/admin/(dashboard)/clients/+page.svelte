@@ -11,7 +11,7 @@
 
 	// Edit modal state
 	let editingClient = $state<Client | null>(null);
-	let editForm = $state({ name: '', code: '', score: 0 });
+	let editForm = $state({ name: '', score: 0 });
 	let editError = $state('');
 	let editLoading = $state(false);
 
@@ -50,7 +50,7 @@
 			if (sortBy === 'name') {
 				cmp = a.name.localeCompare(b.name);
 			} else if (sortBy === 'score') {
-				cmp = a.score - b.score;
+				cmp = (a.score ?? 0) - (b.score ?? 0);
 			} else if (sortBy === 'createdAt') {
 				cmp = new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
 			}
@@ -62,7 +62,7 @@
 
 	function openEdit(client: Client) {
 		editingClient = client;
-		editForm = { name: client.name, code: client.code ?? '', score: client.score ?? 0 };
+		editForm = { name: client.name, score: client.score ?? 0 };
 		editError = '';
 	}
 
@@ -78,7 +78,6 @@
 
 		const res = await updateClient(editingClient.id, {
 			name: editForm.name,
-			code: editForm.code,
 			score: editForm.score
 		});
 
@@ -178,7 +177,7 @@
 							<th class="px-6 py-4 text-left">
 								<button
 									onclick={() => toggleSort('score')}
-									class="flex items-center gap-1 font-semibold text-slate-600 hover:text-slate-900"
+									class="flex items-center gap-1 font-semibold text-slate-600 underline hover:text-slate-900"
 								>
 									Score
 									{#if sortBy === 'score'}
@@ -189,7 +188,7 @@
 							<th class="hidden px-6 py-4 text-left md:table-cell">
 								<button
 									onclick={() => toggleSort('createdAt')}
-									class="flex items-center gap-1 font-semibold text-slate-600 hover:text-slate-900"
+									class="flex items-center gap-1 font-semibold text-slate-600 underline hover:text-slate-900"
 								>
 									Aangemaakt
 									{#if sortBy === 'createdAt'}
@@ -272,16 +271,6 @@
 						id="edit-name"
 						type="text"
 						bind:value={editForm.name}
-						class="w-full rounded-lg border border-slate-300 px-4 py-2 focus:border-transparent focus:ring-2 focus:ring-amber-500"
-						required
-					/>
-				</div>
-				<div>
-					<label for="edit-code" class="mb-1 block text-sm font-medium text-slate-700">Code</label>
-					<input
-						id="edit-code"
-						type="text"
-						bind:value={editForm.code}
 						class="w-full rounded-lg border border-slate-300 px-4 py-2 focus:border-transparent focus:ring-2 focus:ring-amber-500"
 						required
 					/>

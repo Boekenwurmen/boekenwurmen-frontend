@@ -133,9 +133,11 @@
 						/>
 					</svg>
 				</button>
-				<div class="flex-1"></div>
-				<a href="/" class="text-sm text-slate-500 transition-colors hover:text-amber-600">
-					← Naar website
+				<a
+					href="/"
+					class="rounded-lg bg-slate-200 px-4 py-2 text-base font-semibold text-slate-700 transition-colors hover:bg-slate-300"
+				>
+					← Terug naar de website
 				</a>
 			</header>
 
