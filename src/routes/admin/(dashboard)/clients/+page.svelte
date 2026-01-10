@@ -240,7 +240,7 @@
 							</tr>
 						{:else}
 							<tr>
-								<td colspan="5" class="px-6 py-12 text-center text-slate-500">
+								<td colspan="4" class="px-6 py-12 text-center text-slate-500">
 									Geen gebruikers gevonden
 								</td>
 							</tr>
