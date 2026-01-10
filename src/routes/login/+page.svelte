@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { PUBLIC_API_URL } from '$env/static/public';
-	import { onMount } from 'svelte';
 	import '../css/login.css';
+	import PasswordInputWithToggle from '$lib/components/PasswordInputWithToggle.svelte';
 	let name = '';
 	let code = '';
 	let message: string = '';
 
-	onMount(() => {
+	if (typeof window !== 'undefined') {
 		try {
 			const raw = localStorage.getItem('auth');
 			if (raw) {
@@ -17,7 +17,7 @@
 				}
 			}
 		} catch {}
-	});
+	}
 
 	async function onSubmit(event: Event) {
 		event.preventDefault();
@@ -70,13 +70,17 @@
 			</label>
 			<label>
 				<span>Code</span>
-				<input
-					type="password"
-					class="story-input"
+				<PasswordInputWithToggle
 					bind:value={code}
 					name="code"
 					autocomplete="current-password"
 					required
+					inputClass="story-input"
+					containerClass="login-password"
+					buttonClass="login-eye"
+					iconClass="login-eye-icon"
+					ariaLabelShow="Toon code"
+					ariaLabelHide="Verberg code"
 				/>
 			</label>
 			<button type="submit" class="story-button story-button-wide" aria-label="Login">

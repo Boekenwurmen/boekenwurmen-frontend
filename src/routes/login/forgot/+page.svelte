@@ -2,6 +2,7 @@
 	import { PUBLIC_API_URL } from '$env/static/public';
 	import { goto } from '$app/navigation';
 	import '../../css/login.css';
+	import PasswordInputWithToggle from '$lib/components/PasswordInputWithToggle.svelte';
 
 	let name = '';
 	let newCode = '';
@@ -59,13 +60,17 @@
 			</label>
 			<label>
 				<span>Nieuwe code</span>
-				<input
-					type="password"
-					class="story-input"
+				<PasswordInputWithToggle
 					bind:value={newCode}
 					name="code"
 					autocomplete="new-password"
 					required
+					inputClass="story-input"
+					containerClass="login-password"
+					buttonClass="login-eye"
+					iconClass="login-eye-icon"
+					ariaLabelShow="Toon code"
+					ariaLabelHide="Verberg code"
 				/>
 			</label>
 			<button type="submit" class="story-button story-button-wide">Reset code</button>
@@ -76,4 +81,3 @@
 		{/if}
 	</div>
 </div>
-
