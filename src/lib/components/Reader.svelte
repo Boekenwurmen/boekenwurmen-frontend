@@ -8,11 +8,13 @@
 	import Stories from "./Stories.svelte";
     import { page } from '$app/stores';
     import ProgressBar from './ProgressBar.svelte';
+	import { INTRODUCTION_BOOK_ID } from "$lib/constants";
+	import SkipIntroButton from "./SkipIntroButton.svelte";
     
     
     let pageId = 0;
     const bookParam = $page.url.searchParams.get('book');
-    let bookId =  bookParam ? parseInt(bookParam) : 0
+    let bookId =  bookParam ? parseInt(bookParam) : INTRODUCTION_BOOK_ID;
     let clickCount = 0;
 
     const pageContext = $state([ pageId, bookId, clickCount ]);
@@ -49,6 +51,10 @@
 
 <div class="w-full">
     <!-- <p>isOnNamePage {isOnNamePage}, isOnCodePage {isOnCodePage}</p> -->
+    {#if bookId === INTRODUCTION_BOOK_ID}
+        <SkipIntroButton/>
+    {/if}
+
     <ReadingWindow/>
     {#if isOnNamePage}
         <InsertNameWindow/>
