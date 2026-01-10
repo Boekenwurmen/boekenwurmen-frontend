@@ -78,12 +78,12 @@
 						bind:value={password}
 						name="password"
 						autocomplete="current-password"
-						inputClass="w-full rounded-lg border border-slate-300 px-4 py-3 transition-all focus:border-transparent focus:ring-2 focus:ring-amber-500"
+						inputClass="w-full rounded-lg border border-slate-300 px-4 py-3 pr-12 transition-all focus:border-transparent focus:ring-2 focus:ring-amber-500"
 						containerClass="relative"
 						buttonClass="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-700"
+						iconClass="w-5 h-5"
 						placeholder="••••••••"
 						required={true}
-						disabled={loading}
 					/>
 				</div>
 
