@@ -29,10 +29,10 @@
 		loading = false;
 	}
 
-	const categories = $derived(() => {
-		const cats = new Set(books.map((b) => b.category));
-		return ['all', ...Array.from(cats)];
-	});
+	const categories = $derived([
+		'all',
+		...Array.from(new Set(books.map((b) => b.category)))
+	]);
 
 	const filteredBooks = $derived(() => {
 		let list = books;
