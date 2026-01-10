@@ -44,8 +44,14 @@
 </svelte:head>
 
 <div
-	class="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-900 to-slate-800 p-4"
+	class="relative flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-900 to-slate-800 p-4"
 >
+	<a
+		href="/"
+		class="absolute top-4 left-4 rounded-lg bg-gray-800 px-5 py-3 text-lg font-semibold text-white transition-colors hover:bg-gray-700"
+	>
+		← Terug
+	</a>
 	<div class="w-full max-w-md">
 		<div class="rounded-2xl bg-white p-8 shadow-xl">
 			<div class="mb-8 text-center">
@@ -63,7 +69,7 @@
 						id="email"
 						bind:value={email}
 						class="w-full rounded-lg border border-slate-300 px-4 py-3 transition-all focus:border-transparent focus:ring-2 focus:ring-amber-500"
-						placeholder="admin@boekenwurmen.nl"
+						placeholder="E-mail"
 						required
 						disabled={loading}
 					/>
@@ -81,9 +87,10 @@
 						inputClass="w-full rounded-lg border border-slate-300 px-4 py-3 pr-12 transition-all focus:border-transparent focus:ring-2 focus:ring-amber-500"
 						containerClass="relative"
 						buttonClass="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-700"
-						iconClass="w-5 h-5"
+						iconClass="w-6 h-6"
 						placeholder="••••••••"
 						required={true}
+						disabled={loading}
 					/>
 				</div>
 
@@ -101,12 +108,6 @@
 					{loading ? 'Inloggen...' : 'Inloggen'}
 				</button>
 			</form>
-
-			<div class="mt-6 text-center">
-				<a href="/login" class="text-sm text-slate-500 transition-colors hover:text-amber-600">
-					← Terug naar gebruikers login
-				</a>
-			</div>
 		</div>
 	</div>
 </div>
