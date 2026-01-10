@@ -8,7 +8,7 @@
 	import Stories from "./Stories.svelte";
     import { page } from '$app/stores';
     import ProgressBar from './ProgressBar.svelte';
-	import { INTRODUCTION_BOOK_ID } from "$lib/constants";
+	import { INTRODUCTION_BOOK_ID } from "$lib/constants.ts";
 	import SkipIntroButton from "./SkipIntroButton.svelte";
     
     
