@@ -203,7 +203,16 @@ export async function createBook(data: {
 }) {
 	return apiFetch<Book>('/admin/books', {
 		method: 'POST',
-		body: JSON.stringify(data)
+		body: JSON.stringify({
+			metadata: {
+				title: data.title,
+				author: data.author,
+				description: data.description || '',
+				co_authors: [],
+				cover_image_url: data.coverUrl || '',
+				category: data.category || 'fiction'
+			}
+		})
 	});
 }
 
@@ -220,7 +229,15 @@ export async function updateBook(
 ) {
 	return apiFetch<Book>(`/admin/books/${bookId}`, {
 		method: 'PUT',
-		body: JSON.stringify(data)
+		body: JSON.stringify({
+			metadata: {
+				...(data.title && { title: data.title }),
+				...(data.author && { author: data.author }),
+				...(data.description !== undefined && { description: data.description }),
+				...(data.coverUrl !== undefined && { cover_image_url: data.coverUrl }),
+				...(data.category && { category: data.category })
+			}
+		})
 	});
 }
 
