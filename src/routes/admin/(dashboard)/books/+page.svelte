@@ -184,7 +184,7 @@
 							<span class="rounded-full bg-slate-100 px-2 py-1 text-xs text-slate-600"
 								>{book.category}</span
 							>
-							<span class="text-xs text-slate-400">{book.year}</span>
+							<span class="text-xs text-slate-400">{book.year ?? ''}</span>
 						</div>
 					</div>
 				</div>
