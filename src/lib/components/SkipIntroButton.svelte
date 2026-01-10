@@ -32,8 +32,44 @@
     }
 </script>
 
+<!-- class="story-button story-button-wide my-4" -->
 {#if hasSkipped}
-<button class="story-button story-button-wide my-4" onclick={setPage}>
+<button class="skip-button" onclick={setPage}>
     Skip Intro
 </button>
 {/if}
+
+<style>
+    
+	.skip-button {
+		position: absolute;
+		top: -180px;
+		left: 0;
+		background: linear-gradient(135deg, #f5e6d3 0%, #e8d5c4 100%);
+		color: #6b5437;
+		border: 2px solid #d4a574;
+		border-radius: 10%;
+		font-size: 24px;
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: all 0.3s ease;
+		z-index: 10;
+		box-shadow: 0 4px 12px rgba(107, 84, 55, 0.15);
+		font-weight: bold;
+	}
+
+	.skip-button:hover {
+		background: linear-gradient(135deg, #8b6f47 0%, #6b5437 100%);
+		color: #f5e6d3;
+		border-color: #6b5437;
+		box-shadow: 0 6px 16px rgba(107, 84, 55, 0.3);
+		transform: translateY(-2px);
+	}
+
+	.skip-button:active {
+		transform: translateY(0);
+		box-shadow: 0 2px 8px rgba(107, 84, 55, 0.2);
+	}
+</style>
