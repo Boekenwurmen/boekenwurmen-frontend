@@ -8,13 +8,25 @@
 	import Stories from "./Stories.svelte";
     import { page } from '$app/stores';
     import ProgressBar from './ProgressBar.svelte';
+	import { INTRODUCTION_BOOK_ID, ACCOUNT_CREATION_PAGE } from "$lib/constants.ts";
+	import SkipIntroButton from "./SkipIntroButton.svelte";
+	import ExitButton from "./ExitButton.svelte";
     
     
-    let pageId = 0;
     const bookParam = $page.url.searchParams.get('book');
-    let bookId =  bookParam ? parseInt(bookParam) : 0
+    const pageParam = $page.url.searchParams.get('page');
+    const typeParam = $page.url.searchParams.get('type');
+
+    let bookId =  bookParam ? parseInt(bookParam) : INTRODUCTION_BOOK_ID;
+    let pageId =  pageParam ? parseInt(pageParam) : 0;
     let clickCount = 0;
 
+    switch (typeParam) {
+        case 'register':
+            pageId = ACCOUNT_CREATION_PAGE;
+            break;
+    }
+    
     const pageContext = $state([ pageId, bookId, clickCount ]);
 
     // client context holds created client id and name
@@ -49,6 +61,11 @@
 
 <div class="w-full">
     <!-- <p>isOnNamePage {isOnNamePage}, isOnCodePage {isOnCodePage}</p> -->
+    <ExitButton/>
+    {#if bookId === INTRODUCTION_BOOK_ID}
+        <SkipIntroButton/>
+    {/if}
+
     <ReadingWindow/>
     {#if isOnNamePage}
         <InsertNameWindow/>

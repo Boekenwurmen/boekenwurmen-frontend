@@ -89,6 +89,9 @@
 			<div class="login-links">
 				<a href="/login/forgot" aria-label="Wachtwoord vergeten">Wachtwoord vergeten?</a>
 			</div>
+			<div class="login-links">
+				<a href="/read?type=register" aria-label="Wachtwoord vergeten">Account aanmaken</a>
+			</div>
 			{#if message}
 				<p class="login-error">{message}</p>
 			{/if}
