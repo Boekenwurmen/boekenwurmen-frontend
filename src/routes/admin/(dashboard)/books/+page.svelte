@@ -29,12 +29,9 @@
 		loading = false;
 	}
 
-	const categories = $derived([
-		'all',
-		...Array.from(new Set(books.map((b) => b.category)))
-	]);
+	const categories = $derived(['all', ...Array.from(new Set(books.map((b) => b.category)))]);
 
-	const filteredBooks = $derived(() => {
+	const filteredBooks = $derived.by(() => {
 		let list = books;
 
 		// Filter by search
@@ -111,7 +108,7 @@
 				bind:value={categoryFilter}
 				class="rounded-lg border border-slate-300 px-4 py-2 focus:border-transparent focus:ring-2 focus:ring-amber-500"
 			>
-				{#each categories() as cat}
+				{#each categories as cat}
 					<option value={cat}>{cat === 'all' ? 'Alle categorieën' : cat}</option>
 				{/each}
 			</select>
@@ -130,12 +127,12 @@
 		<div class="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-700">{error}</div>
 	{:else}
 		<div class="mb-2 text-sm text-slate-500">
-			{filteredBooks().length} van {books.length} boeken
+			{filteredBooks.length} van {books.length} boeken
 		</div>
 
 		<!-- Books Grid -->
 		<div class="grid gap-6 md:grid-cols-2">
-			{#each filteredBooks() as book}
+			{#each filteredBooks as book}
 				<div class="group relative overflow-hidden rounded-xl bg-white shadow-sm">
 					<!-- Cover -->
 					<div
