@@ -24,6 +24,13 @@
     setContext('page', pageContext);
     setContext('readingSettings', {speed:50, myTypeWriter: null});
 
+    // Language context for translation support
+    const languageContext = $state({
+        selectedLang: 'en', // Default to English (source language)
+        availableLanguages: ['en', 'nl', 'de'] // Only languages loaded in LibreTranslate
+    });
+    setContext('language', languageContext);
+
     let pageType = $state(
         /**@type {"page" | "enter name" | "enter password" | "set name" | "set password"}*/
         ('page')
@@ -38,13 +45,31 @@
         const bookId = pageContext ? Number(pageContext[1]) : undefined;
 
         // fetch the story for this page, showing a loading message if slow
-        
+
         Stories.getPageType(bookId, page)
             .then(v => pageType = v).catch(err => {
             // on error, show fallback text but avoid throwing
             console.error('Error loading story for page', page, err);
         });
     })
+
+    // Load selected language from localStorage on mount
+    $effect(() => {
+        if (typeof window !== 'undefined') {
+            const saved = localStorage.getItem('selectedLanguage');
+            if (saved && languageContext.availableLanguages.includes(saved)) {
+                languageContext.selectedLang = saved;
+            }
+        }
+    });
+
+    // Save selected language to localStorage when it changes
+    $effect(() => {
+        const lang = languageContext.selectedLang;
+        if (typeof window !== 'undefined' && lang) {
+            localStorage.setItem('selectedLanguage', lang);
+        }
+    });
 </script>
 
 <div class="w-full">
