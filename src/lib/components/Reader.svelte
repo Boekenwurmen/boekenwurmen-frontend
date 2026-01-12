@@ -1,16 +1,16 @@
 <script>
-    import ReadingWindow from "./ReadingWindow.svelte";
-    import ActionWindow from "./ChooseActionWindow.svelte";
+    import ReadingWindow from './ReadingWindow.svelte';
+    import ActionWindow from './ChooseActionWindow.svelte';
     import { setContext } from 'svelte';
-    import ReadingSettings from "./ReadingSettings.svelte";
-	import InsertPasswordWindow from "./InsertPasswordWindow.svelte";
-	import InsertNameWindow from "./InsertNameWindow.svelte";
-	import Stories from "./Stories.svelte";
+    import ReadingSettings from './ReadingSettings.svelte';
+    import InsertPasswordWindow from './InsertPasswordWindow.svelte';
+    import InsertNameWindow from './InsertNameWindow.svelte';
+    import Stories from './Stories.svelte';
     import { page } from '$app/stores';
     import ProgressBar from './ProgressBar.svelte';
-	import { INTRODUCTION_BOOK_ID, ACCOUNT_CREATION_PAGE } from "$lib/constants.ts";
-	import SkipIntroButton from "./SkipIntroButton.svelte";
-	import ExitButton from "./ExitButton.svelte";
+    import { INTRODUCTION_BOOK_ID, ACCOUNT_CREATION_PAGE } from "$lib/constants.ts";
+    import SkipIntroButton from "./SkipIntroButton.svelte";
+    import ExitButton from "./ExitButton.svelte";
     
     
     const bookParam = $page.url.searchParams.get('book');
@@ -26,7 +26,7 @@
             pageId = ACCOUNT_CREATION_PAGE;
             break;
     }
-    
+
     const pageContext = $state([ pageId, bookId, clickCount ]);
 
     // client context holds created client id and name
@@ -34,7 +34,7 @@
     setContext('client', client);
 
     setContext('page', pageContext);
-    setContext('readingSettings', {speed:50, myTypeWriter: null});
+    setContext('readingSettings', { speed: 50, myTypeWriter: null });
 
     let pageType = $state(
         /**@type {"page" | "enter name" | "enter password" | "set name" | "set password"}*/
@@ -50,13 +50,14 @@
         const bookId = pageContext ? Number(pageContext[1]) : undefined;
 
         // fetch the story for this page, showing a loading message if slow
-        
+
         Stories.getPageType(bookId, page)
-            .then(v => pageType = v).catch(err => {
-            // on error, show fallback text but avoid throwing
-            console.error('Error loading story for page', page, err);
-        });
-    })
+            .then(v => pageType = v)
+            .catch(err => {
+                // on error, show fallback text but avoid throwing
+                console.error('Error loading story for page', page, err);
+            });
+    });
 </script>
 
 <div class="w-full">
@@ -77,5 +78,4 @@
         <ActionWindow/>
     {/if}
     <ProgressBar/>
-    <ReadingSettings/>
 </div>
