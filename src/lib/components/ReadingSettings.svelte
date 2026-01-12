@@ -1,5 +1,5 @@
 <script>
-	import { getContext, onMount, setContext } from "svelte";
+	import { getContext, onMount, setContext } from 'svelte';
 	import TypeWriter from "./TypeWriter.svelte.js";
 	import { I18n } from "$lib/i18n/i18n.svelte.js";
 
@@ -53,10 +53,19 @@
 
 <div class="w-full">
 	<details>
-		<summary>{translationsLoaded ? translator.t('settings') : 'Settings'}</summary>
+		<summary>⚙{translationsLoaded ? translator.t('settings') : 'Settings'}</summary>
 		<div>
 			<label for="readingSpeed">{translationsLoaded ? translator.t('readingSpeed') : 'Reading Speed'}</label>
-			<input type="range" id="readingSpeed" name="readingSpeed" min="5" max="80" step="5" bind:value={readingSpeed} on:input={handleReadingSpeedUpdate}/>
+			<input
+				type="range"
+				id="readingSpeed"
+				name="readingSpeed"
+				min="5"
+				max="80"
+				step="5"
+				bind:value={readingSpeed}
+				on:input={handleReadingSpeedUpdate}
+			/>
 		</div>
 	</details>
 </div>

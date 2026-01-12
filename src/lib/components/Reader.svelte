@@ -1,18 +1,16 @@
 <script>
-	import ReadingWindow from "./ReadingWindow.svelte";
-	import ActionWindow from "./ChooseActionWindow.svelte";
+	import ReadingWindow from './ReadingWindow.svelte';
+	import ActionWindow from './ChooseActionWindow.svelte';
 	import { setContext, getContext } from 'svelte';
-	import ReadingSettings from "./ReadingSettings.svelte";
-	import InsertPasswordWindow from "./InsertPasswordWindow.svelte";
-	import InsertNameWindow from "./InsertNameWindow.svelte";
-	import Stories from "./Stories.svelte";
+	import InsertPasswordWindow from './InsertPasswordWindow.svelte';
+	import InsertNameWindow from './InsertNameWindow.svelte';
+	import Stories from './Stories.svelte';
 	import { page } from '$app/stores';
 	import ProgressBar from './ProgressBar.svelte';
 
-
 	let pageId = 0;
 	const bookParam = $page.url.searchParams.get('book');
-	let bookId =  bookParam ? parseInt(bookParam) : 0
+	let bookId = bookParam ? parseInt(bookParam) : 0;
 	let clickCount = 0;
 
 	const pageContext = $state([ pageId, bookId, clickCount ]);
@@ -22,7 +20,7 @@
 	setContext('client', client);
 
 	setContext('page', pageContext);
-	setContext('readingSettings', {speed:50, myTypeWriter: null});
+	setContext('readingSettings', { speed: 50, myTypeWriter: null });
 
 	// Get language context from parent layout (no need to create it here)
 	const languageContext = getContext('language');
@@ -43,7 +41,8 @@
 		// fetch the story for this page, showing a loading message if slow
 
 		Stories.getPageType(bookId, page)
-			.then(v => pageType = v).catch(err => {
+			.then(v => pageType = v)
+            .catch(err => {
 			// on error, show fallback text but avoid throwing
 			console.error('Error loading story for page', page, err);
 		});
@@ -63,5 +62,4 @@
 		<ActionWindow/>
 	{/if}
 	<ProgressBar/>
-	<ReadingSettings/>
 </div>
