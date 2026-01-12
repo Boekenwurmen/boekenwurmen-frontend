@@ -12,7 +12,7 @@ const bookId = 0;
  */
 function getIntegersInRange(from, to) {
     const offset = from;
-    const length = to - from;
+    const length = to - from + 1;
     return [...Array(length)].map((_, i) => i + offset);
 }
 
