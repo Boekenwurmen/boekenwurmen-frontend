@@ -76,11 +76,6 @@
             return; // no button was clicked
         }
         _lastActionClickCount = actionClickCount;
-        if (actionClickCount === _lastActionClickCount) {
-            // actionClickCount is needed here to trigger the effect to refresh when the page is unchanged
-            return; // no button was clicked
-        }
-        _lastActionClickCount = actionClickCount;
 
         const isPageUnchanged = page === _lastPage && bookId === _lastBookId;
         if (isPageUnchanged) {
@@ -88,8 +83,6 @@
             return; // already handled this page
         }
 
-        _lastPage = page;
-        _lastBookId = bookId;
         _lastPage = page;
         _lastBookId = bookId;
 
