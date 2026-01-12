@@ -74,7 +74,6 @@
 </script>
 
 <div class="reading-container">
-    <ReadingSettings />
     <p class="story-box typing">
         <WordExplainingReadingWindow
             text={myTypeWriter.shown}

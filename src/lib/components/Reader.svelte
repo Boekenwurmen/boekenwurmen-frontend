@@ -67,6 +67,7 @@
         <SkipIntroButton/>
     {/if}
 
+    <ReadingSettings />
     <ReadingWindow/>
     {#if isOnNamePage}
         <InsertNameWindow/>
