@@ -1,7 +1,7 @@
 <script>
     import ReadingWindow from "./ReadingWindow.svelte";
     import ActionWindow from "./ChooseActionWindow.svelte";
-    import { setContext } from 'svelte';
+    import { setContext, onMount } from 'svelte';
     import ReadingSettings from "./ReadingSettings.svelte";
 	import InsertPasswordWindow from "./InsertPasswordWindow.svelte";
 	import InsertNameWindow from "./InsertNameWindow.svelte";
@@ -10,16 +10,34 @@
     import ProgressBar from './ProgressBar.svelte';
     
     
-    let pageId = 0;
     const bookParam = $page.url.searchParams.get('book');
-    let bookId =  bookParam ? parseInt(bookParam) : 0
-    let clickCount = 0;
+    const pageParam = $page.url.searchParams.get('page');
+    let pageId = pageParam ? parseInt(pageParam) : 0;
+    let bookId = bookParam ? parseInt(bookParam) : 1;
+    let clickCount = pageParam ? 1 : 0; // If resuming from a saved page, set clickCount to trigger progress
 
     const pageContext = $state([ pageId, bookId, clickCount ]);
 
     // client context holds created client id and name
     const client = $state({ id: null, name: null });
     setContext('client', client);
+
+    // Load client from localStorage on mount
+    onMount(() => {
+        try {
+            const raw = localStorage.getItem('auth');
+            if (raw) {
+                const auth = JSON.parse(raw);
+                if (auth?.loggedIn && auth?.id && auth?.name) {
+                    client.id = auth.id;
+                    client.name = auth.name;
+                    console.log('[Reader] Loaded client from localStorage:', { id: client.id, name: client.name });
+                }
+            }
+        } catch (e) {
+            console.warn('[Reader] Failed to load auth from localStorage', e);
+        }
+    });
 
     setContext('page', pageContext);
     setContext('readingSettings', {speed:50, myTypeWriter: null});

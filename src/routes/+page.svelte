@@ -15,7 +15,7 @@
 				<h1 class="start-title">Boekenwurmen</h1>
 			</div>
 			<div class="button-wrap">
-				<a href="/read" class="button" aria-label="Start spel">Start</a>
+				<a href="/read?book=1" class="button" aria-label="Start spel">Start</a>
 			</div>
 			<div class="leaderboard-wrap">
 				<button
