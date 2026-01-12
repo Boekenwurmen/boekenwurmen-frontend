@@ -71,7 +71,6 @@
             return;
         }
 
-        _lastActionClickCount = actionClickCount;
         if (actionClickCount === _lastActionClickCount) {
             // actionClickCount is needed here to trigger the effect to refresh when the page is unchanged
             return; // no button was clicked
