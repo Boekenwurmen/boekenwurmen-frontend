@@ -1,7 +1,8 @@
 <script>
     import { getContext } from 'svelte';
+    import PasswordInputWithToggle from './PasswordInputWithToggle.svelte';
     import { PUBLIC_API_URL } from '$env/static/public';
-    import { prefillCodeForClient, ensureClientExists, saveClientCode } from '../userActions.js';
+    import { prefillCodeForClient, saveClientCode, registerClient } from '../userActions.js';
 	import { showDelayedLoadingMessage } from './delayedLoadingMessage.js';
 	import Stories from './Stories.svelte.js';
 	import { followOption } from '$lib/readingActions.js';
@@ -62,78 +63,89 @@
     async function submitCode() {
         message = '';
         if (!codeValue) return;
+        if (codeValue.length < 10) {
+            message = 'That is a bad password, try making it longer.';
+            if (await followOption(pageContext, errorOptionBadPassword)) return;
+            return;
+        }
         try {
             // Avoid logging sensitive code value
             console.log('[ChooseActionWindow] submitCode start', { hasCode: !!codeValue, clientId: clientContext?.id });
-            // ensure client exists via helper
-            if (!clientContext.id) {
-                const created = await ensureClientExists(PUBLIC_API_URL, clientContext.name || 'guest');
-                if (created) {
-                    clientContext.id = created.id;
-                    clientContext.name = created.name;
-                }
+            if (!clientContext.name) {
+                message = 'Please enter your name first.';
+                return;
             }
 
             if (!clientContext.id) {
-                if (followOption(pageContext, errorOptionUnknown)) return;
-                message = 'No client id available. Could not save code.';
-                return;
-            }
-            const { ok, status, data } = await saveClientCode(PUBLIC_API_URL, clientContext.id, codeValue);
-            if (status >= 200 && status < 300 && data && data.success && data.client) {
-                message = 'Code saved. Thank you!';
-                // reflect saved value from server
-                if (data.client && data.client.code) {
-                    codeValue = data.client.code;
-                }
-                // fetch fresh client object to confirm in DB and show id
-                try {
-                    const verifyJson = await prefillCodeForClient(clientContext.id, PUBLIC_API_URL, true);
-                    console.log('[ChooseActionWindow] verify client after save', verifyJson);
-                    if (verifyJson && verifyJson.client) {
-                        message += ` Saved for user id ${verifyJson.client.id}.`;
+                // Register new client with name + code
+                const { status, data } = await registerClient(PUBLIC_API_URL, clientContext.name, codeValue);
+                if (status === 201 && data && data.success && data.client) {
+                    clientContext.id = data.client.id;
+                    // proceed to next page
+                    try {
+                        pageContext[0] = (Number(pageContext[0]) || 0) + 1;
+                        if (await followOption(pageContext, submitOption)) return;
+                    } catch (e) {
+                        console.error('[ChooseActionWindow] advancing page failed after register', e);
+                        if (await followOption(pageContext, errorOptionUnknown)) return;
                     }
-                } catch (ve) {
-                    console.warn('[ChooseActionWindow] could not verify client after save', ve);
-                    if (followOption(pageContext, errorOptionUnknown)) return;
+                } else if (status === 409) {
+                    message = 'That name is already taken. Please go back and choose a different name.';
+                } else if (status >= 400 && status < 500) {
+                    if (await followOption(pageContext, errorOptionBadPassword)) return;
+                    message = data?.message || 'That is a bad password, try making it longer.';
+                } else {
+                    console.warn('[ChooseActionWindow] register client response', { success: !!data?.success, error: data?.message });
+                    if (await followOption(pageContext, errorOptionUnknown)) return;
+                    message = 'Could not create your account.';
                 }
-                // optionally advance page
-                try {
-                    pageContext[0] = (Number(pageContext[0]) || 0) + 1;
-                    if (followOption(pageContext, submitOption)) return;
-                } catch (e) {
-                    console.error('[ChooseActionWindow] advancing page failed', e);
-                    if (followOption(pageContext, errorOptionUnknown)) return;
-                }
-            } else if (status >= 400 && status < 500) {
-                if (followOption(pageContext, errorOptionBadPassword)) return;
-                message = 'That is a bad password, try making it longer.';
             } else {
-                console.warn('[ChooseActionWindow] save code response', { success: !!data?.success, error: data?.message });
-                if (followOption(pageContext, errorOptionUnknown)) return;
-                message = 'Could not save code.';
+                // Existing client: update code only
+                const { status, data } = await saveClientCode(PUBLIC_API_URL, clientContext.id, codeValue);
+                if (status >= 200 && status < 300 && data && data.success && data.client) {
+                    message = 'Code saved. Thank you!';
+                    try {
+                        pageContext[0] = (Number(pageContext[0]) || 0) + 1;
+                        if (await followOption(pageContext, submitOption)) return;
+                    } catch (e) {
+                        console.error('[ChooseActionWindow] advancing page failed', e);
+                        if (await followOption(pageContext, errorOptionUnknown)) return;
+                    }
+                } else if (status >= 400 && status < 500) {
+                    if (await followOption(pageContext, errorOptionBadPassword)) return;
+                    message = data?.message || 'That is a bad password, try making it longer.';
+                } else {
+                    console.warn('[ChooseActionWindow] save code response', { success: !!data?.success, error: data?.message });
+                    if (await followOption(pageContext, errorOptionUnknown)) return;
+                    message = 'Could not save code.';
+                }
             }
         } catch (err) {
             console.error('[ChooseActionWindow] submitCode error', err);
-            if (followOption(pageContext, errorOptionUnknown)) return;
+            if (await followOption(pageContext, errorOptionUnknown)) return;
             message = 'Network error while saving code.';
         }
     }
 </script>
 
-{#if clientContext?.id}
-    <div class="story-box">
-        <label for="code-input" class="block mb-2 label-dark">Enter the library code (password)</label>
-        <input id="code-input" type="password" class="story-input" bind:value={codeValue} placeholder="Type the library code here" />
-        <button class="story-button" onclick={submitCode}>{submitOption?.name ?? "Submit code"}</button>
-        {#if message}
-            <p class="mt-2 message-text">{message}</p>
-        {/if}
-    </div>
-{:else}
-    <!-- If user reached code page but has no client yet, show nothing -->
-    <div></div>
-{/if}
+<div class="story-box">
+    <label for="code-input" class="block mb-2 label-dark">Enter your personal library code (password)</label>
+    <PasswordInputWithToggle
+        id="code-input"
+        bind:value={codeValue}
+        name="code"
+        autocomplete="new-password"
+        inputClass="story-input"
+        containerClass="login-password"
+        buttonClass="login-eye"
+        iconClass="login-eye-icon"
+        placeholder="Type the library code here"
+    />
+    <button class="story-button" onclick={submitCode}>{submitOption?.name ?? "Submit code"}</button>
+    {#if message}
+        <p class="mt-2 message-text">{message}</p>
+    {/if}
+</div>
 
 <style>
     .label-dark { color: var(--cover-dark); }

@@ -14,6 +14,28 @@ export async function createClient(baseUrl, name) {
   }
 }
 
+/**
+ * Save progress to backend
+ * @param {string} baseUrl
+ * @param {number} clientId
+ * @param {number} bookId
+ * @param {number} pageId
+ * @returns {Promise<{ok: boolean, status: number}>}
+ */
+export async function saveProgressToBackend(baseUrl, clientId, bookId, pageId) {
+  try {
+    const res = await fetch(`${baseUrl}/progress/${clientId}/${bookId}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ pageId })
+    });
+    return { ok: res.ok, status: res.status };
+  } catch (e) {
+    console.warn('[readingActions] saveProgressToBackend failed', e);
+    return { ok: false, status: 0 };
+  }
+}
+
 export function goTo(pageContext, pageNumber) {
   try {
     if (!pageContext) return;
@@ -37,15 +59,29 @@ export function advanceFromNameToCode(pageContext) {
  * Jumps to the target page stored in an options object
  * @param {number[]} pageContext keeps track of what page we are on
  * @param {{toPage: number, type: string, name: string}|undefined} option has the new page inside
- * @returns {boolean} true if successful, false if unsuccessful
+ * @param {string} [baseUrl] the base URL for API calls (optional)
+ * @param {number} [clientId] the client ID (optional)
+ * @returns {Promise<boolean>} true if successful, false if unsuccessful
  */
-export function followOption(pageContext, option) {
+export async function followOption(pageContext, option, baseUrl, clientId) {
   try {
     if (!pageContext || !option || option.toPage === undefined || option.toPage === null) return false;
-    pageContext[0] = option.toPage;
+    
+    const bookId = Number(pageContext[1]);
+    const newPageId = option.toPage;
+    
+    // Index 2 tracks action clicks to trigger effects
+    pageContext[2]++;
+    pageContext[0] = newPageId;
+    
+    // Save to backend
+    if (clientId && bookId && baseUrl) {
+      await saveProgressToBackend(baseUrl, clientId, bookId, newPageId);
+    }
+    
     return true;
   } catch (e) {
+    console.warn('[readingActions] followOption failed', e);
     return false;
-    // ignore
   }
 }
