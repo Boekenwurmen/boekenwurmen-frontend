@@ -156,6 +156,7 @@ export default class Stories {
 
     /**
      * 
+     * @param {number | null | undefined} bookId
      * @param {number | null | undefined} page
      */
     static _getPageStoryLocal(bookId, page){
@@ -167,6 +168,7 @@ export default class Stories {
 
     /**
      * 
+     * @param {number | null | undefined} bookId
      * @param {number | null | undefined} page
      */
     static _getPageTypeLocal(bookId, page){
@@ -178,6 +180,7 @@ export default class Stories {
 
     /**
      * 
+     * @param {number | null | undefined} bookId
      * @param {number | null | undefined} page 
      */
     static _getPageOptionsLocal(bookId, page){

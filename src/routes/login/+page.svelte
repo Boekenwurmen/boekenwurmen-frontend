@@ -113,6 +113,9 @@
 			<div class="login-links">
 				<a href="/login/forgot" aria-label="Forgot password"><T key="forgotPassword" fallback="Forgot password?" /></a>
 			</div>
+			<div class="login-links">
+				<a href="/read?type=register" aria-label="Wachtwoord vergeten">Account aanmaken</a>
+			</div>
 			{#if message}
 				<p class="login-error">{message}</p>
 			{/if}
