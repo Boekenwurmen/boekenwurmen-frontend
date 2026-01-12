@@ -1,7 +1,7 @@
 <script>
     import ReadingWindow from './ReadingWindow.svelte';
     import ActionWindow from './ChooseActionWindow.svelte';
-    import { setContext } from 'svelte';
+    import { setContext, getContext } from 'svelte';
     import ReadingSettings from './ReadingSettings.svelte';
     import InsertPasswordWindow from './InsertPasswordWindow.svelte';
     import InsertNameWindow from './InsertNameWindow.svelte';
@@ -11,7 +11,6 @@
     import { INTRODUCTION_BOOK_ID, ACCOUNT_CREATION_PAGE } from "$lib/constants.ts";
     import SkipIntroButton from "./SkipIntroButton.svelte";
     import ExitButton from "./ExitButton.svelte";
-    
     
     const bookParam = $page.url.searchParams.get('book');
     const pageParam = $page.url.searchParams.get('page');
@@ -36,6 +35,9 @@
     setContext('page', pageContext);
     setContext('readingSettings', { speed: 50, myTypeWriter: null });
 
+    // Get language context from parent layout (no need to create it here)
+    const languageContext = getContext('language');
+
     let pageType = $state(
         /**@type {"page" | "enter name" | "enter password" | "set name" | "set password"}*/
         ('page')
@@ -54,9 +56,9 @@
         Stories.getPageType(bookId, page)
             .then(v => pageType = v)
             .catch(err => {
-                // on error, show fallback text but avoid throwing
-                console.error('Error loading story for page', page, err);
-            });
+            // on error, show fallback text but avoid throwing
+            console.error('Error loading story for page', page, err);
+        });
     });
 </script>
 
