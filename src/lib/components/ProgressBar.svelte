@@ -1,7 +1,6 @@
 <script>
 	import { getContext } from 'svelte';
-	import { getProgress } from '../userActions.js';
-	import { page } from '$app/stores';
+	import { PUBLIC_API_URL } from '$env/static/public';
 
 	/**
 	 * @type {number[]}
@@ -15,38 +14,27 @@
 
 	let percentage = $state(0);
 	let loading = $state(false);
-
-	const baseUrl = $page.url.origin;
-
-	async function fetchProgress() {
-		if (!pageContext) return;
-		
-		const clientId = client?.id;
-		const bookId = Number(pageContext[1]);
-		const pageNum = Number(pageContext[0]);
-		
-		console.log('[ProgressBar] Fetching progress:', { clientId, bookId, pageNum });
-		
-		if (!clientId || !bookId) {
-			console.log('[ProgressBar] Missing clientId or bookId, skipping');
-			return;
-		}
-
-		loading = true;
-		const result = await getProgress(baseUrl, clientId, bookId);
-		console.log('[ProgressBar] Progress result:', result);
-		percentage = result.percentage;
-		loading = false;
-	}
+	
+	// Total pages in book 1 (from backend: 30 pages, 0-29)
+	const TOTAL_PAGES = 30;
 
 	$effect(() => {
-		// Force dependency on pageContext by accessing it
 		if (!pageContext) return;
 		const pageNum = pageContext[0];
 		const bookId = pageContext[1];
+		const clickCount = pageContext[2];
+		const clientId = client?.id;
 		
-		console.log('[ProgressBar] Effect triggered with page:', pageNum, 'book:', bookId);
-		fetchProgress();
+		console.log('[ProgressBar] Effect triggered with page:', pageNum, 'book:', bookId, 'clicks:', clickCount);
+		
+		// Calculate progress locally based on current page
+		// Only update after user has made choices (clickCount > 0)
+		if (clickCount > 0 && pageNum > 0) {
+			const newPercentage = Math.min(Math.round((pageNum / TOTAL_PAGES) * 100), 100);
+			if (newPercentage > percentage) {
+				percentage = newPercentage;
+			}
+		}
 	});
 </script>
 
