@@ -2,8 +2,10 @@
   import books from '../../lib/books';
   import type { Book } from '../../lib/books';
   import { writable, derived } from 'svelte/store';
-  import { onMount } from 'svelte';
+  import { onMount, getContext } from 'svelte';
   import { goto } from '$app/navigation';
+  import T from '$lib/components/T.svelte';
+  import { I18n } from '$lib/i18n/i18n.svelte.js';
 
   const allBooks: Book[] = books;
   let favorites: number[] = [];
@@ -19,11 +21,39 @@
 
   const categories = ['All', ...Array.from(new Set(allBooks.map(b => b.category)))];
 
+  const languageContext = getContext('language');
+  let translator = $state(new I18n(languageContext?.selectedLang || 'en'));
+  let searchPlaceholder = $state('');
+  let sortNewest = $state('');
+  let sortOldest = $state('');
+  let currentLang = $state(languageContext?.selectedLang || 'en');
+
+  // Load translations and update when language changes
+  $effect(() => {
+    const lang = languageContext?.selectedLang || 'en';
+    if (lang !== currentLang) {
+      currentLang = lang;
+      const newTranslator = new I18n(lang);
+      newTranslator.load().then(() => {
+        translator = newTranslator;
+        searchPlaceholder = translator.t('searchPlaceholder');
+        sortNewest = translator.t('newest');
+        sortOldest = translator.t('oldest');
+      });
+    }
+  });
+
   onMount(() => {
     const saved = localStorage.getItem('favorites');
     if (saved) {
       favorites = JSON.parse(saved);
     }
+    // Load initial translations
+    translator.load().then(() => {
+      searchPlaceholder = translator.t('searchPlaceholder');
+      sortNewest = translator.t('newest');
+      sortOldest = translator.t('oldest');
+    });
   });
 
   function logout() {
@@ -83,23 +113,23 @@
 <main class="library-page">
   <header class="toolbar">
     <div class="toolbar-top">
-      <h2>📚 Fantasie Bibliotheek</h2>
-      <button class="chip" onclick={logout} aria-label="Uitloggen">↪ Uitloggen</button>
+      <h2>📚 <T key="fantasyLibrary" fallback="Fantasy Library" /></h2>
+      <button class="chip" onclick={logout} aria-label="Logout">↪ <T key="logout" fallback="Logout" /></button>
     </div>
 
     <div class="controls">
-      <button class="chip filter-toggle" onclick={() => showFilters = !showFilters} aria-label="Filters tonen">
-        🔍 Filters {showFilters ? '✕' : '▼'}
+      <button class="chip filter-toggle" onclick={() => showFilters = !showFilters} aria-label="Filters">
+        🔍 <T key="filters" fallback="Filters" /> {showFilters ? '✕' : '▼'}
       </button>
 
       <div class="search-wrap">
         <input
           type="search"
-          placeholder="Zoek titel, auteur of beschrijving..."
+          placeholder={searchPlaceholder}
           oninput={(e) => search.set(e.currentTarget.value)}
-          aria-label="Zoek boeken"
+          aria-label="Search"
         />
-        <button class="clear" onclick={() => search.set('')} aria-label="Wis zoekopdracht">✕</button>
+        <button class="clear" onclick={() => search.set('')} aria-label="Clear">✕</button>
       </div>
 
       <div class="filters {showFilters ? 'show' : ''}">
@@ -109,22 +139,28 @@
 
         <div class="filter-content">
           <div class="filter-header">
-            <h3>Filters</h3>
-            <button class="close-filters" onclick={() => showFilters = false} aria-label="Sluit filters">✕</button>
+            <h3><T key="filters" fallback="Filters" /></h3>
+            <button class="close-filters" onclick={() => showFilters = false} aria-label="Close filters">✕</button>
           </div>
 
           <div class="chips">
-            <button class="chip { $showOnlyFavorites ? 'active' : '' }" onclick={() => showOnlyFavorites.set(!$showOnlyFavorites)}>♥ Favorieten</button>
+            <button class="chip { $showOnlyFavorites ? 'active' : '' }" onclick={() => showOnlyFavorites.set(!$showOnlyFavorites)}>♥ <T key="favorites" fallback="Favorites" /></button>
             {#each categories as c}
-              <button class="chip { $category === c ? 'active' : '' }" onclick={() => category.set(c)}>{c}</button>
+              <button class="chip { $category === c ? 'active' : '' }" onclick={() => category.set(c)}>
+                {#if c === 'All'}
+                  <T key="all" fallback="All" />
+                {:else}
+                  {c}
+                {/if}
+              </button>
             {/each}
           </div>
 
           <div class="sort-wrap">
-            <label for="sort" class="sr-only">Sorteer</label>
-            <select id="sort" onchange={(e) => sort.set((e.target as HTMLSelectElement).value)} aria-label="Sorteer">
-              <option value="newest">Nieuwste eerst</option>
-              <option value="oldest">Oudste eerst</option>
+            <label for="sort" class="sr-only"><T key="sortBy" fallback="Sort by" /></label>
+            <select id="sort" onchange={(e) => sort.set((e.target as HTMLSelectElement).value)} aria-label="Sort">
+              <option value="newest">{sortNewest}</option>
+              <option value="oldest">{sortOldest}</option>
             </select>
           </div>
         </div>
@@ -134,7 +170,7 @@
 
   <section class="results">
     {#if $filtered.length === 0}
-      <div class="empty">Geen boeken gevonden.</div>
+      <div class="empty"><T key="noBooks" fallback="No books found." /></div>
     {:else}
       <div class="grid">
         {#each displayBooks as book}
@@ -162,9 +198,9 @@
       </div>
 
       <div class="pagination">
-        <button class="pag-btn" onclick={prevPage} disabled={currentPage === 1}>← Vorige</button>
-        <span class="page-info">Pagina {currentPage} van {$totalPages}</span>
-        <button class="pag-btn" onclick={nextPage} disabled={currentPage === $totalPages}>Volgende →</button>
+        <button class="pag-btn" onclick={prevPage} disabled={currentPage === 1}>← <T key="previous" fallback="Previous" /></button>
+        <span class="page-info"><T key="page" fallback="Page" /> {currentPage} <T key="of" fallback="of" /> {$totalPages}</span>
+        <button class="pag-btn" onclick={nextPage} disabled={currentPage === $totalPages}><T key="next" fallback="Next" /> →</button>
       </div>
     {/if}
   </section>
@@ -175,7 +211,7 @@
   
   .library-page::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background-image:radial-gradient(circle at 20% 50%, rgba(214,185,106,0.03) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(107,62,43,0.04) 0%, transparent 50%);pointer-events:none;z-index:0}
 
-  .library-page::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background-image:radial-gradient(circle at 20% 50%, rgba(214,185,106,0.03) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(107,62,43,0.04) 0%, transparent 50%);pointer-events:none;z-index:0}
+
   .library-page > *{position:relative;z-index:1}
 
   .toolbar{display:flex;flex-direction:column;gap:0;margin-bottom:0;background:#fff;padding:0;border-radius:0;width:100%;position:relative;z-index:50}

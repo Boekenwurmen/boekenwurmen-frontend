@@ -1,6 +1,8 @@
 <script>
 	import '../css/startscherm.css';
 	import '../css/leaderboard.css';
+	import T from '$lib/components/T.svelte';
+
 	const entries = [
 		{ rank: 1, name: 'Ava', score: 1280 },
 		{ rank: 2, name: 'Liam', score: 1175 },
@@ -25,16 +27,16 @@
 		<!-- Centered content like /read -->
 		<div class="content-wrap" style="margin-top: 100px; gap: 1rem;">
 			<div class="title-wrap">
-				<h1 class="start-title">Ranglijst</h1>
+				<h1 class="start-title"><T key="leaderboard" fallback="Leaderboard" /></h1>
 			</div>
 
-			<div class="ranglijst-card" role="region" aria-label="Ranglijst" style="margin-top: 0;">
+			<div class="ranglijst-card" role="region" aria-label="Leaderboard" style="margin-top: 0;">
 				<div class="leaderboard-container">
 					<div class="leaderboard-table">
 						<div class="leaderboard-header">
-							<div>#</div>
-							<div>Speler</div>
-							<div>Score</div>
+							<div><T key="rank" fallback="#" /></div>
+							<div><T key="player" fallback="Player" /></div>
+							<div><T key="score" fallback="Score" /></div>
 						</div>
 						{#each entries as e}
 							<div class="leaderboard-row">
