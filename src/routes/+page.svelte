@@ -1,6 +1,7 @@
 <script>
 	import './css/startscherm.css';
 	import T from '$lib/components/T.svelte';
+	import { INTRODUCTION_BOOK_ID } from '$lib/constants';
 </script>
 
 <div class="start-frame">
@@ -16,7 +17,7 @@
 				<h1 class="start-title">Boekenwurmen</h1>
 			</div>
 			<div class="button-wrap">
-				<a href="/read" class="button" aria-label="Start"><T key="start" fallback="Start" /></a>
+				<a href="/read?book={INTRODUCTION_BOOK_ID}" class="button" aria-label="Start"><T key="start" fallback="Start" /></a>
 			</div>
 			<div class="leaderboard-wrap">
 				<button

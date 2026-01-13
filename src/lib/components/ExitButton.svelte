@@ -1,8 +1,14 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
+	function clicked() {
+		const raw = localStorage.getItem('auth');
+		const auth = raw ? JSON.parse(raw) : null;
+		const isLoggedIn = auth?.loggedIn;
+		goto(isLoggedIn ? '/library' : '/');
+	}
 </script>
 
-<button class="exit-button" onclick={() => goto('/')}>✕</button>
+<button class="exit-button" onclick={clicked}>✕</button>
 
 
 <style>
