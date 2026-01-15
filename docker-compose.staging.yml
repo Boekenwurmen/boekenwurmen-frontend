@@ -1,15 +1,15 @@
 services:
   backend:
-    image: ghcr.io/boekenwurmen/boekenwurmen-backend:latest
-    container_name: boekenwurmen-backend
+    image: ghcr.io/boekenwurmen/boekenwurmen-backend:develop
+    container_name: boekenwurmen-backend-staging
     ports:
-      - "3012:3012"
+      - "3013:3012"  # Different external port for staging
     env_file:
-      - ../boekenwurmen-backend/.env
+      - ../boekenwurmen-backend/.env.staging
     volumes:
-      - backend-data:/app/prisma
+      - backend-staging-data:/app/prisma
     networks:
-      - boekenwurmen-network
+      - boekenwurmen-staging-network
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3012/health || exit 1"]
@@ -19,17 +19,17 @@ services:
       start_period: 40s
 
   frontend:
-    image: ghcr.io/boekenwurmen/boekenwurmen-frontend:latest
-    container_name: boekenwurmen-frontend
+    image: ghcr.io/boekenwurmen/boekenwurmen-frontend:develop
+    container_name: boekenwurmen-frontend-staging
     ports:
-      - "3000:3000"
+      - "3001:3000"  # Different external port for staging
     env_file:
-      - .env
+      - .env.staging
     depends_on:
       backend:
         condition: service_healthy
     networks:
-      - boekenwurmen-network
+      - boekenwurmen-staging-network
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000 || exit 1"]
@@ -39,9 +39,9 @@ services:
       start_period: 40s
 
 volumes:
-  backend-data:
+  backend-staging-data:
     driver: local
 
 networks:
-  boekenwurmen-network:
+  boekenwurmen-staging-network:
     driver: bridge
