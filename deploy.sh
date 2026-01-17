@@ -111,16 +111,29 @@ echo ""
 
 # Stop existing containers
 echo "🛑 Stopping existing containers..."
-docker compose down || true
+docker compose -f docker-compose.production.yml down || true
 echo -e "${GREEN}✓ Containers stopped${NC}"
 echo ""
 
-# Build and start containers
-echo "🔨 Building and starting containers..."
-docker compose up -d --build
+# Pull latest images from GitHub Container Registry
+echo "📥 Pulling latest images from ghcr.io..."
+docker compose -f docker-compose.production.yml pull
 
 if [ $? -eq 0 ]; then
-    echo -e "${GREEN}✓ Containers built and started successfully${NC}"
+    echo -e "${GREEN}✓ Images pulled successfully${NC}"
+else
+    echo -e "${RED}❌ Failed to pull images${NC}"
+    echo -e "${YELLOW}⚠ Make sure you're logged in to ghcr.io or the images are public${NC}"
+    exit 1
+fi
+echo ""
+
+# Start containers with pre-built images
+echo "🚀 Starting containers..."
+docker compose -f docker-compose.production.yml up -d
+
+if [ $? -eq 0 ]; then
+    echo -e "${GREEN}✓ Containers started successfully${NC}"
 else
     echo -e "${RED}❌ Failed to start containers${NC}"
     exit 1
@@ -133,21 +146,21 @@ sleep 5
 
 # Check container status
 echo "📊 Container status:"
-docker compose ps
+docker compose -f docker-compose.production.yml ps
 echo ""
 
 # Show logs
 echo "📝 Recent logs:"
-docker compose logs --tail=20
+docker compose -f docker-compose.production.yml logs --tail=20
 echo ""
 
 echo -e "${GREEN}✅ Deployment completed!${NC}"
 echo ""
 echo "📌 Next steps:"
-echo "  - Check logs: docker compose logs -f"
-echo "  - Check status: docker compose ps"
-echo "  - Restart: docker compose restart"
-echo "  - Stop: docker compose down"
+echo "  - Check logs: docker compose -f docker-compose.production.yml logs -f"
+echo "  - Check status: docker compose -f docker-compose.production.yml ps"
+echo "  - Restart: docker compose -f docker-compose.production.yml restart"
+echo "  - Stop: docker compose -f docker-compose.production.yml down"
 echo ""
 echo "🌐 Your application should be running on:"
 echo "  - Frontend: http://localhost:3000"
