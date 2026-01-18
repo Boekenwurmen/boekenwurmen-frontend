@@ -43,3 +43,5 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            PUBLIC_API_URL=${{ vars.PUBLIC_API_URL }}
