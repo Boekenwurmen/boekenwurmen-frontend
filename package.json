@@ -15,7 +15,12 @@
 		"test:unit": "vitest",
 		"test": "npm run test:unit -- --run",
 		"storybook": "storybook dev -p 6006",
-		"build-storybook": "storybook build"
+		"build-storybook": "storybook build",
+		"env" : "node -e \"require('fs').copyFileSync('.env.example', '.env')\"",
+		"init": "npm install",
+		"init:dev": "npm run init && npm run dev",
+		"init:test": "npm run init && npm run test",
+		"init:build": "npm run init && npm run build"
 	},
 	"devDependencies": {
 		"@chromatic-com/storybook": "^4.1.3",

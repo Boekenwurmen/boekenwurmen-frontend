@@ -2,27 +2,95 @@
   import books from '../../../lib/books';
   import type { Book } from '../../../lib/books';
   import { page } from '$app/stores';
+  import { goto } from '$app/navigation';
   import { onMount } from 'svelte';
+  import { PUBLIC_API_URL } from '$env/static/public';
 
   let book: Book | undefined;
   let favorites: number[] = [];
   let isFavorite = false;
+  
+  // Progress state
+  let hasProgress = false;
+  let savedPageId = 0;
+  let clientId: number | null = null;
 
   $: book = books.find(b => b.id === Number($page.params.id));
   $: isFavorite = favorites.includes(book?.id || 0);
 
-  onMount(() => {
+  onMount(async () => {
+    // Load favorites
     const saved = localStorage.getItem('favorites');
     if (saved) {
       favorites = JSON.parse(saved);
     }
+    
+    // Load auth and check progress
+    try {
+      const authRaw = localStorage.getItem('auth');
+      if (authRaw) {
+        const auth = JSON.parse(authRaw);
+        if (auth?.loggedIn && auth?.id) {
+          clientId = auth.id;
+          
+          // Find the book first to get backend ID
+          const currentBook = books.find(b => b.id === Number($page.params.id));
+          let backendBookId = currentBook?.id || 1;
+          
+          // Extract backend book ID from pdf field if it's an interactive book
+          if (currentBook?.pdf?.startsWith('/read?book=')) {
+            const match = currentBook.pdf.match(/book=(\d+)/);
+            if (match) backendBookId = parseInt(match[1]);
+          }
+          
+          // Fetch progress from backend
+          const res = await fetch(`${PUBLIC_API_URL}/progress/${auth.id}/${backendBookId}`);
+          const data = await res.json();
+          if (data.success && data.hasProgress) {
+            hasProgress = true;
+            savedPageId = data.pageId || 0;
+          }
+        }
+      }
+    } catch (e) {
+      console.warn('Failed to load progress', e);
+    }
   });
 
-  function handleReadClick() {
-    if (book?.pdf) {
-      window.open(book.pdf, '_blank');
-    } else if (book?.cover) {
-      window.open(book.cover, '_blank');
+  // Get the backend book ID from the pdf field (e.g., "/read?book=1" -> 1)
+  function getBackendBookId(): number {
+    if (book?.pdf?.startsWith('/read?book=')) {
+      const match = book.pdf.match(/book=(\d+)/);
+      if (match) return parseInt(match[1]);
+    }
+    return book?.id || 1;
+  }
+
+  // Continue reading from saved page
+  function handleContinueReading() {
+    if (book) {
+      const backendBookId = getBackendBookId();
+      goto(`/read?book=${backendBookId}&page=${savedPageId}`);
+    }
+  }
+
+  // Start fresh - reset progress and start from beginning
+  async function handleStartFresh() {
+    const backendBookId = getBackendBookId();
+    if (book && clientId) {
+      try {
+        // Reset progress by sending pageId: 0
+        await fetch(`${PUBLIC_API_URL}/progress/${clientId}/${backendBookId}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ pageId: 0 })
+        });
+      } catch (e) {
+        console.warn('Failed to reset progress', e);
+      }
+    }
+    if (book) {
+      goto(`/read?book=${backendBookId}`);
     }
   }
 
@@ -60,7 +128,16 @@
         <p class="description">{book.description}</p>
 
         <div class="actions">
-          <button class="btn btn-primary" on:click={handleReadClick}>Lees nu</button>
+          {#if hasProgress}
+            <button class="btn btn-primary" on:click={handleContinueReading}>
+              Verder lezen (pagina {savedPageId})
+            </button>
+            <button class="btn btn-secondary" on:click={handleStartFresh}>
+              Opnieuw beginnen
+            </button>
+          {:else}
+            <button class="btn btn-primary" on:click={handleStartFresh}>Lees nu</button>
+          {/if}
           <button class="btn btn-secondary { isFavorite ? 'is-favorite' : '' }" on:click={toggleFavorite}>
             {isFavorite ? '♥ In favorieten' : '♡ Toevoegen aan favorieten'}
           </button>

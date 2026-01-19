@@ -1,5 +1,6 @@
 <script>
     import { getContext } from 'svelte';
+    import PasswordInputWithToggle from './PasswordInputWithToggle.svelte';
     import { PUBLIC_API_URL } from '$env/static/public';
     import { prefillCodeForClient, saveClientCode, registerClient } from '../userActions.js';
 	import { showDelayedLoadingMessage } from './delayedLoadingMessage.js';
@@ -129,7 +130,17 @@
 
 <div class="story-box">
     <label for="code-input" class="block mb-2 label-dark">Enter your personal library code (password)</label>
-    <input id="code-input" type="password" class="story-input" bind:value={codeValue} placeholder="Type the library code here" />
+    <PasswordInputWithToggle
+        id="code-input"
+        bind:value={codeValue}
+        name="code"
+        autocomplete="new-password"
+        inputClass="story-input"
+        containerClass="login-password"
+        buttonClass="login-eye"
+        iconClass="login-eye-icon"
+        placeholder="Type the library code here"
+    />
     <button class="story-button" onclick={submitCode}>{submitOption?.name ?? "Submit code"}</button>
     {#if message}
         <p class="mt-2 message-text">{message}</p>

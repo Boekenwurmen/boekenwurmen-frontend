@@ -1,19 +1,30 @@
 <script>
-    import ReadingWindow from "./ReadingWindow.svelte";
-    import ActionWindow from "./ChooseActionWindow.svelte";
-    import { setContext } from 'svelte';
-    import ReadingSettings from "./ReadingSettings.svelte";
-	import InsertPasswordWindow from "./InsertPasswordWindow.svelte";
-	import InsertNameWindow from "./InsertNameWindow.svelte";
-	import Stories from "./Stories.svelte";
+    import ReadingWindow from './ReadingWindow.svelte';
+    import ActionWindow from './ChooseActionWindow.svelte';
+    import { setContext, getContext, onMount } from 'svelte';
+    import ReadingSettings from './ReadingSettings.svelte';
+    import InsertPasswordWindow from './InsertPasswordWindow.svelte';
+    import InsertNameWindow from './InsertNameWindow.svelte';
+    import Stories from './Stories.svelte';
     import { page } from '$app/stores';
     import ProgressBar from './ProgressBar.svelte';
+    import { INTRODUCTION_BOOK_ID, ACCOUNT_CREATION_PAGE } from "$lib/constants.ts";
+    import SkipIntroButton from "./SkipIntroButton.svelte";
+    import ExitButton from "./ExitButton.svelte";
     
-    
-    let pageId = 0;
     const bookParam = $page.url.searchParams.get('book');
-    let bookId =  bookParam ? parseInt(bookParam) : 0
-    let clickCount = 0;
+    const pageParam = $page.url.searchParams.get('page');
+    const typeParam = $page.url.searchParams.get('type');
+
+    let bookId = bookParam ? parseInt(bookParam) : INTRODUCTION_BOOK_ID;
+    let pageId = pageParam ? parseInt(pageParam) : 0;
+    let clickCount = pageParam ? 1 : 0; // If resuming from a saved page, set clickCount to trigger progress
+
+    switch (typeParam) {
+        case 'register':
+            pageId = ACCOUNT_CREATION_PAGE;
+            break;
+    }
 
     const pageContext = $state([ pageId, bookId, clickCount ]);
 
@@ -21,8 +32,28 @@
     const client = $state({ id: null, name: null });
     setContext('client', client);
 
+    // Load client from localStorage on mount
+    onMount(() => {
+        try {
+            const raw = localStorage.getItem('auth');
+            if (raw) {
+                const auth = JSON.parse(raw);
+                if (auth?.loggedIn && auth?.id && auth?.name) {
+                    client.id = auth.id;
+                    client.name = auth.name;
+                    console.log('[Reader] Loaded client from localStorage:', { id: client.id, name: client.name });
+                }
+            }
+        } catch (e) {
+            console.warn('[Reader] Failed to load auth from localStorage', e);
+        }
+    });
+
     setContext('page', pageContext);
-    setContext('readingSettings', {speed:50, myTypeWriter: null});
+    setContext('readingSettings', { speed: 50, myTypeWriter: null });
+
+    // Get language context from parent layout (no need to create it here)
+    const languageContext = getContext('language');
 
     let pageType = $state(
         /**@type {"page" | "enter name" | "enter password" | "set name" | "set password"}*/
@@ -38,17 +69,24 @@
         const bookId = pageContext ? Number(pageContext[1]) : undefined;
 
         // fetch the story for this page, showing a loading message if slow
-        
+
         Stories.getPageType(bookId, page)
-            .then(v => pageType = v).catch(err => {
+            .then(v => pageType = v)
+            .catch(err => {
             // on error, show fallback text but avoid throwing
             console.error('Error loading story for page', page, err);
         });
-    })
+    });
 </script>
 
 <div class="w-full">
     <!-- <p>isOnNamePage {isOnNamePage}, isOnCodePage {isOnCodePage}</p> -->
+    <ExitButton/>
+    {#if bookId === INTRODUCTION_BOOK_ID}
+        <SkipIntroButton/>
+    {/if}
+
+    <ReadingSettings />
     <ReadingWindow/>
     {#if isOnNamePage}
         <InsertNameWindow/>
@@ -60,5 +98,4 @@
         <ActionWindow/>
     {/if}
     <ProgressBar/>
-    <ReadingSettings/>
 </div>

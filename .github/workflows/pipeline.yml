@@ -32,6 +32,8 @@ jobs:
         run: npm test
 
       - name: Build Project
+        env:
+          PUBLIC_API_URL: http://localhost:3012
         run: npm run build
 
       - name: Notify Discord on failure

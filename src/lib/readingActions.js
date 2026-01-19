@@ -70,6 +70,7 @@ export async function followOption(pageContext, option, baseUrl, clientId) {
     const bookId = Number(pageContext[1]);
     const newPageId = option.toPage;
     
+    // Index 2 tracks action clicks to trigger effects
     pageContext[2]++;
     pageContext[0] = newPageId;
     
