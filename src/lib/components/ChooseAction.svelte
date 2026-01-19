@@ -1,12 +1,17 @@
 <script lang="ts">
     import { getContext } from 'svelte';
     import { goto } from '$app/navigation';
-    import { page } from '$app/stores';
+    import { PUBLIC_API_URL } from '$env/static/public';
     import { saveProgressToBackend } from '../readingActions';
+
+    interface Action {
+        toPage: number;
+        type: "page" | "bad ending" | "ending" | "to library" | "submit" | "onError" | "to login";
+        name: string;
+    }
     
     const { 
-        action = { toPage: 0, type: 'page', name: 'Go back' } as 
-        { toPage: number; type: "page" | "bad ending" | "ending" | "to library" | "submit" | "onError"; name: string; }
+        action = { toPage: 0, type: 'page', name: 'Go back' } as Action
     } = $props();
 
     // type context as a single-number tuple (or undefined when not provided)
@@ -24,9 +29,13 @@
         try {
             console.log('[ChooseAction] setPage called with action:', action);
             
-            if (action.type === "to library" || action.type === "ending") {
-                goto('/library');
-                return;
+            switch (action.type) {
+                case "to library": case "ending":
+                    goto('/library');
+                    return;
+                case "to login":
+                    goto('/login');
+                    return;
             }
             if (!pageContext) {
                 console.warn('[ChooseAction] pageContext is not available', pageContext);
@@ -46,9 +55,8 @@
             
             // Save to backend
             if (client?.id && pageContext[1]) {
-                const baseUrl = $page.url.origin;
-                console.log('[ChooseAction] Saving to backend:', { baseUrl, clientId: client.id, bookId: pageContext[1], pageId: newPage });
-                const result = await saveProgressToBackend(baseUrl, client.id, pageContext[1], newPage);
+                console.log('[ChooseAction] Saving to backend:', { clientId: client.id, bookId: pageContext[1], pageId: newPage });
+                const result = await saveProgressToBackend(PUBLIC_API_URL, client.id, pageContext[1], newPage);
                 console.log('[ChooseAction] Backend response:', result);
             } else {
                 console.warn('[ChooseAction] Cannot save - missing client.id or bookId', { clientId: client?.id, bookId: pageContext[1] });

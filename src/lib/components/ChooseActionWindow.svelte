@@ -5,6 +5,8 @@
     import { showDelayedLoadingMessage } from "./delayedLoadingMessage";
 
     const pageContext = getContext('page');
+    const languageContext = getContext('language');
+
     let currentPage = $state(0);
 
     $effect(() => {
@@ -21,11 +23,12 @@
         // snapshot primitives to avoid proxied $state usage
         const page = pageContext ? pageContext[0] : undefined;
         const bookId = pageContext ? pageContext[1] : undefined;
+        const lang = languageContext?.selectedLang || 'en';
 
-        // console.log('[ChooseActionWindow] page effect', { page, bookId });
-                
+        // console.log('[ChooseActionWindow] page effect', { page, bookId, lang });
+
         const optionsPromise = showDelayedLoadingMessage(
-            Stories.getPageOptions(bookId, page),
+            Stories.getPageOptions(bookId, page, lang),
             () => options = []
         );
 
