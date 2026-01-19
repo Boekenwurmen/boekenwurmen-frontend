@@ -13,6 +13,7 @@
 		"format": "prettier --write .",
 		"lint": "prettier --check . && eslint .",
 		"test:unit": "vitest",
+  		"test:coverage": "vitest run --coverage",
 		"test": "npm run test:unit -- --run",
 		"storybook": "storybook dev -p 6006",
 		"build-storybook": "storybook build",
