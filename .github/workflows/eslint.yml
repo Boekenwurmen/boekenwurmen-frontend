@@ -11,10 +11,10 @@ name: ESLint
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ['main']
   pull_request:
     # The branches below must be a subset of the branches above
-    branches: [ "main" ]
+    branches: ['main']
   schedule:
     - cron: '24 21 * * 1'
 
@@ -30,17 +30,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
 
       - name: Install SARIF formatter
         run: npm install --no-save @microsoft/eslint-formatter-sarif@3.1.0
 
-
       - name: Run ESLint
         env:
-          SARIF_ESLINT_IGNORE_SUPPRESSED: "true"
+          SARIF_ESLINT_IGNORE_SUPPRESSED: 'true'
           NODE_OPTIONS: --no-warnings
         run: >
           npx eslint . \
