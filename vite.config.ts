@@ -11,33 +11,34 @@ export default defineConfig({
 			allow: ['static/covers']
 		}
 	},
-	test: {
-		expect: { requireAssertions: true },
-		projects: [
-			{
-				extends: './vite.config.ts',
-				test: {
-					name: 'client',
-					browser: {
-						enabled: true,
-						provider: playwright(),
-						instances: [{ browser: 'chromium', headless: true }]
-					},
-					include: ['src/**/*.svelte.{test,spec}.{js,ts}'],
-					exclude: ['src/lib/server/**']
-				}
-			},
-			{
-				extends: './vite.config.ts',
-				test: {
-					name: 'server',
-					environment: 'node',
-					include: ['src/**/*.{test,spec}.{js,ts}'],
-					exclude: ['src/**/*.svelte.{test,spec}.{js,ts}']
-				}
-			}
-		]
-	},
+	       test: {
+		       expect: { requireAssertions: true },
+		       setupFiles: ['./vitest.setup.ts'],
+		       projects: [
+			       {
+				       extends: './vite.config.ts',
+				       test: {
+					       name: 'client',
+					       browser: {
+						       enabled: true,
+						       provider: playwright(),
+						       instances: [{ browser: 'chromium', headless: true }]
+					       },
+					       include: ['src/**/*.svelte.{test,spec}.{js,ts}'],
+					       exclude: ['src/lib/server/**']
+				       }
+			       },
+			       {
+				       extends: './vite.config.ts',
+				       test: {
+					       name: 'server',
+					       environment: 'node',
+					       include: ['src/**/*.{test,spec}.{js,ts}'],
+					       exclude: ['src/**/*.svelte.{test,spec}.{js,ts}']
+				       }
+			       }
+		       ]
+	       },
 	resolve: process.env.VITEST
 		? {
 				conditions: ['browser']
